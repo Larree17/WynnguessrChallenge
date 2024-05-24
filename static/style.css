@@ -1,0 +1,81 @@
+nav{
+    padding: 0;
+}
+.navbar {
+    background-color: #baaa80;
+    text-align: inline-block;
+    padding: 0;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    z-index: 1; 
+    display: flex;
+    align-items: center; 
+
+}
+.nav-container {
+    display: flex;
+    align-items: center;
+    padding: 0px;
+}
+
+.navbar .nav-link{
+    float: left;
+    color: #000000;
+    background-color: #857361;
+    text-align: center;
+    padding: 0px 10px;
+    text-decoration: none;
+    font-size: 17px;
+    font-family: "Comic Sans";
+    border-color: #402523;
+    border-width: 3px;
+    border-style: solid;
+    margin: 0 2px;
+    cursor: pointer;
+}
+.nav-link i{
+    display:inline-flex;
+    height: 20px;
+    vertical-align:top;
+}
+.nav-link a{
+    color: #000000;
+    text-decoration: none;
+    text-align: center;
+}
+.nav-icon{
+    float: left;
+    color: #000000;
+    text-align: center;
+    padding: 0px 3px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.navbar .nav-link:hover {
+    color: white;
+    transform: scale(1.05);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.navbar .nav-link:hover a {
+    color: white;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.footer{
+    text-align: center;
+    padding: 3px;
+    background-color: #baaa80;
+    color: white;
+}
+
+
+/* //Responsive adjustments might be needed depending on the rest of your design 
+@media (max-width: 768px) {
+    .navbar-nav {
+        flex-direction: column;
+    }
+
+    .nav-item {
+        margin: 10px 0; //More vertical spacing between items on small screens 
+    }
+}*/
