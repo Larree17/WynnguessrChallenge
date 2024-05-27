@@ -11,7 +11,7 @@ nav{
     z-index: 1; 
     display: flex;
     align-items: center; 
-
+    border-bottom: 3px solid #857361;
 }
 .nav-container {
     display: flex;
@@ -61,11 +61,38 @@ nav{
     color: white;
     transition: transform 0.3s ease, color 0.3s ease;
 }
+
+.background-image{
+    background-image: url(wallpaper_minecraft_serene_snow_3840x2160.png);
+    background-size: 100% auto;
+    background-position: center;
+    height: 95vh;
+    width: 100vw;
+    color: white;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+.play-button{
+    border-radius: 8px;
+    background-color: #83C73C;
+    border-color: black;
+}
+.play-button:hover{
+    background-color: #6FAE2D;
+    transform: scale(1.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
 .footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     text-align: center;
     padding: 3px;
     background-color: #baaa80;
-    color: white;
+    color: #000000;
+    border-top: 3px solid #857361;
 }
 
 
