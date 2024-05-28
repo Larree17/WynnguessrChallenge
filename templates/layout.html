@@ -12,19 +12,34 @@
 <body>
     <nav class = "navbar">
         <div class = "nav-container">
-            <a class = "nav-icon" href = "/"><img src = "static/wynnlogo.png" alt = "logo" height = 31.1></a>
-            <div class = nav-link>
-                <i class="material-icons">home</i><a href="/">Home</a></i>
-            </div>
-            <div  class = "nav-link">
-                <i class="material-icons">play_arrow</i><a href = "templates/play.html">Play</a>
-            </div>
-            <div  class = "nav-link">
-                <i class="material-icons">leaderboard</i><a href = "leaderboard">Leaderboard</a>
-            </div>
-            <div  class = "nav-link">
-                <i alt = "graph-up" class="material-icons">trending_up</i><a href = "about">Stats</a>
-            </div>
+            <a class = "nav-icon" href = "/">
+                <img src = "static/wynnlogo.png" alt = "logo" height = 31.1>
+            </a>
+            
+            <a href = "{{ url_for('index') }}">
+                <div class = nav-link>
+                    <i class="material-icons">home</i>
+                    <a href = "{{ url_for('play') }}">Home</a></i>
+                </div>
+            </a>
+            <a href = "{{ url_for('play') }}">
+                <div  class = "nav-link">
+                    <i class="material-icons">play_arrow</i>
+                    <a href = "{{ url_for('play') }}">Play</a>
+                </div>
+            </a>
+            <a href = "{{ url_for('leaderboard') }}">
+                <div  class = "nav-link">
+                    <i class="material-icons">leaderboard</i>
+                    <a href = "{{ url_for('leaderboard') }}">Leaderboard</a>
+                </div>
+            </a>
+            <a href = "{{ url_for('stats') }}">
+                <div  class = "nav-link">
+                    <i alt = "graph-up" class="material-icons">trending_up</i>
+                    <a href = "{{ url_for('stats') }}">Stats</a>
+                </div>
+            </a>
         </div>
     </nav>
     

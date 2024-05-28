@@ -66,9 +66,10 @@ nav{
     background-image: url(wallpaper_minecraft_serene_snow_3840x2160.png);
     background-size: 100% auto;
     background-position: center;
+    background-repeat: no-repeat;
     height: 95vh;
-    width: 100vw;
-    color: white;
+    width: 99.1vw;
+    color: black;
     text-align: center;
     font-family: Arial, sans-serif;
 }
