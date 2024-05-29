@@ -33,17 +33,14 @@ nav{
     border-style: solid;
     margin: 0 2px;
     cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 .nav-link i{
     display:inline-flex;
     height: 20px;
     vertical-align:top;
 }
-.nav-link a{
-    color: #000000;
-    text-decoration: none;
-    text-align: center;
-}
+
 .nav-icon{
     float: left;
     color: #000000;
@@ -55,7 +52,6 @@ nav{
 .navbar .nav-link:hover {
     color: white;
     transform: scale(1.05);
-    transition: transform 0.3s ease, color 0.3s ease;
 }
 .navbar .nav-link:hover a {
     color: white;
@@ -77,13 +73,37 @@ nav{
     border-radius: 8px;
     background-color: #83C73C;
     border-color: black;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 .play-button:hover{
     background-color: #6FAE2D;
     transform: scale(1.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.play-button-gamemode {
+    display: inline-block;
+    text-align: center;
+    line-height: 15vh; 
+    border-radius: 12px;
+    border: 8px solid black;
+    background-color: #83C73C;
+    width: 50vw;
+    height: 15vh;
+    margin: 10px;
+    font-size: 30px;
+    color: black; 
+    text-decoration: none;
+    transition: transform 0.3s ease-in, background-color 0.3s ease-in;
 }
 
+.play-button-gamemode:hover {
+    background-color: #6FAE2D;
+    transform: scale(1.1);
+}
+
+.play-button-gamemode:hover{
+    background-color: #6FAE2D;
+    transform: scale(1.05);
+}
 .footer{
     position: fixed;
     left: 0;
@@ -95,15 +115,3 @@ nav{
     color: #000000;
     border-top: 3px solid #857361;
 }
-
-
-/* //Responsive adjustments might be needed depending on the rest of your design 
-@media (max-width: 768px) {
-    .navbar-nav {
-        flex-direction: column;
-    }
-
-    .nav-item {
-        margin: 10px 0; //More vertical spacing between items on small screens 
-    }
-}*/

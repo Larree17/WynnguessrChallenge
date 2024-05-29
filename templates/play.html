@@ -6,14 +6,17 @@
 
     <div class = "background-image">
         <h1>Play</h1>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo dolorum esse culpa doloremque in quo, ab deleniti doloribus numquam eligendi fugit! Nesciunt aspernatur vero officia eligendi consectetur impedit. Distinctio, tempore?Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic iusto fuga eveniet unde cupiditate laboriosam iure animi earum. Deleniti a accusantium assumenda nihil consectetur deserunt. Harum illo adipisci tempore eaque!Loremlorem
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, sed quia est provident doloribus quae esse maxime suscipit illum numquam magnam quas repellendus laudantium nihil sapiente ad at enim veritatis!Lorem
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus pariatur commodi iste non, blanditiis voluptas tempora corrupti doloremque repellat velit! Unde nesciunt obcaecati ullam similique reiciendis exercitationem aperiam sit est.
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi sit ipsum voluptas animi fuga quasi commodi beatae illum quisquam inventore! Dignissimos hic quos quasi magni, quae qui dolorem accusamus aut?lum numquam magnam quas repellendus laudantium nihil sapiente ad at enim veritatis!Lorem
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus pariatur commodi iste non, blanditiis voluptas tempora corrupti doloremque repellat velit! Unde nesciunt obcaecati ullam similique reiciendis exercitationem aperiam sit est.
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nisi sit ipsum voluptas animi fuga quasi commodi beatae illum quisquam inventore! Dignissimoslum numquam magnam quas repellendus laudantium nihil sapiente ad at enim veritatis!Lorem
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus pariatur commodi iste
-        </p>
+        <a href="{{ url_for('play', mode='wynncraft') }}" class="play-button-gamemode">
+            All of Wynncraft
+        </a>
+
+        <a href="{{ url_for('leaderboard') }}" class="play-button-gamemode">
+            Province of Wynn
+        </a>
+
+        <a href="{{ url_for('stats') }}" class="play-button-gamemode">
+            Province of Gavel
+        </a>
+
     </div>
 {% endblock %}

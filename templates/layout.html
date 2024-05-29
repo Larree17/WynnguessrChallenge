@@ -15,30 +15,28 @@
             <a class = "nav-icon" href = "/">
                 <img src = "static/wynnlogo.png" alt = "logo" height = 31.1>
             </a>
-            
             <a href = "{{ url_for('index') }}">
                 <div class = nav-link>
-                    <i class="material-icons">home</i>
-                    <a href = "{{ url_for('play') }}">Home</a></i>
+                    <i class="material-icons">home</i>Home
                 </div>
             </a>
             <a href = "{{ url_for('play') }}">
                 <div  class = "nav-link">
-                    <i class="material-icons">play_arrow</i>
-                    <a href = "{{ url_for('play') }}">Play</a>
+                    <i class="material-icons">play_arrow</i>Play
                 </div>
             </a>
             <a href = "{{ url_for('leaderboard') }}">
-                <div  class = "nav-link">
-                    <i class="material-icons">leaderboard</i>
-                    <a href = "{{ url_for('leaderboard') }}">Leaderboard</a>
+                <div  class = "nav-link" >
+                    <i class="material-icons">leaderboard</i>Leaderboard
                 </div>
             </a>
             <a href = "{{ url_for('stats') }}">
                 <div  class = "nav-link">
-                    <i alt = "graph-up" class="material-icons">trending_up</i>
-                    <a href = "{{ url_for('stats') }}">Stats</a>
+                    <i alt = "graph-up" class="material-icons">trending_up</i>Stats
                 </div>
+            </a>
+            <a>
+                <div class = "nav-link">Login</div>
             </a>
         </div>
     </nav>
