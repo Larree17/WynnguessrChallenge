@@ -10,42 +10,48 @@
 </head>
 
 <body>
-    <nav class = "navbar">
-        <div class = "nav-container">
-            <a class = "nav-icon" href = "/">
-                <img src = "static/wynnlogo.png" alt = "logo" height = 31.1>
-            </a>
-            <a href = "{{ url_for('index') }}">
-                <div class = nav-link>
-                    <i class="material-icons">home</i>Home
-                </div>
-            </a>
-            <a href = "{{ url_for('play') }}">
-                <div  class = "nav-link">
-                    <i class="material-icons">play_arrow</i>Play
-                </div>
-            </a>
-            <a href = "{{ url_for('leaderboard') }}">
-                <div  class = "nav-link" >
-                    <i class="material-icons">leaderboard</i>Leaderboard
-                </div>
-            </a>
-            <a href = "{{ url_for('stats') }}">
-                <div  class = "nav-link">
-                    <i alt = "graph-up" class="material-icons">trending_up</i>Stats
-                </div>
-            </a>
-            <a>
-                <div class = "nav-link">Login</div>
-            </a>
-        </div>
-    </nav>
-    
-    {% block content %}{% endblock %}
-</body>
-<footer>
-    <div class = "footer">
-        <span>Wynnguesser is not affiliated with or endorsed by Wynncraft.</span>
-        <span>Any bug reports can be sent to Example@gmail.com</span>
+    <div class = "background-image">
+        <nav class = "navbar">
+            <div class = "nav-container">
+                <a class = "nav-icon" href = "/">
+                    <img src = "static/wynnlogo.png" alt = "logo" height = 31.1>
+                </a>
+                <a href = "/">
+                    <div class = "nav-link-left">
+                        <i class="material-icons">home</i>Home
+                    </div>
+                </a>
+                <a href = "/play">
+                    <div  class = "nav-link-left">
+                        <i class="material-icons">play_arrow</i>Play
+                    </div>
+                </a>
+                <a href = "/leaderboard">
+                    <div  class = "nav-link-left" >
+                        <i class="material-icons">leaderboard</i>Leaderboard
+                    </div>
+                </a>
+                <a href = "/stats">
+                    <div  class = "nav-link-left">
+                        <i alt = "graph-up" class="material-icons">trending_up</i>Stats
+                    </div>
+                </a>
+                
+            </div>
+            <div>
+                <a href = "/register">
+                    <div class = "nav-link-right">Register</div>
+                </a>
+                <a href = "/login">
+                    <div class = "nav-link-right">Login</div>
+                </a>
+                
+            </div>
+        </nav>
+        
+        {% block content %}{% endblock %}
     </div>
-</footer>
+
+</body>
+
+{%block footer %}{% endblock %}

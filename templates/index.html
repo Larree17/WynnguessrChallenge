@@ -3,10 +3,19 @@
 {% block title %}: Home{% endblock %}
 
 {% block content %}
-    <div class="background-image">
-        <h1>Wynnguessr Home</h1>
-        <form action="{{ url_for('play') }}" method="get">
-            <button type="submit" class="play-button">Play Now!</button>
-        </form>
-    </div>
+    <h1>Wynnguessr Home</h1>
+    <a href = "/play">
+        <div class = "play-button">
+            Play Now!
+        </div>
+    </a>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <div class = "footer">
+            <span>Wynnguesser is not affiliated with or endorsed by Wynncraft.</span>
+            <span>Any bug reports can be sent to Example@gmail.com</span>
+        </div>
+    </footer>
 {% endblock %}

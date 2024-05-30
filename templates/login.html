@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}: Login{% endblock %}
+
+{% block content %}
+    <form class = "login-form" action = "login" method = "post">
+        <div>
+            <input placeholder="Username" class = "login-input" name = "username">
+        </div>
+        <div>
+            <input placeholder="Password" class = "login-input" name = "password">
+        </div>            
+        <a href = "/register" class = "register-redirect">Dont Have an account? Register here!</a>
+        <div>
+            <button type = "submit" class = "form-submit">Login</button>
+        </div>
+    </form>
+    
+{% endblock %}

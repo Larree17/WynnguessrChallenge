@@ -3,20 +3,16 @@
 {% block title %}: Play{% endblock %}
 
 {% block content %}
+    <h1>Play</h1>
+    <a href = "/game " class = "play-button-gamemode" id = "all-of-wynncraft-button">
+        All of Wynncraft
+    </a>
 
-    <div class = "background-image">
-        <h1>Play</h1>
-        <a href="{{ url_for('play', mode='wynncraft') }}" class="play-button-gamemode">
-            All of Wynncraft
-        </a>
+    <a class = "play-button-gamemode" id = "wynn-province-button">
+        Province of Wynn
+    </a>
 
-        <a href="{{ url_for('leaderboard') }}" class="play-button-gamemode">
-            Province of Wynn
-        </a>
-
-        <a href="{{ url_for('stats') }}" class="play-button-gamemode">
-            Province of Gavel
-        </a>
-
-    </div>
+    <a class="play-button-gamemode" id = "gavel-province-button">
+        Province of Gavel
+    </a>
 {% endblock %}

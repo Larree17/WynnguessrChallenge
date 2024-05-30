@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}: Login{% endblock %}
+
+{% block content %}
+    <form class = "login-form" action = "login" method = "post">
+        <div>
+            <input placeholder="Username" class = "login-input" name = "username">
+        </div>
+        <div>
+            <input placeholder="Password" class = "login-input" name = "password">
+        </div>            
+        <div>
+            <input placeholder="Confirm Password" class = "login-input" name = "confirmation">
+        </div>
+        <div>
+            <button type = "submit" class = "form-submit">Register</button>
+        </div>
+    </form>
+
+{% endblock %}

@@ -1,6 +1,3 @@
-nav{
-    padding: 0;
-}
 .navbar {
     background-color: #baaa80;
     text-align: inline-block;
@@ -19,7 +16,10 @@ nav{
     padding: 0px;
 }
 
-.navbar .nav-link{
+.nav-link-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     float: left;
     color: #000000;
     background-color: #857361;
@@ -35,6 +35,32 @@ nav{
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
 }
+
+.nav-link-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    color: #000000;
+    background-color: #857361;
+    text-align: center;
+    padding: 0px 10px;
+    text-decoration: none;
+    font-size: 17px;
+    font-family: "Comic Sans";
+    border-color: #402523;
+    border-width: 3px;
+    border-style: solid;
+    margin: 0 2px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-link-right:hover {
+    color: white;
+    transform: scale(1.05);
+}
+
 .nav-link i{
     display:inline-flex;
     height: 20px;
@@ -49,31 +75,37 @@ nav{
     text-decoration: none;
     font-size: 17px;
 }
-.navbar .nav-link:hover {
+.navbar .nav-link-left:hover {
     color: white;
     transform: scale(1.05);
-}
-.navbar .nav-link:hover a {
-    color: white;
-    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .background-image{
     background-image: url(wallpaper_minecraft_serene_snow_3840x2160.png);
-    background-size: 100% auto;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 95vh;
-    width: 99.1vw;
+    background-position: fixed;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
     color: black;
     text-align: center;
     font-family: Arial, sans-serif;
 }
 .play-button{
-    border-radius: 8px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 12px;
+    padding: 10px;
+    border: 4px solid black;
     background-color: #83C73C;
-    border-color: black;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-size: 20px;
+    color: black; 
+    transition: transform 0.3s ease-in, background-color 0.3s ease-in;
 }
 .play-button:hover{
     background-color: #6FAE2D;
@@ -90,9 +122,21 @@ nav{
     height: 15vh;
     margin: 10px;
     font-size: 30px;
-    color: black; 
+    color: white; 
     text-decoration: none;
     transition: transform 0.3s ease-in, background-color 0.3s ease-in;
+}
+#all-of-wynncraft-button{
+    background-image: url(random_minecraft_background.png);
+    background-position: center;
+}
+#wynn-province-button{
+    background-image: url(random_minecraft_background2.jpg);
+    background-position: center;
+}
+#gavel-province-button{
+    background-image: url(random_minecraft_background3.jpg);
+    background-position: center;
 }
 
 .play-button-gamemode:hover {
@@ -103,6 +147,28 @@ nav{
 .play-button-gamemode:hover{
     background-color: #6FAE2D;
     transform: scale(1.05);
+}
+.login-input{
+    border-radius: 8px;
+    border: 3px solid black;
+    padding: 5px;
+    margin: 5px;
+    width: 200px;
+    font-size: 20px;
+}
+.register-redirect{
+    color: gray;
+    font-size: 10px;
+}
+.form-submit{
+    border-radius: 8px;
+    border: 3px solid black;
+    padding: 5px;
+    margin: 5px;
+    width: 100px;
+    font-size: 20px;
+    background-color: #83C73C;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 .footer{
     position: fixed;
