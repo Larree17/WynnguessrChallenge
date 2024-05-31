@@ -123,20 +123,19 @@
     margin: 10px;
     font-size: 30px;
     color: white; 
+    background-position: center;
+    background-size: cover;
     text-decoration: none;
     transition: transform 0.3s ease-in, background-color 0.3s ease-in;
 }
 #all-of-wynncraft-button{
     background-image: url(random_minecraft_background.png);
-    background-position: center;
 }
 #wynn-province-button{
     background-image: url(random_minecraft_background2.jpg);
-    background-position: center;
 }
 #gavel-province-button{
     background-image: url(random_minecraft_background3.jpg);
-    background-position: center;
 }
 
 .play-button-gamemode:hover {

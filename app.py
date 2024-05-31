@@ -45,7 +45,7 @@ def login():
             #cookies
             return redirect('/')
         else:
-            return redirect('apology')
+            return render_template('apology.html', message = "Invalid username or password")
     else:
         return render_template('login.html')
     
