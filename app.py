@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, request, redirect
+import sqlite3
 
 app = Flask(__name__)
+connection = sqlite3.connect('database.db')
 
 @app.route("/")
 def index():
@@ -30,9 +32,8 @@ def register():
         password = request.form['password']
         confirmation = request.form['confirmation']
         if password != confirmation:
-            print("Passwords do not match")
-            return redirect(url_for('register.html', message = "Passwords do not match"))
-        return redirect('login.html')
+            return render_template('apology.html', message = "Passwords do not match")
+        return render_template('index.html')
     else:
         return render_template('register.html')
 

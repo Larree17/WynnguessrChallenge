@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
-    <title>Document</title>
-</head>
-<body>
-    <div class = "background-image">
+{% extends "layout.html" %}
+
+{% block title %}: Apology{% endblock %}
+
+{% block content %}
+    <div class = "apology-message">
         <p>
             {{ message }}
         </p>
     </div>
-</body>
-</html>
+{% endblock %}
