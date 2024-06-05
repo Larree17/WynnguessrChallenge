@@ -156,8 +156,9 @@
     font-size: 20px;
 }
 .register-redirect{
-    color: gray;
-    font-size: 10px;
+    color: red;
+    font-size: 15px;
+    font-weight: bold;
 }
 .form-submit{
     border-radius: 8px;
@@ -179,7 +180,6 @@
     background-repeat: no-repeat;
     margin: auto;
     position: relative;
-    
 }
 .apology-message p {
     position: absolute;

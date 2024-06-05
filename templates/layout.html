@@ -38,6 +38,20 @@
                 </a>
                 
             </div>
+            {% if session['user_id'] %}
+                <div class = "nav-container">
+                    <a href = "/profile">
+                        <div class = "nav-link-right">
+                            <i class="material-icons">account_circle</i>Profile
+                        </div>
+                    </a>
+                    <a href = "/logout">
+                        <div class = "nav-link-right">
+                            <i class="material-icons">logout</i>Logout
+                        </div>
+                    </a>
+                </div>
+            {% else %}
             <div>
                 <a href = "/register">
                     <div class = "nav-link-right">Register</div>
@@ -45,8 +59,8 @@
                 <a href = "/login">
                     <div class = "nav-link-right">Login</div>
                 </a>
-                
             </div>
+            {% endif %}
         </nav>
         
         {% block content %}{% endblock %}
