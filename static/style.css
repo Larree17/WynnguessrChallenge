@@ -154,6 +154,7 @@
     margin: 5px;
     width: 200px;
     font-size: 20px;
+    
 }
 .register-redirect{
     color: red;
@@ -170,6 +171,20 @@
     background-color: #83C73C;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
+.leaderboard-table{
+    border-collapse: collapse;
+    width: 70%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #857361;
+    border: 3px solid black;
+}
+.leaderboard-row{
+    border: 1px solid black;
+
+}
+
 .apology-message{
     color: red;
     font-size: 20px;

@@ -8,10 +8,9 @@ conn = sqlite3.connect('database.db', check_same_thread=False)
 app.secret_key = os.urandom(24)
 db = conn.cursor()
 
-
 @app.route("/")
 def index():
-    if session['loggedin']:
+    if 'loggedin' in session and session['loggedin']:
         return render_template('index.html', username = db.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],)).fetchone()[0])
     return render_template('index.html')
 
@@ -21,7 +20,8 @@ def play():
 
 @app.route("/leaderboard")
 def leaderboard():
-    return render_template('leaderboard.html')
+    print(db.execute("SELECT * FROM users").fetchall())
+    return render_template('leaderboard.html', users = db.execute("SELECT * FROM users").fetchall())
 
 @app.route("/stats")
 def stats():
