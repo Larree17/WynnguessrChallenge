@@ -8,6 +8,10 @@ conn = sqlite3.connect('database.db', check_same_thread=False)
 app.secret_key = os.urandom(24)
 db = conn.cursor()
 
+LOCATIONS = [{"id": 1, "url": "static/locations/black road image.png", "x": -350, "z": -1400},
+    {"id": 2, "url": "static/locations/nivla woods image", "x": 610, "z": -1550},
+    {"id": 3, "url": "static/locations/saint's row image.png", "x": 290, "z": -2060},]
+
 @app.route("/")
 def index():
     if 'loggedin' in session and session['loggedin']:
@@ -29,7 +33,8 @@ def stats():
 
 @app.route("/game")
 def game():
-    return render_template('game.html')
+    print(LOCATIONS[0]['url'])
+    return render_template('game.html', locations = LOCATIONS)
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
