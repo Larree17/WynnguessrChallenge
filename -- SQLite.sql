@@ -1,2 +1,1 @@
--- SQLite
-SELECT * FROM users;
+.schema
