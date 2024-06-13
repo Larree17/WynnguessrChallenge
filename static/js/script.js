@@ -15,20 +15,40 @@ document.addEventListener('DOMContentLoaded', function () {
     var map = L.map('map',{
         crs: L.CRS.Simple,
         minZoom: -3,
-        maxZoom: 3
+        maxZoom: 4
     }).setView([0, 0], 0);
-    var bounds = [[0,-2000], [6485,2091]];
+    var bounds = [[157,-2392], [6542,1699]];//coords of the bounds of map
     var image = L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
     map.fitBounds(bounds);
-    //adds marker to the map
-    coords = convertCoords(0, 0);
-    L.marker(L.latLng(coords)).addTo(map);
-    L.marker(L.latLng(convertCoords(-2264, -74))).addTo(map);
-    map.setView( [70, 120], 1);
+    map.setView( [1000, 100], -2);
+    console.log(map.getZoom());
     
+
+    //function to get coords of the map when clicked
+    var marker;
+    function onMapClick(e) {
+        if(marker != undefined){
+            map.removeLayer(marker);
+        }
+        console.log("You clicked the map at " + e.latlng);
+        marker = L.marker(e.latlng).addTo(map);
+        
+    }
+    
+    map.on('click', onMapClick);
 });
 
 function convertCoords(z, x){
     
     return [z * -1, x];
 }
+
+//function to get values of marker when guess button is clicked
+document.getElementById('guess-button').onclick = function(){
+    if(marker == undefined){
+        alert("Please select a location on the map");
+        return;
+    }
+    alert(marker.getLatLng());
+
+};

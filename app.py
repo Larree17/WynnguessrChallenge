@@ -70,7 +70,7 @@ def register():
         if password != confirmation:
             return render_template('apology.html', message = "Passwords do not match")
         elif db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall():
-            return render_template('apology.html', message = "Username already exists")
+            return render_template('apology.html', message = "Username is already taken")
         elif username == "" or password == "" or confirmation == "":
             return render_template('apology.html', message = "Please fill in all fields")
         else:

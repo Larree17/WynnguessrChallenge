@@ -217,20 +217,46 @@ body {
 .leaderboard-row{
     border: 1px solid black;
 }
-#map{
+.map{
     position: absolute;
     bottom: 0px;
     right: 0px;
-    height: 600px;
-    width: 600px;
+    height: 300px;
+    width: 300px;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
-#map:hover{
-    /*transform: scaleX(1.1) scaleY(1.1);*/
+.map:hover .guess-button{
+    padding: 10px 264.3px;
+}
+.map:hover #map{
     height: 600px;
     width: 600px;
-}
 
+}
+#map{
+    position: absolute;
+    bottom: 51px;
+    right: 0px;
+    height: 300px;
+    width: 300px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.guess-button{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 12px;
+    border: 4px solid black;
+    background-color: #83C73C;
+    font-size: 20px;
+    color: black; 
+    padding: 10px 114.3px;
+    transition: transform 0.3s ease-in, background-color 0.3s ease-in;
+
+}
 .apology-message{
     color: red;
     font-size: 20px;
