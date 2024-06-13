@@ -1,3 +1,7 @@
+body {
+    padding: 0;
+    margin: 0;
+  }
 .navbar {
     background-color: #baaa80;
     text-align: inline-block;
@@ -95,6 +99,36 @@
     text-align: center;
     font-family: Arial, sans-serif;
 }
+.location-image{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position: fixed;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    color: black;
+    text-align: center;
+    font-family: Arial, sans-serif;
+
+}
+.vr-image{
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-position: fixed;
+    position:absolute;
+    top: 50px;;
+    left:0;
+    width:600px;
+    height: 400px;
+    color: black;
+    text-align: center;
+    font-family: Arial, sans-serif;
+
+}
 .play-button{
     display: inline-block;
     text-align: center;
@@ -182,7 +216,19 @@
 }
 .leaderboard-row{
     border: 1px solid black;
-
+}
+#map{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 600px;
+    width: 600px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+#map:hover{
+    /*transform: scaleX(1.1) scaleY(1.1);*/
+    height: 600px;
+    width: 600px;
 }
 
 .apology-message{

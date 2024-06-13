@@ -1,22 +1,30 @@
-from flask import Flask, render_template, url_for, request, redirect, session
+from flask import Flask, render_template, url_for, request, redirect, session, send_from_directory
 from flask_session import Session
+from flask_cors import CORS
 import os
 import sqlite3
+
 
 app = Flask(__name__)
 conn = sqlite3.connect('database.db', check_same_thread=False)
 app.secret_key = os.urandom(24)
 db = conn.cursor()
 
+CORS(app)
+
+@app.route('/static/locations/<filename>')
+def serve_image(filename):
+    return send_from_directory('static/locations', filename)
+
 LOCATIONS = [{"id": 1, "url": "static/locations/black road image.png", "x": -350, "z": -1400},
-    {"id": 2, "url": "static/locations/nivla woods image", "x": 610, "z": -1550},
+    {"id": 2, "url": "static/locations/nivla woods image.png", "x": 610, "z": -1550},
     {"id": 3, "url": "static/locations/saint's row image.png", "x": 290, "z": -2060},]
 
 @app.route("/")
 def index():
     if 'loggedin' in session and session['loggedin']:
         return render_template('index.html', username = db.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],)).fetchone()[0])
-    return render_template('index.html')
+    return render_template('index.html', username = "Guest")
 
 @app.route("/play")
 def play():
