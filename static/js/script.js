@@ -1,28 +1,16 @@
-//vr view initialization
-window.addEventListener('load', onVrViewLoad);
-
-        function onVrViewLoad() {
-            var vrView = new VRView.Player('#vrview', {
-                image: 'http://127.0.0.1:5000/static/locations/emerald%20trail%20360.png',
-                width: window.screen.width,
-                height: window.screen.height,
-                is_stereo: false // Change to true if the image is stereo
-            });
-        }
-
+var locations;
 //leaflet map initialization
 document.addEventListener('DOMContentLoaded', function () {
     var map = L.map('map',{
         crs: L.CRS.Simple,
         minZoom: -3,
-        maxZoom: 4
+        maxZoom: 2
     }).setView([0, 0], 0);
     var bounds = [[157,-2392], [6542,1699]];//coords of the bounds of map
     var image = L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
     map.fitBounds(bounds);
-    map.setView( [1000, 100], -2);
+    map.setView( [3000, -500], -2);
     console.log(map.getZoom());
-    
 
     //function to get coords of the map when clicked
     var marker;
@@ -34,21 +22,34 @@ document.addEventListener('DOMContentLoaded', function () {
         marker = L.marker(e.latlng).addTo(map);
         
     }
-    
     map.on('click', onMapClick);
-});
 
-function convertCoords(z, x){
-    
-    return [z * -1, x];
-}
+    //function to calculate distance between two points
+    document.getElementById('guess-button').onclick = function(){
+        if(marker == undefined){
+            document.getElementById('guess-button').innerHTML = "Select a location first!";
+            document.getElementById('guess-button').style.backgroundColor = "red";
+        }
+        alert(marker.getLatLng());
 
-//function to get values of marker when guess button is clicked
-document.getElementById('guess-button').onclick = function(){
-    if(marker == undefined){
-        alert("Please select a location on the map");
-        return;
+    };
+
+    function convertCoords(z, x){
+        
+        return [z * -1, x];
     }
-    alert(marker.getLatLng());
 
-};
+    //vr view initialization
+    window.addEventListener('load', onVrViewLoad);
+
+            function onVrViewLoad() {
+                var vrView = new VRView.Player('#vrview', {
+                    image: 'static/locations/almuj 360.png',
+                    
+                    is_stereo: false // Change to true if the image is stereo
+                });
+            }
+
+    fetch('/api/locations').then(response => response.json()).then(data => {locations = data.locations});
+    alert(locations);
+});

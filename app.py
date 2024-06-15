@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, session, send_from_directory
+from flask import Flask, render_template, url_for, request, redirect, session, send_from_directory, jsonify 
 from flask_session import Session
 from flask_cors import CORS
 import os
@@ -6,19 +6,21 @@ import sqlite3
 
 
 app = Flask(__name__)
-conn = sqlite3.connect('database.db', check_same_thread=False)
 app.secret_key = os.urandom(24)
+conn = sqlite3.connect('database.db', check_same_thread=False)
 db = conn.cursor()
 
-CORS(app)
+#CORS(app)
 
-@app.route('/static/locations/<filename>')
-def serve_image(filename):
-    return send_from_directory('static/locations', filename)
+#@app.route('/static/locations/<filename>')
+#def serve_image(filename):
+#    return send_from_directory('static/locations', filename)
 
-LOCATIONS = [{"id": 1, "url": "static/locations/black road image.png", "x": -350, "z": -1400},
-    {"id": 2, "url": "static/locations/nivla woods image.png", "x": 610, "z": -1550},
-    {"id": 3, "url": "static/locations/saint's row image.png", "x": 290, "z": -2060},]
+@app.route("/api/locations")
+def get_locations():
+    locations = db.execute("SELECT * FROM locations").fetchall()
+    locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
+    return jsonify(locations_list)
 
 @app.route("/")
 def index():
@@ -41,8 +43,7 @@ def stats():
 
 @app.route("/game")
 def game():
-    print(LOCATIONS[0]['url'])
-    return render_template('game.html', locations = LOCATIONS)
+    return render_template('game.html')
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
