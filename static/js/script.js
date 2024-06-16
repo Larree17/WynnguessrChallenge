@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     map.setView( [3000, -500], -2);
     console.log(map.getZoom());
 
-    //function to get coords of the map when clicked
+    //function to set marker on map where clicked
     var marker;
     function onMapClick(e) {
         if(marker != undefined){
@@ -40,6 +40,13 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("Actual: " + xActual + ", " + zActual + " Guess: " + xGuess + ", " + zGuess);
         var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
         console.log("Distance: " + distance.toFixed(2) + " blocks away!");
+        map.eachLayer((layer) => {
+            if (layer instanceof L.Marker) {
+               layer.remove();
+            }
+          });
+
+        nextLocation();
     };
 
     function convertCoords(z, x){
@@ -54,18 +61,28 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(response => response.json())
     .then(data => {
         //initializing image with a random location and storing info
-        var rand = Math.floor(Math.random() * data.length);
-        console.log("Index Number: " + rand);
         LOCATIONS = data;
         console.log(LOCATIONS);
-        image = LOCATIONS[rand];
-        window.addEventListener('load', onVrViewLoad);
-
-            function onVrViewLoad() {
-                var vrView = new VRView.Player('#vrview', {
-                    image: image['url'],
-                    is_stereo: false 
-                });
-            }
+        nextLocation();
     });
+
+    function nextLocation(){
+        //if somehow runs out of locations
+        if(LOCATIONS.length == 0){
+            document.getElementById('guess-button').innerHTML = "No more locations!";
+            document.getElementById('guess-button').style.backgroundColor = "red";
+            return;
+        }
+        //creates new vr view with a random location and sets image to coordinates
+        var rand = Math.floor(Math.random() * LOCATIONS.length);
+        console.log("Index Number: " + rand);
+        image = LOCATIONS[rand];
+        LOCATIONS.splice(rand, 1);
+        console.log(image);
+        var vrView = new VRView.Player('#vrview', {
+            image: image['url'],
+            is_stereo: false 
+        });
+    }
 });
+
