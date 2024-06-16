@@ -1,4 +1,5 @@
-var locations;
+var LOCATIONS;
+var image;
 //leaflet map initialization
 document.addEventListener('DOMContentLoaded', function () {
     var map = L.map('map',{
@@ -30,8 +31,13 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('guess-button').innerHTML = "Select a location first!";
             document.getElementById('guess-button').style.backgroundColor = "red";
         }
-        alert(marker.getLatLng());
-
+        var xGuess = marker.getLatLng().lng;
+        var zGuess = -marker.getLatLng().lat;
+        var xActual = image['X'];
+        var zActual = image['Z'];
+        console.log("Actual: " + xActual + ", " + zActual + " Guess: " + xGuess + ", " + zGuess);
+        var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
+        alert("Distance: " + distance.toFixed(2) + " blocks away!");
     };
 
     function convertCoords(z, x){
@@ -40,16 +46,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     //vr view initialization
-    window.addEventListener('load', onVrViewLoad);
+    
+    //gets all locations from the database
+    fetch('/api/locations')
+    .then(response => response.json())
+    .then(data => {
+        //initializing image with a random location and storing info
+        var rand = Math.floor(Math.random() * data.length);
+        console.log("Index Number: " + rand);
+        LOCATIONS = data;
+        console.log(LOCATIONS);
+        image = LOCATIONS[rand];
+        window.addEventListener('load', onVrViewLoad);
 
             function onVrViewLoad() {
                 var vrView = new VRView.Player('#vrview', {
-                    image: 'static/locations/almuj 360.png',
-                    
-                    is_stereo: false // Change to true if the image is stereo
+                    image: image['url'],
+                    is_stereo: false 
                 });
             }
-
-    fetch('/api/locations').then(response => response.json()).then(data => {locations = data.locations});
-    alert(locations);
+    });
 });
