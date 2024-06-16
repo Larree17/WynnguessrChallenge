@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var map = L.map('map',{
         crs: L.CRS.Simple,
         minZoom: -3,
-        maxZoom: 2
+        maxZoom: 5
     }).setView([0, 0], 0);
-    var bounds = [[157,-2392], [6542,1699]];//coords of the bounds of map
+    var bounds = [[123,-2392], [6608,1699]];//coords of the bounds of map
     var image = L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
     map.fitBounds(bounds);
     map.setView( [3000, -500], -2);
@@ -35,9 +35,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var zGuess = -marker.getLatLng().lat;
         var xActual = image['X'];
         var zActual = image['Z'];
+        marker = L.marker([-zActual,xActual]).addTo(map);
+
         console.log("Actual: " + xActual + ", " + zActual + " Guess: " + xGuess + ", " + zGuess);
         var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
-        alert("Distance: " + distance.toFixed(2) + " blocks away!");
+        console.log("Distance: " + distance.toFixed(2) + " blocks away!");
     };
 
     function convertCoords(z, x){

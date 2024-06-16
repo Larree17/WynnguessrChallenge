@@ -239,7 +239,8 @@ body {
     right: 0px;
     height: 300px;
     width: 300px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: width .5s, height .5s, transform .5s;
+    image-rendering: pixelated;
 }
 .guess-button{
     position: absolute;
@@ -255,7 +256,7 @@ body {
     color: black; 
     padding: 10px;
     width: 300px;
-    transition: transform 0.3s ease-in, background-color 0.3s ease-in;
+    transition: width .5s, height .5s, transform .5s;
 
 }
 .apology-message{
