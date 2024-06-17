@@ -1,5 +1,6 @@
 var LOCATIONS;
 var image;
+var round = 1;
 //leaflet map initialization
 document.addEventListener('DOMContentLoaded', function () {
     var map = L.map('map',{
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                layer.remove();
             }
           });
+          document.getElementById('guess-button').innerHTML = "Distance: " + distance.toFixed(2) + " blocks away!";
 
         nextLocation();
     };
