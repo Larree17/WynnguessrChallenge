@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var map = L.map('map',{
         crs: L.CRS.Simple,
         minZoom: -3,
-        maxZoom: 5
+        maxZoom: 5,
+        renderer: L.canvas({ padding: 10 })
     }).setView([0, 0], 0);
     var bounds = [[123,-2392], [6608,1699]];//coords of the bounds of map
     var image = L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
@@ -32,13 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if(marker != undefined){
             map.removeLayer(marker);
         }
-        console.log("You clicked the map at " + e.latlng);
+        console.log("You clicked at: " + e.latlng)
         marker = L.marker(e.latlng).addTo(map);
-        
     }
     map.on('click', onMapClick);
 
-    //function to react to guess button press
+    //loads score screen and calculates distance between actual and guessed location
     document.getElementById('guess-button').onclick = function(){
         //calculates distance between actual and guessed location
         if(marker == undefined){
@@ -50,8 +50,20 @@ document.addEventListener('DOMContentLoaded', function () {
         var zGuess = -marker.getLatLng().lat;
         var xActual = image['X'];
         var zActual = image['Z'];
-        marker = L.marker([-zActual,xActual]).addTo(map);
-
+        //sets actual marker as green marker on map
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        L.marker([-zActual,xActual], {icon: greenIcon}).addTo(map);
+        console.log("Actual Point: " +[-zActual, xActual] + ", Guess Point: " + [-zGuess, xGuess])
+        var polyline = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], {color: 'red'}).addTo(map);
+        // zoom the map to the polyline
+        map.fitBounds(polyline.getBounds());
         console.log("Actual: " + xActual + ", " + zActual + " Guess: " + xGuess + ", " + zGuess);
         var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
         console.log("Distance: " + distance.toFixed(2) + " blocks away!");
@@ -66,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('guess-button').innerHTML = "Distance: " + distance.toFixed(2) + " blocks away!";
 
         scoreScreen();
+        map.setview(polyline.getBounds());
     };
 
     //function to react to next image button press
@@ -115,9 +128,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function scoreScreen(){
         //adds score screen HTML and styles
         document.getElementById('score-screen').innerHTML = 
-        "<h2 id = 'distance'> </h2>" +
+        "<p id = 'distance' class = 'score-info'> </p>" +
         "<button id='next-button' class='next-button'>Next Location</button>" + 
-        "<h2 id='score'></h2>";
+        "<p id='score' class = 'score-info'>SCOREEE</p>";
         document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
         document.getElementById('score').innerHTML = "Score: " + (totalScore + score)+ "/" + round * 5000;
         document.getElementById('map-container').style.top = "5.5%";
