@@ -217,7 +217,7 @@ body {
 .leaderboard-row{
     border: 1px solid black;
 }
-/*.map-container{
+.map-container{
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -226,16 +226,8 @@ body {
     height: 351px;
     width: 300px;
     transition: width .5s, height .5s, transform .5s;
-}*/
-.map-container{
-    top: 5.5%;
-    height: 94.5%;
-    width: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    transition: width .5s, height .5s, transform .5s;
 }
+
 .map-container:hover{
     height: 700px;
     width: 600px;

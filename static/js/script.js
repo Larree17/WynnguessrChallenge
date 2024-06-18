@@ -1,8 +1,20 @@
 var LOCATIONS;
 var image;
 var round = 1;
+var score = 0;
+var totalScore = 0;
 //leaflet map initialization
 document.addEventListener('DOMContentLoaded', function () {
+
+    fetch('/api/locations')
+    .then(response => response.json())
+    .then(data => {
+        //initializing image with a random location and storing info
+        LOCATIONS = data;
+        console.log(LOCATIONS);
+        nextLocation();
+    });
+
     var map = L.map('map',{
         crs: L.CRS.Simple,
         minZoom: -3,
@@ -26,11 +38,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     map.on('click', onMapClick);
 
-    //function to calculate distance between two points
+    //function to react to guess button press
     document.getElementById('guess-button').onclick = function(){
+        //calculates distance between actual and guessed location
         if(marker == undefined){
             document.getElementById('guess-button').innerHTML = "Select a location first!";
             document.getElementById('guess-button').style.backgroundColor = "red";
+            return;
         }
         var xGuess = marker.getLatLng().lng;
         var zGuess = -marker.getLatLng().lat;
@@ -41,32 +55,49 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("Actual: " + xActual + ", " + zActual + " Guess: " + xGuess + ", " + zGuess);
         var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
         console.log("Distance: " + distance.toFixed(2) + " blocks away!");
+
+        score = 5000 - distance;
+        if(distance > 5000){
+            score = 0;
+        }
+        totalScore += score;
+        
+        //post results
+        document.getElementById('guess-button').innerHTML = "Distance: " + distance.toFixed(2) + " blocks away!";
+
+        scoreScreen();
+    };
+
+    //function to react to next image button press
+    document.getElementById('next-button').onclick = function(){
+        
+        //bring map back to corner TODO
+
+        //bring in score screen TODO
+
+        //remove all markers TODO
+
+        //remove hover css map change TODO
+
+        //set map sight to cover all points TODO
+
+        //remove guess button TODO
+
+
         map.eachLayer((layer) => {
             if (layer instanceof L.Marker) {
                layer.remove();
             }
           });
-          document.getElementById('guess-button').innerHTML = "Distance: " + distance.toFixed(2) + " blocks away!";
-
         nextLocation();
+        //update round number
     };
+
 
     function convertCoords(z, x){
         
         return [z * -1, x];
     }
-
-    //vr view initialization
-    
-    //gets all locations from the database
-    fetch('/api/locations')
-    .then(response => response.json())
-    .then(data => {
-        //initializing image with a random location and storing info
-        LOCATIONS = data;
-        console.log(LOCATIONS);
-        nextLocation();
-    });
 
     function nextLocation(){
         //if somehow runs out of locations
@@ -85,6 +116,19 @@ document.addEventListener('DOMContentLoaded', function () {
             image: image['url'],
             is_stereo: false 
         });
+    }
+    function scoreScreen(){
+        //TODO
+        document.getElementById('score-screen').innerHTML = 
+        "<h1>Your Score</h1>" + 
+        "<p id='score'></p>" +
+        "<button id='next-button' class='guess-button'>Next</button>";
+        document.getElementById('score').innerHTML = "Score: " + (totalScore + score)+ "/" + round * 5000;
+        
+    }
+    function finalScore(){
+        //TODO
+
     }
 });
 
