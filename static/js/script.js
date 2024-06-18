@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(LOCATIONS);
         nextLocation();
     });
-
+//loads map
     var map = L.map('map',{
         crs: L.CRS.Simple,
         minZoom: -3,
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         totalScore += score;
         
-        //post results
+        //post results TODO works for now
         document.getElementById('guess-button').innerHTML = "Distance: " + distance.toFixed(2) + " blocks away!";
 
         scoreScreen();
@@ -93,12 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
         //update round number
     };
 
-
-    function convertCoords(z, x){
-        
-        return [z * -1, x];
-    }
-
     function nextLocation(){
         //if somehow runs out of locations
         if(LOCATIONS.length == 0){
@@ -117,13 +111,22 @@ document.addEventListener('DOMContentLoaded', function () {
             is_stereo: false 
         });
     }
+
     function scoreScreen(){
-        //TODO
+        //adds score screen HTML and styles
         document.getElementById('score-screen').innerHTML = 
-        "<h1>Your Score</h1>" + 
-        "<p id='score'></p>" +
-        "<button id='next-button' class='guess-button'>Next</button>";
+        "<h2 id = 'distance'> </h2>" +
+        "<button id='next-button' class='next-button'>Next Location</button>" + 
+        "<h2 id='score'></h2>";
+        document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
         document.getElementById('score').innerHTML = "Score: " + (totalScore + score)+ "/" + round * 5000;
+        document.getElementById('map-container').style.top = "5.5%";
+        document.getElementById('map-container').style.height = "84.5%";
+        document.getElementById('map-container').style.width = "100%";
+        document.getElementById('score-screen').style.display = "block";
+        document.getElementById('score-screen').style.backgroundColor = "#141323";
+        document.getElementById('guess-button').style.display = "none";
+        document.getElementById('vrview').style.display = "none";
         
     }
     function finalScore(){

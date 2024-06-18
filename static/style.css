@@ -243,6 +243,7 @@ body {
     flex-grow: 1;
     transition: width .5s, height .5s, transform .5s;
     image-rendering: pixelated;
+    background: black;
 }
 .guess-button{
     position: relative;
@@ -258,6 +259,34 @@ body {
     width: 100%;
     height: 51px;
     transition: width .5s, height .5s, transform .5s;
+}
+.next-button{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 12px;
+    border: 4px solid black;
+    background-color: #83C73C;
+    font-size: 20px;
+    color: black; 
+    padding: 10px;
+    width: 20%;
+    height: 51px;
+}
+.score-screen{
+    position: absolute;
+    display: inline-block;
+    flex-direction: column;
+    top: 90%;
+    height: 10%;
+    width: 100%;
+    background-color: #857361;
+    text-align: center;
+    color: white;
+}
+#round-number{
+    margin: 10px;
 }
 .apology-message{
     color: red;
