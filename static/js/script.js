@@ -3,7 +3,7 @@ var image;
 var round = 1;
 var score = 0;
 var totalScore = 0;
-//leaflet map initialization
+var scoreScreen = false;
 document.addEventListener('DOMContentLoaded', function () {
 
     fetch('/api/locations')
@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', function () {
         //initializing image with a random location and storing info
         LOCATIONS = data;
         console.log(LOCATIONS);
-        nextLocation();
+        showNextLocation();
     });
-//loads map
+    //leaflet map initialization
     var map = L.map('map',{
         crs: L.CRS.Simple,
         minZoom: -3,
@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //function to set marker on map where clicked
     var marker;
     function onMapClick(e) {
+        if(scoreScreen){
+            return;
+        }
         if(marker != undefined){
             map.removeLayer(marker);
         }
@@ -77,13 +80,19 @@ document.addEventListener('DOMContentLoaded', function () {
         //post results TODO works for now
         document.getElementById('guess-button').innerHTML = "Distance: " + distance.toFixed(2) + " blocks away!";
 
-        scoreScreen();
+        showScoreScreen();
         map.setview(polyline.getBounds());
     };
 
     //function to react to next image button press
     document.getElementById('next-button').onclick = function(){
         
+        
+        showNextLocation();
+        
+    };
+
+    function showNextLocation(){
         //bring map back to corner TODO
 
         //bring in score screen TODO
@@ -96,18 +105,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         //remove guess button TODO
 
-
-        map.eachLayer((layer) => {
-            if (layer instanceof L.Marker) {
-               layer.remove();
-            }
-          });
-        nextLocation();
-        //update round number
-    };
-
-    function nextLocation(){
         //if somehow runs out of locations
+        scoreScreen = false;
         if(LOCATIONS.length == 0){
             document.getElementById('guess-button').innerHTML = "No more locations!";
             document.getElementById('guess-button').style.backgroundColor = "red";
@@ -123,21 +122,29 @@ document.addEventListener('DOMContentLoaded', function () {
             image: image['url'],
             is_stereo: false 
         });
+        map.eachLayer((layer) => {
+            if (layer instanceof L.Marker) {
+               layer.remove();
+            }
+          });
+        //update round number
+        round++;
+        document.getElementById('round').innerHTML = "Round: " + round + "/5 ";
     }
 
-    function scoreScreen(){
+    function showScoreScreen(){
         //adds score screen HTML and styles
+        scoreScreen = true;
         document.getElementById('score-screen').innerHTML = 
         "<p id = 'distance' class = 'score-info'> </p>" +
         "<button id='next-button' class='next-button'>Next Location</button>" + 
-        "<p id='score' class = 'score-info'>SCOREEE</p>";
+        "<p id='score' class = 'score-info'>SCOREEEEEEEEEEEEEEEE</p>";
         document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
         document.getElementById('score').innerHTML = "Score: " + (totalScore + score)+ "/" + round * 5000;
         document.getElementById('map-container').style.top = "5.5%";
         document.getElementById('map-container').style.height = "84.5%";
         document.getElementById('map-container').style.width = "100%";
-        document.getElementById('score-screen').style.display = "block";
-        document.getElementById('score-screen').style.backgroundColor = "#141323";
+        document.getElementById('score-screen').style.display = "flex";
         document.getElementById('guess-button').style.display = "none";
         document.getElementById('vrview').style.display = "none";
         

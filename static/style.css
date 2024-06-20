@@ -277,24 +277,26 @@ body {
 .score-screen{
     position: absolute;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     top: 90%;
     height: 10%;
     width: 100%;
-    background-color: #857361;
     text-align: center;
     color: white;
+    background-color: #141323;
 }
 .score-info{
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-    border-radius: 12px;
     font-size: 20px;
-    color: white; 
+    color: white;
     padding: 10px;
-
+    width: 300px;
 }
+
 #round-number{
     margin: 10px;
 }
