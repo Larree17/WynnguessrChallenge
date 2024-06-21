@@ -6,15 +6,10 @@ import sqlite3
 
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = os.urandom(24)
 conn = sqlite3.connect('database.db', check_same_thread=False)
 db = conn.cursor()
-
-#CORS(app)
-
-#@app.route('/static/locations/<filename>')
-#def serve_image(filename):
-#    return send_from_directory('static/locations', filename)
 
 @app.route("/api/locations")
 def get_locations():

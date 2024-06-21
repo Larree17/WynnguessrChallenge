@@ -100,14 +100,12 @@ function calculateAndDisplayScore() {
     }
     totalScore += score;
 
-    document.getElementById('guess-button').innerHTML = "Distance: " + distance.toFixed(2) + " blocks away!";
-
     // Wait for the map container to resize properly before fitting bounds
+    //BUG WHERE MAP DOESNT RESIZE PROPERLY TO FIT POLYLINE IDK HOW TO FIX ITS BEEN 7 HOURS PLS HELP(copilot generated this comment lol)
+    map.invalidateSize({ pan: false, debounceMoveend: true });
     setTimeout(function () {
-        map.invalidateSize({ pan: false, debounceMoveend: true });
-        var padding = Math.min(map.getSize().x, map.getSize().y) * 0.1; // 10% of the smaller dimension
-        map.fitBounds(polyline.getBounds(), { padding: [padding, padding] });
-    }, 1000); 
+        map.fitBounds(polyline.getBounds());
+    }, 300); // Adjust the delay as needed
 }
 
 // Display the score screen
@@ -121,9 +119,11 @@ function showScoreScreen() {
     document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
     document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
 
+    document.getElementById('map-container').style.transition = 'none';
     document.getElementById('map-container').style.top = "5.5%";
     document.getElementById('map-container').style.height = "84.5%";
     document.getElementById('map-container').style.width = "100%";
+    
     document.getElementById('score-screen').style.display = "flex";
     document.getElementById('guess-button').style.display = "none";
     document.getElementById('vrview').style.display = "none";
@@ -133,6 +133,16 @@ function showScoreScreen() {
 
 // Load the next location
 function showNextLocation() {
+    if(scoreScreen) {
+        document.getElementById('map-container').style.transition = "width .5s, height .5s, transform .5s";
+        document.getElementById('map-container').style.bottom = "0";
+        document.getElementById('map-container').style.top = "auto"; // Set to auto instead of "none"
+        document.getElementById('map-container').style.height = "351px";
+        document.getElementById('map-container').style.width = "300px";
+        document.getElementById('score-screen').style.display = "none";
+        document.getElementById('guess-button').style.display = "inline-block";
+        document.getElementById('vrview').style.display = "inline-block";
+    }
     scoreScreen = false;
 
     if (LOCATIONS.length === 0) {
@@ -140,23 +150,25 @@ function showNextLocation() {
         document.getElementById('guess-button').style.backgroundColor = "red";
         return;
     }
-
+    //selects a random location from the list of locations and removes it to prevent duplicates
     var rand = Math.floor(Math.random() * LOCATIONS.length);
     image = LOCATIONS[rand];
     LOCATIONS.splice(rand, 1);
-
+    //loads next vrview image
     console.log(image);
     var vrView = new VRView.Player('#vrview', {
         image: image['url'],
         is_stereo: false
     });
-
+    //removes all markers from the map
     map.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
             layer.remove();
         }
     });
-
+    map.removeLayer(polyline);
+    marker = null;
+    
     round++;
     document.getElementById('round-number').innerHTML = "Round: " + round + "/5 ";
 }
