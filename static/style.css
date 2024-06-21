@@ -101,6 +101,13 @@ body {
     text-align: center;
     font-family: Arial, sans-serif;
 }
+.guess-screen{
+    position: absolute;
+    display: flex;
+    top: 5.5%;
+    width: 100%;
+    height: 94.5%;
+}
 .location-image{
     background-size: cover;
     background-position: center;
@@ -116,16 +123,15 @@ body {
     font-family: Arial, sans-serif;
 
 }
+
 .vr-image iframe{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-position: fixed;
     position:absolute;
-    top: 5.5%;
-    left:0;
     width:100%;
-    height: 94.5%;
+    height: 100%;
     color: black;
     text-align: center;
     font-family: Arial, sans-serif;
@@ -245,6 +251,14 @@ body {
     image-rendering: pixelated;
     background: black;
 }
+#scoreMap{
+    position:absolute;
+    top: auto;
+    height: 90%;
+    width: 100%;
+    image-rendering: pixelated;
+    background: black;
+}
 .guess-button{
     position: relative;
     display: inline-block;
@@ -263,6 +277,7 @@ body {
     position: relative;
     display: inline-block;
     text-align: center;
+    margin-bottom: auto;
     vertical-align: middle;
     border-radius: 12px;
     border: 4px solid black;
@@ -279,16 +294,28 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    top: 90%;
-    height: 10%;
+    top: 5.5%;
+    height: 94.5%;
     width: 100%;
     text-align: center;
     color: white;
     background-color: #141323;
 }
+#score-container{
+    display: flex;
+    position:absolute;
+    bottom: 0px;
+    height: 10%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 .score-info{
     display: inline-block;
     text-align: center;
+    position:absolute;
+    bottom: 5%;
     vertical-align: middle;
     font-size: 20px;
     color: white;

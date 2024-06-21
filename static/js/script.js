@@ -2,17 +2,20 @@ var LOCATIONS;
 var image;
 var round = 0;
 var score = 0;
-var polyline;
 var totalScore = 0;
 var scoreScreen = false;
-var marker;
+var marker = new Array(5);
+var polyline = new Array(5);
 var map;
+var scoreMap;
 
 // Document ready function
 document.addEventListener('DOMContentLoaded', function () {
-    initializeMap();
     fetchLocations();
-    setupGuessButton();
+    setTimeout(function () {
+        showNextLocation();
+        setupGuessButton();
+    }, 300);
 });
 
 // Fetch location data from the server
@@ -22,25 +25,9 @@ function fetchLocations() {
     .then(data => {
         LOCATIONS = data;
         console.log(LOCATIONS);
-        showNextLocation();
     });
 }
 
-// Initialize the Leaflet map
-function initializeMap() {
-    map = L.map('map', {
-        crs: L.CRS.Simple,
-        minZoom: -3,
-        maxZoom: 5,
-        renderer: L.canvas({ padding: 10 })
-    }).setView([0, 0], 0);
-
-    var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
-    L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
-    map.setView([3000, -500], -2);
-
-    map.on('click', onMapClick);
-}
 
 // Handle map click event to set a marker
 function onMapClick(e) {
@@ -62,9 +49,8 @@ function setupGuessButton() {
             document.getElementById('guess-button').style.backgroundColor = "red";
             return;
         }
-
-        calculateAndDisplayScore();
         showScoreScreen();
+        calculateAndDisplayScore();
     };
 }
 
@@ -84,11 +70,11 @@ function calculateAndDisplayScore() {
         popupAnchor: [1, -34],
         shadowSize: [41, 41]
     });
-    L.marker([-zActual, xActual], { icon: greenIcon }).addTo(map);
+    L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
 
     console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
     //draws line between guess and actual location
-    polyline = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], { color: 'red' }).addTo(map);
+    polyline = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], { color: 'red' }).addTo(scoreMap);
     console.log(polyline.getBounds());
 
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
@@ -102,48 +88,59 @@ function calculateAndDisplayScore() {
 
     // Wait for the map container to resize properly before fitting bounds
     //BUG WHERE MAP DOESNT RESIZE PROPERLY TO FIT POLYLINE IDK HOW TO FIX ITS BEEN 7 HOURS PLS HELP(copilot generated this comment lol)
-    map.invalidateSize({ pan: false, debounceMoveend: true });
+    scoreMap.invalidateSize({ pan: false, debounceMoveend: true });
     setTimeout(function () {
-        map.fitBounds(polyline.getBounds());
+        scoreMap.fitBounds(polyline.getBounds());
     }, 300); // Adjust the delay as needed
 }
 
 // Display the score screen
 function showScoreScreen() {
-    scoreScreen = true;
+    document.getElementById('guess-screen').innerHTML = "";
     document.getElementById('score-screen').innerHTML =
-        "<p id='distance' class='score-info'></p>" +
+        "<div class = 'score-map' id='scoreMap'></div>" + 
+        "<div id = 'score-container'><p id='distance' class='score-info'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button>" +
-        "<p id='score' class='score-info'>SCOREEEEEEEEEEEEEEEE</p>";
+        "<p id='score' class='score-info'>SCOREEEEEEEEEEEEEEEE</p></div>";
+
+    scoreMap = L.map('scoreMap', {
+        crs: L.CRS.Simple,
+        minZoom: -3,
+        maxZoom: 5,
+        renderer: L.canvas({ padding: 10 })
+    }).setView([0, 0], 0);
+    var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
+    L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
+    scoreMap.setView([3000, -500], 1);
+    scoreMap.on('click', onMapClick);
 
     document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
     document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
-
-    document.getElementById('map-container').style.transition = 'none';
-    document.getElementById('map-container').style.top = "5.5%";
-    document.getElementById('map-container').style.height = "84.5%";
-    document.getElementById('map-container').style.width = "100%";
-    
-    document.getElementById('score-screen').style.display = "flex";
-    document.getElementById('guess-button').style.display = "none";
-    document.getElementById('vrview').style.display = "none";
 
     document.getElementById('next-button').onclick = showNextLocation;
 }
 
 // Load the next location
 function showNextLocation() {
-    if(scoreScreen) {
-        document.getElementById('map-container').style.transition = "width .5s, height .5s, transform .5s";
-        document.getElementById('map-container').style.bottom = "0";
-        document.getElementById('map-container').style.top = "auto"; // Set to auto instead of "none"
-        document.getElementById('map-container').style.height = "351px";
-        document.getElementById('map-container').style.width = "300px";
-        document.getElementById('score-screen').style.display = "none";
-        document.getElementById('guess-button').style.display = "inline-block";
-        document.getElementById('vrview').style.display = "inline-block";
-    }
-    scoreScreen = false;
+    document.getElementById('score-screen').innerHTML = "";
+    document.getElementById('guess-screen').innerHTML = 
+    "<div id='vrview' class = vr-image></div>" +
+    "<div class = 'map-container' id = 'map-container'>" +
+        "<div class = 'map' id='map'></div>" +
+        "<button id='guess-button' class = 'guess-button' type = 'submit'>Guess!</button></div>";
+        //initialize map
+    map = L.map('map', {
+        crs: L.CRS.Simple,
+        minZoom: -3,
+        maxZoom: 5,
+        renderer: L.canvas({ padding: 10 })
+    }).setView([0, 0], 0);
+
+    var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
+    L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
+    map.setView([3000, -500], -2);
+
+    map.on('click', onMapClick);
 
     if (LOCATIONS.length === 0) {
         document.getElementById('guess-button').innerHTML = "No more locations!";
@@ -156,6 +153,7 @@ function showNextLocation() {
     LOCATIONS.splice(rand, 1);
     //loads next vrview image
     console.log(image);
+    
     var vrView = new VRView.Player('#vrview', {
         image: image['url'],
         is_stereo: false
@@ -166,7 +164,9 @@ function showNextLocation() {
             layer.remove();
         }
     });
-    map.removeLayer(polyline);
+    if(polyline){
+        map.removeLayer(polyline);
+    }
     marker = null;
     
     round++;
