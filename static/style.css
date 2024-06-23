@@ -299,7 +299,7 @@ body {
     width: 100%;
     text-align: center;
     color: white;
-    background-color: #141323;
+    pointer-events:none; 
 }
 #score-container{
     display: flex;
@@ -310,6 +310,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
+    background-color: #141323;
 }
 .score-info{
     display: inline-block;

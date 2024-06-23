@@ -96,24 +96,26 @@ function calculateAndDisplayScore() {
 
 // Display the score screen
 function showScoreScreen() {
+    showContent('score-screen');
     document.getElementById('guess-screen').innerHTML = "";
+    document.getElementById('score-screen').style.display = "block";
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
         "<div id = 'score-container'><p id='distance' class='score-info'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button>" +
         "<p id='score' class='score-info'>SCOREEEEEEEEEEEEEEEE</p></div>";
-
-    scoreMap = L.map('scoreMap', {
-        crs: L.CRS.Simple,
-        minZoom: -3,
-        maxZoom: 5,
-        renderer: L.canvas({ padding: 10 })
-    }).setView([0, 0], 0);
-    var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
-    L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
-    scoreMap.setView([3000, -500], 1);
-    scoreMap.on('click', onMapClick);
-
+    setTimeout(function () {
+        scoreMap = L.map('scoreMap', {
+            crs: L.CRS.Simple,
+            minZoom: -3,
+            maxZoom: 5,
+            renderer: L.canvas({ padding: 10 })
+        }).setView([0, 0], 0);
+        var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
+        L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
+        scoreMap.setView([3000, -500], -1);
+        scoreMap.on('click', onMapClick);
+    }, 300);
     document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
     document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
 
@@ -122,6 +124,7 @@ function showScoreScreen() {
 
 // Load the next location
 function showNextLocation() {
+    showContent('guess-screen');
     document.getElementById('score-screen').innerHTML = "";
     document.getElementById('guess-screen').innerHTML = 
     "<div id='vrview' class = vr-image></div>" +
@@ -171,6 +174,11 @@ function showNextLocation() {
     
     round++;
     document.getElementById('round-number').innerHTML = "Round: " + round + "/5 ";
+}
+function showContent(contentId){
+    document.getElementById('guess-screen').style.display = "none";
+    document.getElementById('score-screen').style.display = "none";
+    document.getElementById(contentId).style.display = "block";
 }
 
 function finalScore() {
