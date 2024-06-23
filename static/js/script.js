@@ -50,7 +50,6 @@ function setupGuessButton() {
             return;
         }
         showScoreScreen();
-        calculateAndDisplayScore();
     };
 }
 
@@ -60,7 +59,7 @@ function calculateAndDisplayScore() {
     var zGuess = -marker.getLatLng().lat;
     var xActual = image['X'];
     var zActual = image['Z'];
-
+    console.log('attempt');
     // Green marker for actual location
     var greenIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -98,12 +97,11 @@ function calculateAndDisplayScore() {
 function showScoreScreen() {
     showContent('score-screen');
     document.getElementById('guess-screen').innerHTML = "";
-    document.getElementById('score-screen').style.display = "block";
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
-        "<div id = 'score-container'><p id='distance' class='score-info'></p>" +
+        "<div id = 'score-container'><p id='distance' class='score-info-right'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button>" +
-        "<p id='score' class='score-info'>SCOREEEEEEEEEEEEEEEE</p></div>";
+        "<p id='score' class='score-info-left'>SCORE</p></div>";
     setTimeout(function () {
         scoreMap = L.map('scoreMap', {
             crs: L.CRS.Simple,
@@ -115,11 +113,13 @@ function showScoreScreen() {
         L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
         scoreMap.setView([3000, -500], -1);
         scoreMap.on('click', onMapClick);
-    }, 300);
-    document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
-    document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
 
-    document.getElementById('next-button').onclick = showNextLocation;
+        document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
+        document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
+
+        document.getElementById('next-button').onclick = showNextLocation;
+    }, 300);
+    
 }
 
 // Load the next location
