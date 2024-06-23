@@ -4,7 +4,7 @@ var round = 0;
 var score = 0;
 var totalScore = 0;
 var scoreScreen = false;
-var marker = new Array(5);
+var marker = [1,2,3,4,5];
 var polyline = new Array(5);
 var map;
 var scoreMap;
@@ -31,10 +31,9 @@ function fetchLocations() {
 
 // Handle map click event to set a marker
 function onMapClick(e) {
-    if (scoreScreen) {
-        return;
-    }
-    if (marker) {
+    console.log(marker);
+    console.log("Round: " + round);
+    if (marker != null) {
         map.removeLayer(marker);
     }
     console.log("You clicked at: " + e.latlng);
@@ -44,12 +43,13 @@ function onMapClick(e) {
 // Set up the guess button functionality
 function setupGuessButton() {
     document.getElementById('guess-button').onclick = function () {
-        if (!marker) {
+        if (!marker[round-1]) {
             document.getElementById('guess-button').innerHTML = "Select a location first!";
             document.getElementById('guess-button').style.backgroundColor = "red";
             return;
         }
         showScoreScreen();
+        calculateAndDisplayScore();
     };
 }
 
@@ -59,7 +59,6 @@ function calculateAndDisplayScore() {
     var zGuess = -marker.getLatLng().lat;
     var xActual = image['X'];
     var zActual = image['Z'];
-    console.log('attempt');
     // Green marker for actual location
     var greenIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -87,7 +86,6 @@ function calculateAndDisplayScore() {
 
     // Wait for the map container to resize properly before fitting bounds
     //BUG WHERE MAP DOESNT RESIZE PROPERLY TO FIT POLYLINE IDK HOW TO FIX ITS BEEN 7 HOURS PLS HELP(copilot generated this comment lol)
-    scoreMap.invalidateSize({ pan: false, debounceMoveend: true });
     setTimeout(function () {
         scoreMap.fitBounds(polyline.getBounds());
     }, 300); // Adjust the delay as needed
@@ -118,6 +116,15 @@ function showScoreScreen() {
         document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
 
         document.getElementById('next-button').onclick = showNextLocation;
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        L.marker([200, 200], { icon: greenIcon }).addTo(scoreMap);
     }, 300);
     
 }
