@@ -32,6 +32,8 @@ function fetchLocations() {
 function onMapClick(e) {
     if (markers[round - 1] != undefined) {
         map.removeLayer(markers[round - 1]);
+        console.log(markers[round - 1]);
+        console.log(markers[round - 1].getLatLng);
     }
     console.log("You clicked at: " + e.latlng);
     markers[round - 1] = L.marker(e.latlng).addTo(map);
@@ -46,7 +48,6 @@ function setupGuessButton() {
             return;
         }
         showScoreScreen();
-        calculateAndDisplayScore();
     };
 }
 
@@ -81,7 +82,16 @@ function showScoreScreen() {
         var xActual = image['X'];
         var zActual = image['Z'];
 
+        console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
+        var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
+        console.log("Distance: " + distance.toFixed(2) + " blocks away!");
 
+        score = 5000 - distance;
+        if (distance > 5000) {
+            score = 0;
+        }
+        totalScore += score;
+        
         var greenIcon = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -91,29 +101,12 @@ function showScoreScreen() {
             shadowSize: [41, 41]
         });
         L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
-
-        console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
-        var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
-        console.log("Distance: " + distance.toFixed(2) + " blocks away!");
-
+        
+        L.marker([markers[round - 1].getLatLng().lat, markers[round - 1].getLatLng().lng]).addTo(scoreMap);
         
         //draws line between guess and actual location
         polylines[round - 1] = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], { color: 'red' }).addTo(scoreMap);
-        /*console.log(polylines[round - 1].getBounds());
-
-        
-        console.log("green icon added");
-        score = 5000 - distance;
-        if (distance > 5000) {
-            score = 0;
-        }
-        totalScore += score;
-
-        // Wait for the map container to resize properly before fitting bounds
-        //BUG WHERE MAP DOESNT RESIZE PROPERLY TO FIT POLYLINE IDK HOW TO FIX ITS BEEN 7 HOURS PLS HELP(copilot generated this comment lol)
-        setTimeout(function () {
-            scoreMap.fitBounds(polylines[round - 1].getBounds());
-        }, 300); // Adjust the delay as needed*/
+        scoreMap.fitBounds(polylines[round - 1].getBounds());
     }, 300);
     
 }
