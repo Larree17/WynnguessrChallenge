@@ -10,16 +10,14 @@ var scoreMap;
 
 // Document ready function
 document.addEventListener('DOMContentLoaded', function () {
-    fetchLocations();
-    setTimeout(function () {
+    fetchLocations().then(() => {
         showNextLocation();
-        setupGuessButton();
-    }, 300);
+    });
 });
 
 // Fetch location data from the server
 function fetchLocations() {
-    fetch('/api/locations')
+    return fetch('/api/locations')
     .then(response => response.json())
     .then(data => {
         LOCATIONS = data;
@@ -32,95 +30,79 @@ function fetchLocations() {
 function onMapClick(e) {
     if (markers[round - 1] != undefined) {
         map.removeLayer(markers[round - 1]);
-        console.log(markers[round - 1]);
-        console.log(markers[round - 1].getLatLng);
     }
     console.log("You clicked at: " + e.latlng);
     markers[round - 1] = L.marker(e.latlng).addTo(map);
 }
 
-// Set up the guess button functionality
-function setupGuessButton() {
-    document.getElementById('guess-button').onclick = function () {
-        if (markers[round - 1] == undefined) {
-            document.getElementById('guess-button').innerHTML = "Select a location first!";
-            document.getElementById('guess-button').style.backgroundColor = "red";
-            return;
-        }
-        showScoreScreen();
-    };
-}
 
 // Display the score screen
 function showScoreScreen() {
     showContent('score-screen');
-    document.getElementById('guess-screen').innerHTML = "";
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
         "<div id = 'score-container'><p id='distance' class='score-info-right'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button>" +
         "<p id='score' class='score-info-left'>SCORE</p></div>";
-    setTimeout(function () {
-        scoreMap = L.map('scoreMap', {
-            crs: L.CRS.Simple,
-            minZoom: -3,
-            maxZoom: 5,
-            //renderer: L.canvas({ padding: 10 })
-        }).setView([0, 0], 0);
-        var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
-        L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
-        scoreMap.setView([3000, -500], -1);
-        scoreMap.on('click', onMapClick);
+    document.getElementById('guess-screen').innerHTML = "";
 
-        document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
-        document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
+    scoreMap = L.map('scoreMap', {
+        crs: L.CRS.Simple,
+        minZoom: -3,
+        maxZoom: 5,
+        //renderer: L.canvas({ padding: 10 })
+    }).setView([0, 0], 0);
+    var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
+    L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
+    scoreMap.setView([3000, -500], -1);
+    scoreMap.on('click', onMapClick);
 
-        document.getElementById('next-button').onclick = showNextLocation;
+    document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
+    document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
 
-        var xGuess = markers[round - 1].getLatLng().lng;
-        var zGuess = -markers[round - 1].getLatLng().lat;
-        var xActual = image['X'];
-        var zActual = image['Z'];
+    document.getElementById('next-button').onclick = showNextLocation;
 
-        console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
-        var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
-        console.log("Distance: " + distance.toFixed(2) + " blocks away!");
+    var xGuess = markers[round - 1].getLatLng().lng;
+    var zGuess = -markers[round - 1].getLatLng().lat;
+    var xActual = image['X'];
+    var zActual = image['Z'];
 
-        score = 5000 - distance;
-        if (distance > 5000) {
-            score = 0;
-        }
-        totalScore += score;
-        
-        var greenIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-        });
-        L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
-        
-        L.marker([markers[round - 1].getLatLng().lat, markers[round - 1].getLatLng().lng]).addTo(scoreMap);
-        
-        //draws line between guess and actual location
-        polylines[round - 1] = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], { color: 'red' }).addTo(scoreMap);
-        scoreMap.fitBounds(polylines[round - 1].getBounds());
-    }, 300);
+    console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
+    var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
+    console.log("Distance: " + distance.toFixed(2) + " blocks away!");
+
+    score = 5000 - distance;
+    if (distance > 5000) {
+        score = 0;
+    }
+    totalScore += score;
     
+    var greenIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+    L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
+    
+    L.marker([-zGuess, xGuess]).addTo(scoreMap);
+    
+    //draws line between guess and actual location
+    polylines[round - 1] = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], { color: 'red' }).addTo(scoreMap);
+    scoreMap.fitBounds(polylines[round - 1].getBounds());
 }
 
 // Load the next location
 function showNextLocation() {
     showContent('guess-screen');
-    document.getElementById('score-screen').innerHTML = "";
     document.getElementById('guess-screen').innerHTML = 
     "<div id='vrview' class = vr-image></div>" +
     "<div class = 'map-container' id = 'map-container'>" +
         "<div class = 'map' id='map'></div>" +
         "<button id='guess-button' class = 'guess-button' type = 'submit'>Guess!</button></div>";
-        //initialize map
+    
     map = L.map('map', {
         crs: L.CRS.Simple,
         minZoom: -3,
@@ -145,10 +127,20 @@ function showNextLocation() {
     LOCATIONS.splice(rand, 1);
     //loads next vrview image
     console.log(image);
+    //sets up guess button functionality
+    document.getElementById('guess-button').onclick = function () {
+        if (markers[round - 1] == undefined) {
+            document.getElementById('guess-button').innerHTML = "Select a location first!";
+            document.getElementById('guess-button').style.backgroundColor = "red";
+            return;
+        }
+        showScoreScreen();
+    };
     
     var vrView = new VRView.Player('#vrview', {
         image: image['url'],
-        is_stereo: false
+        is_stereo: false,
+        is_autopan_off: true
     });
     //removes all markers from the map
     map.eachLayer((layer) => {

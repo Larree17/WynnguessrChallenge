@@ -300,7 +300,6 @@ body {
     width: 100%;
     text-align: center;
     color: white;
-    cursor: pointer;
 }
 #score-container{
     display: flex;
