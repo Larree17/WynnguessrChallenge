@@ -1,8 +1,8 @@
 var LOCATIONS;
-var image;
 var round = 0;
 var score = 0;
 var totalScore = 0;
+var images = new Array(5);
 var markers = new Array(5);
 var polylines = new Array(5);
 var map;
@@ -57,25 +57,26 @@ function showScoreScreen() {
     scoreMap.setView([3000, -500], -1);
     scoreMap.on('click', onMapClick);
 
-    document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
-    document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
-
-    document.getElementById('next-button').onclick = showNextLocation;
-
     var xGuess = markers[round - 1].getLatLng().lng;
     var zGuess = -markers[round - 1].getLatLng().lat;
-    var xActual = image['X'];
-    var zActual = image['Z'];
+    console.log( images[round - 1]);
+    var xActual = images[round - 1]['X'];
+    var zActual = images[round - 1]['Z'];
 
-    console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
-    var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
-    console.log("Distance: " + distance.toFixed(2) + " blocks away!");
-
+    //console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
+    var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
+    console.log("Distance: " + distance + " blocks away!");
     score = 5000 - distance;
     if (distance > 5000) {
         score = 0;
     }
     totalScore += score;
+
+    document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
+    document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
+
+    document.getElementById('next-button').onclick = showNextLocation;
+
     
     var greenIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -97,6 +98,7 @@ function showScoreScreen() {
 // Load the next location
 function showNextLocation() {
     showContent('guess-screen');
+    round++;
     document.getElementById('guess-screen').innerHTML = 
     "<div id='vrview' class = vr-image></div>" +
     "<div class = 'map-container' id = 'map-container'>" +
@@ -123,10 +125,10 @@ function showNextLocation() {
     }
     //selects a random location from the list of locations and removes it to prevent duplicates
     var rand = Math.floor(Math.random() * LOCATIONS.length);
-    image = LOCATIONS[rand];
+    images[round - 1] = LOCATIONS[rand];
     LOCATIONS.splice(rand, 1);
     //loads next vrview image
-    console.log(image);
+    console.log(images[round - 1]);
     //sets up guess button functionality
     document.getElementById('guess-button').onclick = function () {
         if (markers[round - 1] == undefined) {
@@ -138,7 +140,7 @@ function showNextLocation() {
     };
     
     var vrView = new VRView.Player('#vrview', {
-        image: image['url'],
+        image: images[round - 1]['url'],
         is_stereo: false,
         is_autopan_off: true
     });
@@ -153,7 +155,6 @@ function showNextLocation() {
     }
     marker = null;
     
-    round++;
     document.getElementById('round-number').innerHTML = "Round: " + round + "/5 ";
 }
 function showContent(contentId){
