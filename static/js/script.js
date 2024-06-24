@@ -3,9 +3,8 @@ var image;
 var round = 0;
 var score = 0;
 var totalScore = 0;
-var scoreScreen = false;
-var marker = [1,2,3,4,5];
-var polyline = new Array(5);
+var markers = new Array(5);
+var polylines = new Array(5);
 var map;
 var scoreMap;
 
@@ -31,19 +30,17 @@ function fetchLocations() {
 
 // Handle map click event to set a marker
 function onMapClick(e) {
-    console.log(marker);
-    console.log("Round: " + round);
-    if (marker != null) {
-        map.removeLayer(marker);
+    if (markers[round - 1] != undefined) {
+        map.removeLayer(markers[round - 1]);
     }
     console.log("You clicked at: " + e.latlng);
-    marker = L.marker(e.latlng).addTo(map);
+    markers[round - 1] = L.marker(e.latlng).addTo(map);
 }
 
 // Set up the guess button functionality
 function setupGuessButton() {
     document.getElementById('guess-button').onclick = function () {
-        if (!marker[round-1]) {
+        if (markers[round - 1] == undefined) {
             document.getElementById('guess-button').innerHTML = "Select a location first!";
             document.getElementById('guess-button').style.backgroundColor = "red";
             return;
@@ -51,44 +48,6 @@ function setupGuessButton() {
         showScoreScreen();
         calculateAndDisplayScore();
     };
-}
-
-// Calculate the score and draw the polyline
-function calculateAndDisplayScore() {
-    var xGuess = marker.getLatLng().lng;
-    var zGuess = -marker.getLatLng().lat;
-    var xActual = image['X'];
-    var zActual = image['Z'];
-    // Green marker for actual location
-    var greenIcon = new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
-    L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
-
-    console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
-    //draws line between guess and actual location
-    polyline = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], { color: 'red' }).addTo(scoreMap);
-    console.log(polyline.getBounds());
-
-    var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
-    console.log("Distance: " + distance.toFixed(2) + " blocks away!");
-
-    score = 5000 - distance;
-    if (distance > 5000) {
-        score = 0;
-    }
-    totalScore += score;
-
-    // Wait for the map container to resize properly before fitting bounds
-    //BUG WHERE MAP DOESNT RESIZE PROPERLY TO FIT POLYLINE IDK HOW TO FIX ITS BEEN 7 HOURS PLS HELP(copilot generated this comment lol)
-    setTimeout(function () {
-        scoreMap.fitBounds(polyline.getBounds());
-    }, 300); // Adjust the delay as needed
 }
 
 // Display the score screen
@@ -105,7 +64,7 @@ function showScoreScreen() {
             crs: L.CRS.Simple,
             minZoom: -3,
             maxZoom: 5,
-            renderer: L.canvas({ padding: 10 })
+            //renderer: L.canvas({ padding: 10 })
         }).setView([0, 0], 0);
         var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
         L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
@@ -116,6 +75,13 @@ function showScoreScreen() {
         document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
 
         document.getElementById('next-button').onclick = showNextLocation;
+
+        var xGuess = markers[round - 1].getLatLng().lng;
+        var zGuess = -markers[round - 1].getLatLng().lat;
+        var xActual = image['X'];
+        var zActual = image['Z'];
+
+
         var greenIcon = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -124,7 +90,30 @@ function showScoreScreen() {
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
-        L.marker([200, 200], { icon: greenIcon }).addTo(scoreMap);
+        L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
+
+        console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
+        var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2));
+        console.log("Distance: " + distance.toFixed(2) + " blocks away!");
+
+        
+        //draws line between guess and actual location
+        polylines[round - 1] = L.polyline([[-zActual, xActual], [-zGuess, xGuess]], { color: 'red' }).addTo(scoreMap);
+        /*console.log(polylines[round - 1].getBounds());
+
+        
+        console.log("green icon added");
+        score = 5000 - distance;
+        if (distance > 5000) {
+            score = 0;
+        }
+        totalScore += score;
+
+        // Wait for the map container to resize properly before fitting bounds
+        //BUG WHERE MAP DOESNT RESIZE PROPERLY TO FIT POLYLINE IDK HOW TO FIX ITS BEEN 7 HOURS PLS HELP(copilot generated this comment lol)
+        setTimeout(function () {
+            scoreMap.fitBounds(polylines[round - 1].getBounds());
+        }, 300); // Adjust the delay as needed*/
     }, 300);
     
 }
@@ -174,7 +163,7 @@ function showNextLocation() {
             layer.remove();
         }
     });
-    if(polyline){
+    if(polylines[round - 1]){
         map.removeLayer(polyline);
     }
     marker = null;
