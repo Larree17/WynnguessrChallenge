@@ -72,8 +72,8 @@ function showScoreScreen() {
     }
     totalScore += score;
 
-    document.getElementById('distance').innerHTML = "Distance: " + (5000 - score).toFixed(2) + " blocks away!";
-    document.getElementById('score').innerHTML = "Score: " + (totalScore + score) + "/" + round * 5000;
+    document.getElementById('distance').innerHTML = "Distance: " + distance + " blocks away!";
+    document.getElementById('totalScore').innerHTML = "Score: " + totalScore + "/" + round * 5000;
 
     document.getElementById('next-button').onclick = showNextLocation;
 
