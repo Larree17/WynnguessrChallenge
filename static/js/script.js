@@ -35,45 +35,49 @@ function onMapClick(e) {
     markers[round - 1] = L.marker(e.latlng).addTo(map);
 }
 
-
 // Display the score screen
 function showScoreScreen() {
     showContent('score-screen');
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
-        "<div id = 'score-container'><p id='distance' class='score-info-right'></p>" +
-        "<button id='next-button' class='next-button'>Next Location</button>" +
-        "<p id='score' class='score-info-left'>SCORE</p></div>";
+        "<div id = 'score-container'>" +
+        "<p id='score' class='score-info'></p>" + 
+        "<div class = 'skill-bar'><div class = 'progress' id = 'progress'></div></div>" + 
+        "<p id='distance' class='score-info'></p>" +
+        "<button id='next-button' class='next-button'>Next Location</button></div>";
     document.getElementById('guess-screen').innerHTML = "";
 
     scoreMap = L.map('scoreMap', {
         crs: L.CRS.Simple,
         minZoom: -3,
         maxZoom: 5,
+        attribution: '<a href="https://wynntils.com/">Wynntils</a> Map'
         //renderer: L.canvas({ padding: 10 })
     }).setView([0, 0], 0);
-    var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
+    var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
     L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
     scoreMap.setView([3000, -500], -1);
     scoreMap.on('click', onMapClick);
 
     var xGuess = markers[round - 1].getLatLng().lng;
     var zGuess = -markers[round - 1].getLatLng().lat;
-    console.log( images[round - 1]);
+    console.log(images[round - 1]);
     var xActual = images[round - 1]['X'];
     var zActual = images[round - 1]['Z'];
 
     //console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
     console.log("Distance: " + distance + " blocks away!");
-    score = 5000 - distance;
+    score = Math.round(5000 - distance + .5);
     if (distance > 5000) {
         score = 0;
     }
     totalScore += score;
 
     document.getElementById('distance').innerHTML = "Distance: " + distance + " blocks away!";
+    document.getElementById('progress').style.width = (distance / 5000) * 100 + "%";
     document.getElementById('totalScore').innerHTML = "Score: " + totalScore + "/" + round * 5000;
+    document.getElementById('score').innerHTML = "Score: " + score + " points!";
 
     document.getElementById('next-button').onclick = showNextLocation;
 
@@ -97,8 +101,11 @@ function showScoreScreen() {
 
 // Load the next location
 function showNextLocation() {
+    if(round == 5){
+        showScoreScreen();
+    }
     showContent('guess-screen');
-    round++;
+
     document.getElementById('guess-screen').innerHTML = 
     "<div id='vrview' class = vr-image></div>" +
     "<div class = 'map-container' id = 'map-container'>" +
@@ -109,10 +116,11 @@ function showNextLocation() {
         crs: L.CRS.Simple,
         minZoom: -3,
         maxZoom: 5,
-        renderer: L.canvas({ padding: 10 })
+        renderer: L.canvas({ padding: 10 }), 
+        attribution: '<a href="https://wynntils.com/">Wynntils</a> Map'
     }).setView([0, 0], 0);
 
-    var bounds = [[123, -2392], [6608, 1699]]; // Map bounds
+    var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
     L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
     map.setView([3000, -500], -2);
 
@@ -165,4 +173,5 @@ function showContent(contentId){
 
 function finalScore() {
     // TODO: Implement final score calculation
+
 }
