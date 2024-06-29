@@ -75,7 +75,7 @@ function showScoreScreen() {
     totalScore += score;
 
     document.getElementById('distance').innerHTML = "Distance: " + distance + " blocks away!";
-    document.getElementById('progress').style.width = (distance / 5000) * 100 + "%";
+    //document.getElementById('progress').style.width = (distance / 5000) * 100 + "%";
     document.getElementById('totalScore').innerHTML = "Score: " + totalScore + "/" + round * 5000;
     document.getElementById('score').innerHTML = "Score: " + score + " points!";
 
@@ -105,6 +105,7 @@ function showNextLocation() {
         showScoreScreen();
     }
     showContent('guess-screen');
+    round++;
 
     document.getElementById('guess-screen').innerHTML = 
     "<div id='vrview' class = vr-image></div>" +
@@ -158,6 +159,7 @@ function showNextLocation() {
             layer.remove();
         }
     });
+
     if(polylines[round - 1]){
         map.removeLayer(polyline);
     }
