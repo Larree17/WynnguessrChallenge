@@ -324,14 +324,14 @@ body {
     display: inline-block;
     vertical-align: middle;
     width: 300px;
-    height: 10px;
+    height: 100px;
     border-radius: 10px;
     background-color: #77736f;
 }
 .progress{
     
-    text-align: right; /* Right-align text */
-    color: white; /* White text color */
+    text-align: right;
+    color: white;
 
 }
 

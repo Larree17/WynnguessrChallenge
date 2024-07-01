@@ -42,7 +42,8 @@ function showScoreScreen() {
         "<div class = 'score-map' id='scoreMap'></div>" + 
         "<div id = 'score-container'>" +
         "<p id='score' class='score-info'></p>" + 
-        "<div class = 'skill-bar'><div class = 'progress' id = 'progress'></div></div>" + 
+        "<div class = 'skill-bar'>" +
+        "<div class = 'progress' id = 'progress'></div></div>" + 
         "<p id='distance' class='score-info'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button></div>";
     document.getElementById('guess-screen').innerHTML = "";
