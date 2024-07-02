@@ -13,7 +13,7 @@ db = conn.cursor()
 
 @app.route("/api/locations")
 def get_locations():
-    locations = db.execute("SELECT * FROM locations").fetchall()
+    locations = db.execute("SELECT * FROM WynnProvince").fetchall()
     locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
     return jsonify(locations_list)
 
