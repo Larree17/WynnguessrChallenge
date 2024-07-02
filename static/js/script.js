@@ -78,10 +78,15 @@ function showScoreScreen() {
     document.getElementById('distance').innerHTML = "Distance: " + distance + " blocks away!";
     document.getElementById('progress').style.width = (score / 5000) * 100 + "%";
     document.getElementById('totalScore').innerHTML = "Score: " + totalScore + "/" + round * 5000;
-    document.getElementById('score').innerHTML = score + " points";
+    document.getElementById('score').innerHTML = score + " points!";
 
-    document.getElementById('next-button').onclick = showNextLocation;
-
+    document.getElementById('next-button').onclick = function(){
+        if(round == 5){
+            finalScore();
+            return;
+        }
+        showNextLocation();
+    };
     
     var greenIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -102,9 +107,6 @@ function showScoreScreen() {
 
 // Load the next location
 function showNextLocation() {
-    if(round == 5){
-        showScoreScreen();
-    }
     showContent('guess-screen');
     round++;
 
@@ -175,6 +177,48 @@ function showContent(contentId){
 }
 
 function finalScore() {
-    // TODO: Implement final score calculation
+    showContent('score-screen');
+    document.getElementById('score-screen').innerHTML =
+        "<div class = 'score-map' id='scoreMap'></div>" + 
+        "<div id = 'score-container'>" +
+        "<p id='score' class='score-info'></p>" + 
+        "<div class = 'progress-bar'>" +
+        "<div class = 'progress' id = 'progress'></div></div>" + 
+        "<p id='distance' class='score-info'></p>" +
+        "<button id='next-button' class='next-button'>Play Again!</button></div>";
+    document.getElementById('guess-screen').innerHTML = "";
 
+    scoreMap = L.map('scoreMap', {
+        crs: L.CRS.Simple,
+        minZoom: -3,
+        maxZoom: 5,
+        attribution: '<a href="https://wynntils.com/">Wynntils</a> Map'
+        //renderer: L.canvas({ padding: 10 })
+    }).setView([0, 0], 0);
+    var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
+    L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
+    scoreMap.setView([3000, -500], -1);
+    scoreMap.on('click', onMapClick);
+    console.log(images[1]);
+    console.log(images[1]['Z']);
+    console.log("POLYLINE: " + polylines[round - 1].getBounds());
+
+    for(let i = 0; i < images.length; i++){
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        L.marker([-images[i]['Z'], images[i]['X']], { icon: greenIcon }).addTo(scoreMap);
+        
+        L.marker(markers[i].getLatLng()).addTo(scoreMap);
+        //draws line between guess and actual location
+        polylines[i].addTo(scoreMap);
+    }
+
+    document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/25000";
+    document.getElementById('progress').style.width = (totalScore / 25000) * 100 + "%";
 }
