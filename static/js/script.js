@@ -42,7 +42,7 @@ function showScoreScreen() {
         "<div class = 'score-map' id='scoreMap'></div>" + 
         "<div id = 'score-container'>" +
         "<p id='score' class='score-info'></p>" + 
-        "<div class = 'skill-bar'>" +
+        "<div class = 'progress-bar'>" +
         "<div class = 'progress' id = 'progress'></div></div>" + 
         "<p id='distance' class='score-info'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button></div>";
@@ -76,9 +76,9 @@ function showScoreScreen() {
     totalScore += score;
 
     document.getElementById('distance').innerHTML = "Distance: " + distance + " blocks away!";
-    //document.getElementById('progress').style.width = (distance / 5000) * 100 + "%";
+    document.getElementById('progress').style.width = (score / 5000) * 100 + "%";
     document.getElementById('totalScore').innerHTML = "Score: " + totalScore + "/" + round * 5000;
-    document.getElementById('score').innerHTML = "Score: " + score + " points!";
+    document.getElementById('score').innerHTML = score + " points";
 
     document.getElementById('next-button').onclick = showNextLocation;
 
