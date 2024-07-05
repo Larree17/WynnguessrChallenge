@@ -181,10 +181,10 @@ function finalScore() {
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
         "<div id = 'score-container'>" +
-        "<p id='score' class='score-info'></p>" + 
+        "<p id='Finish Message' class='score-info'>Game Finished!</p>" + 
         "<div class = 'progress-bar'>" +
         "<div class = 'progress' id = 'progress'></div></div>" + 
-        "<p id='distance' class='score-info'></p>" +
+        "<p id='score' class='score-info'></p>" + 
         "<button id='next-button' class='next-button'>Play Again!</button></div>";
     document.getElementById('guess-screen').innerHTML = "";
 
@@ -199,10 +199,8 @@ function finalScore() {
     L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
     scoreMap.setView([3000, -500], -1);
     scoreMap.on('click', onMapClick);
-    console.log(images[1]);
-    console.log(images[1]['Z']);
-    console.log("POLYLINE: " + polylines[round - 1].getBounds());
-
+    
+    var featureGroup = [];
     for(let i = 0; i < images.length; i++){
         var greenIcon = new L.Icon({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -212,12 +210,15 @@ function finalScore() {
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
-        L.marker([-images[i]['Z'], images[i]['X']], { icon: greenIcon }).addTo(scoreMap);
-        
+        let answer = L.marker([-images[i]['Z'], images[i]['X']], { icon: greenIcon }).addTo(scoreMap);
+        featureGroup.push(answer);
         L.marker(markers[i].getLatLng()).addTo(scoreMap);
+        featureGroup.push(markers[i]);
         //draws line between guess and actual location
         polylines[i].addTo(scoreMap);
     }
+    var group = new L.featureGroup(featureGroup);
+    scoreMap.fitBounds(group.getBounds());
 
     document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/25000";
     document.getElementById('progress').style.width = (totalScore / 25000) * 100 + "%";

@@ -315,6 +315,7 @@ body {
     display: inline-block;
     bottom: 5%;
     vertical-align: middle;
+    margin: 15px;
     font-size: 20px;
     color: white;
     width: 300px;
