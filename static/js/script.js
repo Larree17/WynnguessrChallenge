@@ -44,6 +44,7 @@ function showScoreScreen() {
         "<p id='score' class='score-info'></p>" + 
         "<div class = 'progress-bar'>" +
         "<div class = 'progress' id = 'progress'></div></div>" + 
+        "<iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe>" + 
         "<p id='distance' class='score-info'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button></div>";
     document.getElementById('guess-screen').innerHTML = "";
@@ -52,7 +53,7 @@ function showScoreScreen() {
         crs: L.CRS.Simple,
         minZoom: -3,
         maxZoom: 5,
-        attribution: '<a href="https://wynntils.com/">Wynntils</a> Map'
+        attribution: '<a href="https://wynntils.com/">Wynntils Map</a>'
         //renderer: L.canvas({ padding: 10 })
     }).setView([0, 0], 0);
     var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
@@ -68,7 +69,6 @@ function showScoreScreen() {
 
     //console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
-    console.log("Distance: " + distance + " blocks away!");
     score = Math.round(5000 - distance + .5);
     if (distance > 5000) {
         score = 0;
@@ -82,6 +82,7 @@ function showScoreScreen() {
 
     document.getElementById('next-button').onclick = function(){
         if(round == 5){
+            post('/api/score', {score: totalScore});
             finalScore();
             return;
         }
@@ -121,7 +122,7 @@ function showNextLocation() {
         minZoom: -3,
         maxZoom: 5,
         renderer: L.canvas({ padding: 10 }), 
-        attribution: '<a href="https://wynntils.com/">Wynntils</a> Map'
+        attribution: '<a href="https://wynntils.com/">Wynntils Map</a>'
     }).setView([0, 0], 0);
 
     var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
@@ -192,7 +193,7 @@ function finalScore() {
         crs: L.CRS.Simple,
         minZoom: -3,
         maxZoom: 5,
-        attribution: '<a href="https://wynntils.com/">Wynntils</a> Map'
+        attribution: '<a href="https://wynntils.com/">Wynntils Map</a>'
         //renderer: L.canvas({ padding: 10 })
     }).setView([0, 0], 0);
     var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
@@ -223,3 +224,32 @@ function finalScore() {
     document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/25000";
     document.getElementById('progress').style.width = (totalScore / 25000) * 100 + "%";
 }
+
+/**
+ * sends a request to the specified url from a form. this will change the window location.
+ * @param {string} path the path to send the post request to
+ * @param {object} params the parameters to add to the url
+ * @param {string} [method=post] the method to use on the form
+ */
+
+function post(path, params, method='post') {
+    console.log('SENDING FORM')
+    const form = document.createElement('form');
+    form.method = method;
+    form.action = path;
+    form.target = 'dummyframe';
+  
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        const hiddenField = document.createElement('input');
+        hiddenField.type = 'hidden';
+        hiddenField.name = key;
+        hiddenField.value = params[key];
+
+        form.appendChild(hiddenField);
+      }
+    }
+  
+    document.body.appendChild(form);
+    form.submit();
+  }

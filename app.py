@@ -3,6 +3,7 @@ from flask_session import Session
 from flask_cors import CORS
 import os
 import sqlite3
+from datetime import date
 
 
 app = Flask(__name__)
@@ -16,6 +17,18 @@ def get_locations():
     locations = db.execute("SELECT * FROM WynnProvince").fetchall()
     locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
     return jsonify(locations_list)
+
+@app.route("/api/score")
+def post_score():
+    if request.method == 'POST':
+        print('POSTING SCORE LABLLASLDJKLASDKLKASLDKLKASLDLAKSD')
+        if session['loggedin'] == False:
+            return jsonify({"success": False})
+        score = request.form['score']
+        db.execute("INSERT INTO scores (user_id, score, date) VALUES (?, ?, ?)", (session['user_id'], score, date.today()))
+        conn.commit()
+        return jsonify({"success": True})
+    return jsonify({"success": False})
 
 @app.route("/")
 def index():
