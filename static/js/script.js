@@ -21,7 +21,6 @@ function fetchLocations() {
     .then(response => response.json())
     .then(data => {
         LOCATIONS = data;
-        console.log(LOCATIONS);
     });
 }
 
@@ -31,7 +30,6 @@ function onMapClick(e) {
     if (markers[round - 1] != undefined) {
         map.removeLayer(markers[round - 1]);
     }
-    console.log("You clicked at: " + e.latlng);
     markers[round - 1] = L.marker(e.latlng).addTo(map);
 }
 
@@ -63,11 +61,9 @@ function showScoreScreen() {
 
     var xGuess = markers[round - 1].getLatLng().lng;
     var zGuess = -markers[round - 1].getLatLng().lat;
-    console.log(images[round - 1]);
     var xActual = images[round - 1]['X'];
     var zActual = images[round - 1]['Z'];
 
-    //console.log("Actual coords: " + [-zActual, xActual] + ", Guess coords: " + [-zGuess, xGuess]);
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
     score = Math.round(5000 - distance + .5);
     if (distance > 5000) {
@@ -141,7 +137,6 @@ function showNextLocation() {
     images[round - 1] = LOCATIONS[rand];
     LOCATIONS.splice(rand, 1);
     //loads next vrview image
-    console.log(images[round - 1]);
     //sets up guess button functionality
     document.getElementById('guess-button').onclick = function () {
         if (markers[round - 1] == undefined) {
