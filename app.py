@@ -12,20 +12,19 @@ app.secret_key = os.urandom(24)
 conn = sqlite3.connect('database.db', check_same_thread=False)
 db = conn.cursor()
 
-@app.route("/api/locations")
+@app.route("/api/locations", methods = ['GET'])
 def get_locations():
     locations = db.execute("SELECT * FROM WynnProvince").fetchall()
     locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
     return jsonify(locations_list)
 
-@app.route("/api/score")
+@app.route("/api/score", methods=['POST'])
 def post_score():
+    print('POSTING SCORE LABLLASLDJKLASDKLKASLDKLKASLDLAKSD')
     if request.method == 'POST':
-        print('POSTING SCORE LABLLASLDJKLASDKLKASLDKLKASLDLAKSD')
-        if session['loggedin'] == False:
-            return jsonify({"success": False})
+        print(request.form.get('score'))
         score = request.form['score']
-        db.execute("INSERT INTO scores (user_id, score, date) VALUES (?, ?, ?)", (session['user_id'], score, date.today()))
+        db.execute("INSERT INTO scores (user_id, score, date) VALUES (?, ?, ?)", (1, score, date.today()))
         conn.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})
@@ -72,7 +71,7 @@ def login():
 
 @app.route("/register", methods=['POST', 'GET'])
 def register():
-    if request.method == 'POST':#user registration request
+    if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         confirmation = request.form['confirmation']

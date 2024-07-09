@@ -1,1 +1,2 @@
+.schema
 SELECT * FROM scores;

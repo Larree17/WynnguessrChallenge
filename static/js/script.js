@@ -9,7 +9,7 @@ var map;
 var scoreMap;
 
 // Document ready function
-document.addEventListener('DOMContentLoaded', function () {
+$(document).ready(function() {
     fetchLocations().then(() => {
         showNextLocation();
     });
@@ -42,7 +42,6 @@ function showScoreScreen() {
         "<p id='score' class='score-info'></p>" + 
         "<div class = 'progress-bar'>" +
         "<div class = 'progress' id = 'progress'></div></div>" + 
-        "<iframe name='dummyframe' id='dummyframe' style='display: none;'></iframe>" + 
         "<p id='distance' class='score-info'></p>" +
         "<button id='next-button' class='next-button'>Next Location</button></div>";
     document.getElementById('guess-screen').innerHTML = "";
@@ -52,7 +51,6 @@ function showScoreScreen() {
         minZoom: -3,
         maxZoom: 5,
         attribution: '<a href="https://wynntils.com/">Wynntils Map</a>'
-        //renderer: L.canvas({ padding: 10 })
     }).setView([0, 0], 0);
     var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
     L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(scoreMap);
@@ -78,13 +76,13 @@ function showScoreScreen() {
 
     document.getElementById('next-button').onclick = function(){
         if(round == 5){
-            post('/api/score', {score: totalScore});
+            post('/api/score', {'score': totalScore});
             finalScore();
-            return;
         }
-        showNextLocation();
+        else{
+            showNextLocation();
+        }
     };
-    
     var greenIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -220,31 +218,29 @@ function finalScore() {
     document.getElementById('progress').style.width = (totalScore / 25000) * 100 + "%";
 }
 
-/**
- * sends a request to the specified url from a form. this will change the window location.
- * @param {string} path the path to send the post request to
- * @param {object} params the parameters to add to the url
- * @param {string} [method=post] the method to use on the form
- */
-
 function post(path, params, method='post') {
-    console.log('SENDING FORM')
-    const form = document.createElement('form');
-    form.method = method;
-    form.action = path;
-    form.target = 'dummyframe';
-  
-    for (const key in params) {
-      if (params.hasOwnProperty(key)) {
-        const hiddenField = document.createElement('input');
-        hiddenField.type = 'hidden';
-        hiddenField.name = key;
-        hiddenField.value = params[key];
+    console.log('SENDING POST REQUEST');
+    $(document).on('submit','#todo-form',function(e)
+                   {
+      console.log('hello');
+      e.preventDefault();
+      $.ajax({
+        type: method,
+        url: path,
+        data:{
+          params
+        },
+        success:function()
+        {
+          alert('saved');
+        }
+      })
+    });
+}
 
-        form.appendChild(hiddenField);
-      }
-    }
-  
-    document.body.appendChild(form);
-    form.submit();
-  }
+$('submit').click(function() {
+    console.log('SENDING POST REQUEST');
+    $.post("/api/score", function(){
+        alert("TotalScore: " +  totalScore + " was sent to the server");
+      });
+});
