@@ -220,27 +220,16 @@ function finalScore() {
 
 function post(path, params, method='post') {
     console.log('SENDING POST REQUEST');
-    $(document).on('submit','#todo-form',function(e)
-                   {
-      console.log('hello');
-      e.preventDefault();
-      $.ajax({
-        type: method,
+    $.ajax({
         url: path,
-        data:{
-          params
+        data: params,
+        type: method,
+        dataType: 'json',
+        success: function(response){
+            console.log(response);
         },
-        success:function()
-        {
-          alert('saved');
+        error: function(error){
+            console.log(error);
         }
-      })
     });
 }
-
-$('submit').click(function() {
-    console.log('SENDING POST REQUEST');
-    $.post("/api/score", function(){
-        alert("TotalScore: " +  totalScore + " was sent to the server");
-      });
-});
