@@ -5,38 +5,59 @@
 {% block content %}
     <h1>Mode Selection</h1>
     <div>
-        <form action="game">
-            <fieldset class="gamemode-selection" id="provinces">
-                <h3>Provinces</h3>
-                <input type="checkbox" id="wynn-province" checked="true">
-                <label for="wynn-province">Wynn</label>
-                <input type="checkbox" id="gavel-province" checked="true">
-                <label for="gavel-province">Gavel</label>
-                <input type="checkbox" id="corkus-province" checked="true">
-                <label for="corkus-province">Corkus</label>
-                <input type="checkbox" id="ocean-province" checked="true">
-                <label for="ocean-province">Ocean</label>
-                <input type="checkbox" id="silent-expanse" checked="true">
-                <label for="silent-expanse">Silent Expanse</label>
+        <form action="game" class="mode-select-form">
+            <fieldset class="mode-select-box" id="provinces">
+                <h3 class="mode-select-option">Provinces</h3>
+                <div class="mode-select-option">
+                    <input type="checkbox" id="wynn-province" checked="true">
+                    <label for="wynn-province">Wynn</label>
+                </div>
+                <div class="mode-select-option">
+                    <input type="checkbox" id="gavel-province" checked="true">
+                    <label for="gavel-province">Gavel</label>
+                </div>
+                <div class="mode-select-option">
+                    <input type="checkbox" id="corkus-province" checked="true">
+                    <label for="corkus-province">Corkus</label>
+                </div>
+                <div class="mode-select-option">
+                    <input type="checkbox" id="ocean-province" checked="true">
+                    <label for="ocean-province">Ocean</label>
+                </div>
+                <div class="mode-select-option">
+                    <input type="checkbox" id="silent-expanse" checked="true">
+                    <label for="silent-expanse">Silent Expanse</label>
+                </div>
             </fieldset>
-
-            <fieldset class="gamemode-selection" id="timer">
-                <h3>Timer</h3>
-                <input type="radio" id="not-timed" name="timer" checked="true">
-                <label for="not-timed">Not timed</label>
-                <input type="radio" id="timed" name="timer">
-                <label for="timed">Timed</label>
+        
+            <fieldset class="mode-select-box" id="timer">
+                <h3 class="mode-select-option">Timer</h3>
+                <div class="mode-select-option">
+                    <input type="radio" id="not-timed" name="timer" checked="true">
+                    <label for="not-timed">Not timed</label>
+                </div>
+                <div class="mode-select-option">
+                    <input type="radio" id="timed" name="timer">
+                    <label for="timed">Timed</label>
+                </div>
             </fieldset>
-
-            <fieldset class="gamemode-selection" id="look">
-                <h3>Look</h3>
-                <input type="radio" id="look-around" name="look" checked="true">
-                <label for="look-around">Look around</label>
-                <input type="radio" id="no-look" name="look">
-                <label for="no-look">No look</label>
+        
+            <fieldset class="mode-select-box" id="look">
+                <h3 class="mode-select-option">Look</h3>
+                <div class="mode-select-option">
+                    <input type="radio" id="look-around" name="look" checked="true">
+                    <label for="look-around">Look around</label>
+                </div>
+                <div class="mode-select-option">
+                    <input type="radio" id="no-look" name="look">
+                    <label for="no-look">No look</label>
+                </div>
             </fieldset>
-            <button type="submit" class="form-submit">Play</button>
+            
+            <button type="submit" class="form-submit" id="mode-select-button">Play</button>
         </form>
+        
+        
 
     </div>
 {% endblock %}

@@ -40,7 +40,7 @@ def play():
 
 @app.route("/leaderboard")
 def leaderboard():
-    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 10;").fetchall())
+    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
 
 @app.route("/stats")
 def stats():
