@@ -3,16 +3,40 @@
 {% block title %}: Play{% endblock %}
 
 {% block content %}
-    <h1>Play</h1>
-    <a href = "/game " class = "play-button-gamemode" id = "all-of-wynncraft-button">
-        All of Wynncraft
-    </a>
+    <h1>Mode Selection</h1>
+    <div>
+        <form action="game">
+            <fieldset class="gamemode-selection" id="provinces">
+                <h3>Provinces</h3>
+                <input type="checkbox" id="wynn-province">
+                <label for="wynn-province">Wynn</label>
+                <input type="checkbox" id="gavel-province">
+                <label for="gavel-province">Gavel</label>
+                <input type="checkbox" id="corkus-province">
+                <label for="corkus-province">Corkus</label>
+                <input type="checkbox" id="ocean-province">
+                <label for="ocean-province">Ocean</label>
+                <input type="checkbox" id="silent-expanse">
+                <label for="silent-expanse">Silent Expanse</label>
+            </fieldset>
 
-    <a class = "play-button-gamemode" id = "wynn-province-button">
-        Province of Wynn
-    </a>
+            <fieldset class="gamemode-selection" id="timer">
+                <h3>Timer</h3>
+                <input type="radio" id="not-timed">
+                <label for="not-timed">Not timed</label>
+                <input type="radio" id="timed">
+                <label for="timed">Timed</label>
+            </fieldset>
 
-    <a class="play-button-gamemode" id = "gavel-province-button">
-        Province of Gavel
-    </a>
+            <fieldset class="gamemode-selection" id="look">
+                <h3>Look</h3>
+                <input type="radio" id="look-around">
+                <label for="look-around">Look around</label>
+                <input type="radio" id="no-look">
+                <label for="no-look">No look</label>
+            </fieldset>
+            <button type="submit" class="form-submit">Play</button>
+        </form>
+
+    </div>
 {% endblock %}

@@ -168,15 +168,6 @@ body {
     text-decoration: none;
     transition: transform 0.3s ease-in, background-color 0.3s ease-in;
 }
-#all-of-wynncraft-button{
-    background-image: url(random_minecraft_background.png);
-}
-#wynn-province-button{
-    background-image: url(random_minecraft_background2.jpg);
-}
-#gavel-province-button{
-    background-image: url(random_minecraft_background3.jpg);
-}
 
 .play-button-gamemode:hover {
     background-color: #6FAE2D;

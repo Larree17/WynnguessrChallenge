@@ -2,32 +2,32 @@
 
 <head>
     <title>Wynnguesser: Game</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}">
-    <link rel = "icon" href = "static/wynnlogo.png" type = "image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="static/wynnlogo.png" type="image/x-icon">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
 </head>
 
 <body>
-    <nav class = "navbar">
-        <div class = "nav-container">
-            <a class = "nav-icon" href = "/">
-                <img src = "static/wynnlogo.png" alt = "logo" height = 31.1>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="nav-icon" href="/">
+                <img src="static/wynnlogo.png" alt="logo" height=31.1>
             </a>
-            <a href = "/">
-                <div class = "nav-link-left">
+            <a href="/">
+                <div class="nav-link-left">
                     <i class="material-icons">home</i>Home
                 </div>
             </a>
-            <p id = "round-number">
+            <p id="round-number">
                 Round: 1/5
             </p>
-            <p id = "totalScore">
+            <p id="totalScore">
                 0 Points
             </p>
         </div>
     </nav>
-    <div class = "guess-screen" id = "guess-screen">
+    <div class="guess-screen" id="guess-screen">
 
     </div>
 
