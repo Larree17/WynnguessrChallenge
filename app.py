@@ -18,11 +18,10 @@ def get_locations():
     locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
     return jsonify(locations_list)
 
+
 @app.route("/api/score", methods=['POST'])
 def post_score():
-    print('POSTING SCORE LABLLASLDJKLASDKLKASLDKLKASLDLAKSD')
     if request.method == 'POST':
-        print(request.form.get('score'))
         score = request.form['score']
         db.execute("INSERT INTO scores (user_id, score, date) VALUES (?, ?, ?)", (1, score, date.today()))
         conn.commit()
@@ -41,8 +40,7 @@ def play():
 
 @app.route("/leaderboard")
 def leaderboard():
-    print(db.execute("SELECT * FROM users").fetchall())
-    return render_template('leaderboard.html', users = db.execute("SELECT * FROM users").fetchall())
+    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 10;").fetchall())
 
 @app.route("/stats")
 def stats():

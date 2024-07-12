@@ -63,8 +63,9 @@ function showScoreScreen() {
     var zActual = images[round - 1]['Z'];
 
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
-    score = Math.round(5000 - distance + .5);
-    if (distance > 5000) {
+    score = Math.round(4999.91 * Math.pow(.998836, distance));
+    console.log(score);
+    if (score < 0) {
         score = 0;
     }
     totalScore += score;

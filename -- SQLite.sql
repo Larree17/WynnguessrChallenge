@@ -1,2 +1,6 @@
 .schema
-SELECT * FROM scores;
+SELECT username, score, date
+FROM users
+JOIN scores ON users.id = scores.user_id
+ORDER BY score DESC
+LIMIT 10;

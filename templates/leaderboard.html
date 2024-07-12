@@ -6,14 +6,16 @@
 <table class = "leaderboard-table">
     <thead>
         <tr class = "leaderboard-row">
-            <th class = "leaderboard-header">ID</th>
             <th class = "leaderboard-header">Username</th>
+            <th class = "leaderboard-header">Score</th>
+            <th class = "leaderboard-header">Date</th>
         </tr>
     </thead>
     {% for user in users %}
         <tr class = "leaderboard-row">
             <td class = "leaderboard-data">{{ user[0] }}</td>
             <td class = "leaderboard-data">{{ user[1] }}</td>
+            <td class = "leaderboard-data">{{ user[2] }}</td>
         </tr>
     {% endfor %}
 </table>
