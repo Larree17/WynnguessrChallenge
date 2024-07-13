@@ -34,9 +34,9 @@ def index():
         return render_template('index.html', username = db.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],)).fetchone()[0])
     return render_template('index.html', username = "Guest")
 
-@app.route("/play")
+@app.route("/mode")
 def play():
-    return render_template('play.html')
+    return render_template('mode.html')
 
 @app.route("/leaderboard")
 def leaderboard():

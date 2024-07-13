@@ -211,6 +211,10 @@ body {
     background-color: #83C73C;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
+#mode-submit-button{
+    position: absolute;
+    bottom: 0px;
+}
 .leaderboard-table{
     border-collapse: collapse;
     width: 70%;
