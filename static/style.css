@@ -153,7 +153,7 @@ body {
 }
 .mode-select-form{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
 }
 .mode-select-box{
@@ -164,11 +164,17 @@ body {
     border: 3px solid black;
     border-radius: 10px;
     padding: 10px;
-    margin: 20px;
+    margin: 5px 20px;
 }
-.mode-select-option{
+.mode-select-option-box{
     display: flex;
     justify-content: left;
+    margin-left: 30px;
+}
+.mode-select-option{
+    width: 100%;
+    text-align: left;
+    margin-left: 5px;
 }
 #mode-select-button{
     display: inline-block;
@@ -214,6 +220,7 @@ body {
 #mode-submit-button{
     position: absolute;
     bottom: 0px;
+    width: 99.5%;
 }
 .leaderboard-table{
     border-collapse: collapse;

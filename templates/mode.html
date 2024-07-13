@@ -3,54 +3,52 @@
 {% block title %}: Play{% endblock %}
 
 {% block content %}
+    <script src="static/js/mode.js"></script>
     <h1>Mode Selection</h1>
     <div>
         <form action="game" class="mode-select-form">
             <fieldset class="mode-select-box" id="provinces">
                 <h3 class="mode-select-option">Provinces</h3>
-                <div class="mode-select-option">
+                <div class="mode-select-option-box">
                     <input type="checkbox" id="wynn-province" checked="true">
-                    <label for="wynn-province">Wynn</label>
+                    <label class="mode-select-option" for="wynn-province">Wynn</label>
                 </div>
-                <div class="mode-select-option">
+                <div class="mode-select-option-box">
                     <input type="checkbox" id="gavel-province" checked="true">
-                    <label for="gavel-province">Gavel</label>
+                    <label class="mode-select-option" for="gavel-province">Gavel</label>
                 </div>
-                <div class="mode-select-option">
+                <div class="mode-select-option-box">
                     <input type="checkbox" id="corkus-province" checked="true">
-                    <label for="corkus-province">Corkus</label>
+                    <label class="mode-select-option" for="corkus-province">Corkus</label>
                 </div>
-                <div class="mode-select-option">
+                <div class="mode-select-option-box">
                     <input type="checkbox" id="ocean-province" checked="true">
-                    <label for="ocean-province">Ocean</label>
+                    <label class="mode-select-option" for="ocean-province">Ocean</label>
                 </div>
-                <div class="mode-select-option">
+                <div class="mode-select-option-box">
                     <input type="checkbox" id="silent-expanse" checked="true">
-                    <label for="silent-expanse">Silent Expanse</label>
+                    <label class="mode-select-option" for="silent-expanse">Silent Expanse</label>
                 </div>
             </fieldset>
         
             <fieldset class="mode-select-box" id="timer">
-                <h3 class="mode-select-option">Timer</h3>
-                <div class="mode-select-option">
-                    <input type="radio" id="not-timed" name="timer" checked="true">
-                    <label for="not-timed">Not timed</label>
+                <h3 class="mode-select-option">Time Limit</h3>
+                <div class="mode-select-option-box" onclick="enableTextBox();">
+                    <input type="checkbox" id="timed" name="timer">
+                    <label class="mode-select-option" for="timed">Timed</label>
+                    
                 </div>
-                <div class="mode-select-option">
-                    <input type="radio" id="timed" name="timer">
-                    <label for="timed">Timed</label>
+                <div class="mode-select-option-box" id="input-text-box">
+                    
                 </div>
+                
             </fieldset>
         
             <fieldset class="mode-select-box" id="look">
                 <h3 class="mode-select-option">Look</h3>
-                <div class="mode-select-option">
-                    <input type="radio" id="look-around" name="look" checked="true">
-                    <label for="look-around">Look around</label>
-                </div>
-                <div class="mode-select-option">
-                    <input type="radio" id="no-look" name="look">
-                    <label for="no-look">No look</label>
+                <div class="mode-select-option-box">
+                    <input type="checkbox" id="no-look" name="look">
+                    <label class="mode-select-option" for="no-look">No look</label>
                 </div>
             </fieldset>
             
@@ -60,4 +58,15 @@
         
 
     </div>
+    <script>
+        function enableTextBox(){
+            if (document.getElementById("timed").checked) {
+                document.getElementById("input-text-box").innerHTML='<input type="text" id="time-limit" name="time-limit" placeholder="Time Limit (s)">';
+            }
+            else{
+                document.getElementById("input-text-box").innerHTML='<input type="text" id="time-limit" name="time-limit" placeholder="Time Limit (s)" hidden>';
+            }
+        }
+        
+    </script>
 {% endblock %}
