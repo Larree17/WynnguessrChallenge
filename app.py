@@ -46,8 +46,29 @@ def leaderboard():
 def stats():
     return render_template('stats.html')
 
-@app.route("/game")
+@app.route("/game", methods=['POST', 'GET'])
 def game():
+    if request.method == 'POST':
+        if request.form.getlist('province') == []:
+            return render_template('apology.html', message = "Please select at least one province")            
+        provinces = request.form.getlist('province')
+        if request.form.get('time-limit-checkbox') == 'off':
+            time_limit = -1
+        else:
+            if request.form.get('time-limit') == "":
+                return render_template('apology.html', message = "Please enter a time limit")
+            if request.form.get('time-limit').isnumeric() == False:
+                return render_template('apology.html', message = "Time limit must be a number")
+            if int(request.form.get('time-limit')) < 1:
+                return render_template('apology.html', message = "Time limit cannot be less than 1 second")
+            time_limit = int(request.form.get('time-limit'))
+        look = request.form.get('look') == 'on'
+        rounds = request.form.get('rounds')
+        print(provinces)
+        print("Time limit: " + str(time_limit))
+        print("Look: " + str(look))
+        print("Rounds = " + rounds)
+        return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds)
     return render_template('game.html')
 
 @app.route("/login", methods=['POST', 'GET'])

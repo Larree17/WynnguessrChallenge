@@ -217,6 +217,9 @@ function finalScore() {
 
     document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/25000";
     document.getElementById('progress').style.width = (totalScore / 25000) * 100 + "%";
+    $('#next-button').click(function(){
+        location.reload();
+    });
 }
 
 function post(path, params, method='post') {
