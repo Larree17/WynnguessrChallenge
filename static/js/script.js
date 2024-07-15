@@ -154,7 +154,7 @@ function showNextLocation() {
         }
         showScoreScreen();
     };
-    if(look){
+    if(look == 'True'){
         $('#vrview').css('pointer-events', 'none');
     }
     var vrView = new VRView.Player('#vrview', {
