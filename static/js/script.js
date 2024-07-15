@@ -2,7 +2,8 @@ var provinces = $('#game-variables').attr('provinces');
 var look = $('#game-variables').attr('look');
 var timeLimit = $('#game-variables').attr('timeLimit');
 var LOCATIONS;
-var round = $('#game-variables').attr('rounds');
+var round = 0;
+var maxRounds = $('#game-variables').attr('rounds');
 var score = 0;
 var totalScore = 0;
 var images = new Array(5);
@@ -84,7 +85,7 @@ function showScoreScreen() {
     document.getElementById('score').innerHTML = score + " points!";
 
     document.getElementById('next-button').onclick = function(){
-        if(round == 5){
+        if(round >= maxRounds){
             post('/api/score', {'score': totalScore});
             finalScore();
         }
@@ -153,11 +154,14 @@ function showNextLocation() {
         }
         showScoreScreen();
     };
-    
+    if(look){
+        $('#vrview').css('pointer-events', 'none');
+    }
     var vrView = new VRView.Player('#vrview', {
         image: images[round - 1]['url'],
         is_stereo: false,
-        is_autopan_off: true
+        is_autopan_off: true,
+        is_vr_off: true
     });
     //removes all markers from the map
     map.eachLayer((layer) => {
