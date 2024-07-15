@@ -52,9 +52,11 @@ def game():
         if request.form.getlist('province') == []:
             return render_template('apology.html', message = "Please select at least one province")            
         provinces = request.form.getlist('province')
-        if request.form.get('time-limit-checkbox') == 'off':
+        print("time-limit-checkbox:")
+        print(request.form.get('time-limit-checkbox'))
+        if request.form.get('time-limit-checkbox') == None:
             time_limit = -1
-        else:
+        elif request.form.get('time-limit-checkbox') == 'on':
             if request.form.get('time-limit') == "":
                 return render_template('apology.html', message = "Please enter a time limit")
             if request.form.get('time-limit').isnumeric() == False:
