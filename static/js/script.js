@@ -1,5 +1,8 @@
+var provinces = $('#game-variables').attr('provinces');
+var look = $('#game-variables').attr('look');
+var timeLimit = $('#game-variables').attr('timeLimit');
 var LOCATIONS;
-var round = 0;
+var round = $('#game-variables').attr('rounds');
 var score = 0;
 var totalScore = 0;
 var images = new Array(5);
@@ -7,6 +10,11 @@ var markers = new Array(5);
 var polylines = new Array(5);
 var map;
 var scoreMap;
+
+console.log(provinces);
+console.log(round);
+console.log(look);
+console.log(timeLimit);
 
 // Document ready function
 $(document).ready(function() {
