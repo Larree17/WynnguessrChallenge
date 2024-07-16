@@ -6,16 +6,11 @@ var round = 0;
 var maxRounds = $('#game-variables').attr('rounds');
 var score = 0;
 var totalScore = 0;
-var images = new Array(5);
-var markers = new Array(5);
-var polylines = new Array(5);
+var images = new Array(Number(maxRounds));
+var markers = new Array(Number(maxRounds));
+var polylines = new Array(Number(maxRounds));
 var map;
 var scoreMap;
-
-console.log(provinces);
-console.log(round);
-console.log(look);
-console.log(timeLimit);
 
 // Document ready function
 $(document).ready(function() {
@@ -73,7 +68,6 @@ function showScoreScreen() {
 
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
     score = Math.round(5200/(1 + .002* Math.E ** (.0042*distance + 3)) + .822);
-    console.log(score);
     if (score < 0) {
         score = 0;
     }
@@ -169,13 +163,13 @@ function showNextLocation() {
             layer.remove();
         }
     });
-
-    if(polylines[round - 1]){
+    if(polylines[round - 1] != undefined){
+        console.log('removing polyline');
         map.removeLayer(polyline);
     }
     marker = null;
     
-    document.getElementById('round-number').innerHTML = "Round: " + round + "/5 ";
+    document.getElementById('round-number').innerHTML = "Round: " + round + "/" + maxRounds;
 }
 function showContent(contentId){
     document.getElementById('guess-screen').style.display = "none";
@@ -227,15 +221,14 @@ function finalScore() {
     var group = new L.featureGroup(featureGroup);
     scoreMap.fitBounds(group.getBounds());
 
-    document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/25000";
-    document.getElementById('progress').style.width = (totalScore / 25000) * 100 + "%";
+    document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/" + maxRounds * 5000;
+    document.getElementById('progress').style.width = (totalScore / maxRounds * 5000) * 100 + "%";
     $('#next-button').click(function(){
         location.reload();
     });
 }
 
 function post(path, params, method='post') {
-    console.log('SENDING POST REQUEST');
     $.ajax({
         url: path,
         data: params,
