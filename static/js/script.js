@@ -75,12 +75,12 @@ function showScoreScreen() {
 
     document.getElementById('distance').innerHTML = "Distance: " + distance + " blocks away!";
     document.getElementById('progress').style.width = (score / 5000) * 100 + "%";
-    document.getElementById('totalScore').innerHTML = "Score: " + totalScore + "/" + round * 5000;
+    document.getElementById('totalScore').innerHTML = "Score: " + totalScore;
     document.getElementById('score').innerHTML = score + " points!";
 
     document.getElementById('next-button').onclick = function(){
         if(round >= maxRounds){
-            post('/api/score', {'score': totalScore});
+            post('/api/score', {'score': totalScore, 'look': look, 'provinces': provinces});
             finalScore();
         }
         else{

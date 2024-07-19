@@ -9,6 +9,8 @@
             <th class="leaderboard-header">Username</th>
             <th class="leaderboard-header">Score</th>
             <th class="leaderboard-header">Date</th>
+            <th class="leaderboard-header">Look</th>
+            <th class="leaderboard-header">Provinces</th>
         </tr>
     </thead>
     {% for user in users %}
@@ -16,6 +18,8 @@
             <td class="leaderboard-data">{{ user[0] }}</td>
             <td class="leaderboard-data">{{ user[1] }}</td>
             <td class="leaderboard-data">{{ user[2] }}</td>
+            <td class="leaderboard-data">{{ user[3] }}</td>
+            <td class="leaderboard-data">{{ user[4] }}</td>
         </tr>
     {% endfor %}
 </table>

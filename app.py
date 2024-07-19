@@ -25,7 +25,9 @@ def post_score():
         if not session.get('loggedin'):
             return jsonify({"success": False})
         score = request.form['score']
-        db.execute("INSERT INTO scores (user_id, score, date) VALUES (?, ?, ?)", (session['user_id'], score, date.today()))
+        look = request.form['look']
+        provinces = request.form['provinces']
+        db.execute("INSERT INTO scores (user_id, score, date, look, provinces) VALUES (?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces))
         conn.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})
@@ -42,7 +44,7 @@ def play():
 
 @app.route("/leaderboard")
 def leaderboard():
-    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
+    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date, look, provinces FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
 
 @app.route("/stats")
 def stats():
