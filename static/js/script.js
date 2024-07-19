@@ -108,7 +108,7 @@ function showScoreScreen() {
 function showNextLocation() {
     showContent('guess-screen');
     round++;
-
+    
     document.getElementById('guess-screen').innerHTML = 
     "<div id='vrview' class = vr-image></div>" +
     "<div class = 'map-container' id = 'map-container'>" +
@@ -155,7 +155,6 @@ function showNextLocation() {
         image: images[round - 1]['url'],
         is_stereo: false,
         is_autopan_off: true,
-        is_vr_off: true
     });
     //removes all markers from the map
     map.eachLayer((layer) => {
@@ -170,6 +169,12 @@ function showNextLocation() {
     marker = null;
     
     document.getElementById('round-number').innerHTML = "Round: " + round + "/" + maxRounds;
+    if(timeLimit > 0){
+        setTimeout(function(){
+            console.log('Time limit reached');
+            showScoreScreen();
+        }, timeLimit * 1000);
+    }
 }
 function showContent(contentId){
     document.getElementById('guess-screen').style.display = "none";
@@ -222,7 +227,7 @@ function finalScore() {
     scoreMap.fitBounds(group.getBounds());
 
     document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/" + maxRounds * 5000;
-    document.getElementById('progress').style.width = (totalScore / maxRounds * 5000) * 100 + "%";
+    document.getElementById('progress').style.width = (totalScore / (maxRounds * 5000)) * 100 + "%";
     $('#next-button').click(function(){
         location.reload();
     });

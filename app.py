@@ -22,8 +22,10 @@ def get_locations():
 @app.route("/api/score", methods=['POST'])
 def post_score():
     if request.method == 'POST':
+        if session['loggedin'] == False:
+            return jsonify({"success": False})
         score = request.form['score']
-        db.execute("INSERT INTO scores (user_id, score, date) VALUES (?, ?, ?)", (1, score, date.today()))
+        db.execute("INSERT INTO scores (user_id, score, date) VALUES (?, ?, ?)", (session['user_id'], score, date.today()))
         conn.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})
