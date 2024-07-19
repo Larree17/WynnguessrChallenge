@@ -242,7 +242,7 @@ body {
     right: 0px;
     height: 351px;
     width: 300px;
-    transition: width .5s, height .5s, transform .5s;
+    transition: width .3s, height .3s, transform .3s;
 }
 
 .map-container:hover{
