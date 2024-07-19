@@ -10,6 +10,7 @@ var images = new Array(Number(maxRounds));
 var markers = new Array(Number(maxRounds));
 var polylines = new Array(Number(maxRounds));
 var map;
+var timer = 0;
 var scoreMap;
 
 // Document ready function
@@ -61,10 +62,30 @@ function showScoreScreen() {
     scoreMap.setView([3000, -500], -1);
     scoreMap.on('click', onMapClick);
 
-    var xGuess = markers[round - 1].getLatLng().lng;
-    var zGuess = -markers[round - 1].getLatLng().lat;
     var xActual = images[round - 1]['X'];
     var zActual = images[round - 1]['Z'];
+    if(markers[round - 1] == undefined){
+        document.getElementById('score').innerHTML = "No location selected!";
+        document.getElementById('progress').style.width = "0%";
+        document.getElementById('distance').innerHTML = "Distance: 0 blocks away!";
+        document.getElementById('next-button').onclick = function(){
+            showNextLocation();
+        };
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
+        scoreMap.fitBounds([[[-zActual, xActual], [-zActual, xActual]]]);
+        return;
+    }
+    var xGuess = markers[round - 1].getLatLng().lng;
+    var zGuess = -markers[round - 1].getLatLng().lat;
+
 
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
     score = Math.round(5200/(1 + .002* Math.E ** (.0042*distance + 3)) + .822);
@@ -146,6 +167,10 @@ function showNextLocation() {
             document.getElementById('guess-button').style.backgroundColor = "red";
             return;
         }
+        if (timer) {
+            clearTimeout(timer);
+            timer = 0;
+        }
         showScoreScreen();
     };
     if(look == 'True'){
@@ -170,7 +195,7 @@ function showNextLocation() {
     
     document.getElementById('round-number').innerHTML = "Round: " + round + "/" + maxRounds;
     if(timeLimit > 0){
-        setTimeout(function(){
+        timer = setTimeout(function(){
             console.log('Time limit reached');
             showScoreScreen();
         }, timeLimit * 1000);
@@ -218,10 +243,13 @@ function finalScore() {
         });
         let answer = L.marker([-images[i]['Z'], images[i]['X']], { icon: greenIcon }).addTo(scoreMap);
         featureGroup.push(answer);
-        L.marker(markers[i].getLatLng()).addTo(scoreMap);
-        featureGroup.push(markers[i]);
-        //draws line between guess and actual location
-        polylines[i].addTo(scoreMap);
+        if(markers[i] != undefined){
+            L.marker(markers[i].getLatLng()).addTo(scoreMap);
+            featureGroup.push(markers[i]);
+        }
+        if(polylines[i] != undefined){
+            polylines[i].addTo(scoreMap);
+        }
     }
     var group = new L.featureGroup(featureGroup);
     scoreMap.fitBounds(group.getBounds());
