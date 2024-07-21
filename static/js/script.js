@@ -38,7 +38,6 @@ function fetchLocations() {
     });
 }
 
-
 // Handle map click event to set a marker
 function onMapClick(e) {
     if (markers[round - 1] != undefined) {

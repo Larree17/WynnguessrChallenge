@@ -12,6 +12,7 @@
             <th class="leaderboard-header">Date</th>
             <th class="leaderboard-header">Look</th>
             <th class="leaderboard-header">Provinces</th>
+            <th class="leaderboard-header">Time</th>
         </tr>
     </thead>
     {% for user in users %}
@@ -22,6 +23,7 @@
             <td class="leaderboard-data">{{ user[2] }}</td>
             <td class="leaderboard-data">{{ user[3] }}</td>
             <td class="leaderboard-data">{{ user[4] }}</td>
+            <td class="leaderboard-data">{{ user[5] }}</td>
         </tr>
     {% endfor %}
 </table>

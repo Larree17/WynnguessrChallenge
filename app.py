@@ -28,7 +28,16 @@ def post_score():
         look = request.form['look']
         provinces = request.form['provinces']
         totalTime = request.form['totalTime']
-        db.execute("INSERT INTO scores (user_id, score, date, look, provinces) VALUES (?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, totalTime))
+        hours = int(totalTime) // 3600
+        minutes = (int(totalTime) % 3600) // 60
+        seconds = int(totalTime) % 60
+        if hours > 0:
+            totalTime = str(hours) + "h " + str(minutes) + "m " + str(seconds) + "s"
+        elif minutes > 0:
+            totalTime = str(minutes) + "m " + str(seconds) + "s"
+        else:
+            totalTime = str(seconds) + "s"
+        db.execute("INSERT INTO scores (user_id, score, date, look, provinces, time) VALUES (?, ?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, totalTime))
         conn.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})
@@ -45,7 +54,7 @@ def play():
 
 @app.route("/leaderboard")
 def leaderboard():
-    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date, look, provinces FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
+    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date, look, provinces, time FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
 
 @app.route("/stats")
 def stats():
