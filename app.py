@@ -27,7 +27,8 @@ def post_score():
         score = request.form['score']
         look = request.form['look']
         provinces = request.form['provinces']
-        db.execute("INSERT INTO scores (user_id, score, date, look, provinces) VALUES (?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces))
+        totalTime = request.form['totalTime']
+        db.execute("INSERT INTO scores (user_id, score, date, look, provinces) VALUES (?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, totalTime))
         conn.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})

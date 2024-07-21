@@ -13,6 +13,14 @@ var map;
 var timer = 0;
 var scoreMap;
 var totalTime = 0;
+var greenIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
 
 // Document ready function
 $(document).ready(function() {
@@ -75,21 +83,12 @@ function showScoreScreen() {
         document.getElementById('next-button').onclick = function(){
             showNextLocation();
         };
-        var greenIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-        });
         L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
         scoreMap.fitBounds([[[-zActual, xActual], [-zActual, xActual]]]);
         return;
     }
     var xGuess = markers[round - 1].getLatLng().lng;
     var zGuess = -markers[round - 1].getLatLng().lat;
-
 
     var distance = Math.sqrt(Math.pow(xActual - xGuess, 2) + Math.pow(zActual - zGuess, 2)).toFixed(2);
     score = Math.round(5200/(1 + .002* Math.E ** (.0042*distance + 3)) + .822);
@@ -112,14 +111,6 @@ function showScoreScreen() {
             showNextLocation();
         }
     };
-    var greenIcon = new L.Icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-    });
     L.marker([-zActual, xActual], { icon: greenIcon }).addTo(scoreMap);
     
     L.marker([-zGuess, xGuess]).addTo(scoreMap);
@@ -131,20 +122,21 @@ function showScoreScreen() {
 
 // Load the next location
 function showNextLocation() {
-    if(timeLimit > 0){
-        let countdown = timeLimit;
-        timer = setInterval(function(){
-            console.log(countdown);
+
+    let countdown = timeLimit;
+    timer = setInterval(function(){
+        console.log(countdown);
+        if(timeLimit > 0){
             document.getElementById('time-left').innerHTML = "Time: " + countdown;
             countdown--;
-            totalTime++;
             if (countdown < 0) {
                 clearInterval(timer);
                 console.log('Time limit reached');
                 showScoreScreen();
             }
-        }, 1000);
-    }
+        }
+        totalTime++;
+    }, 1000);
 
     showContent('guess-screen');
     round++;
@@ -206,11 +198,10 @@ function showNextLocation() {
         map.removeLayer(polyline);
     }
     marker = null;
-    
     document.getElementById('round-number').innerHTML = "Round: " + round + "/" + maxRounds;
     
-    
 }
+
 function showContent(contentId){
     document.getElementById('guess-screen').style.display = "none";
     document.getElementById('score-screen').style.display = "none";
@@ -243,14 +234,7 @@ function finalScore() {
     
     var featureGroup = [];
     for(let i = 0; i < images.length; i++){
-        var greenIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-        });
+        
         let answer = L.marker([-images[i]['Z'], images[i]['X']], { icon: greenIcon }).addTo(scoreMap);
         featureGroup.push(answer);
         if(markers[i] != undefined){
@@ -264,6 +248,7 @@ function finalScore() {
     var group = new L.featureGroup(featureGroup);
     scoreMap.fitBounds(group.getBounds());
 
+    document.getElementById('Finish Message').innerHTML = "Total Time: " + totalTime + " seconds!";
     document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/" + maxRounds * 5000;
     document.getElementById('progress').style.width = (totalScore / (maxRounds * 5000)) * 100 + "%";
     $('#next-button').click(function(){
