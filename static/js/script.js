@@ -12,6 +12,7 @@ var polylines = new Array(Number(maxRounds));
 var map;
 var timer = 0;
 var scoreMap;
+var totalTime = 0;
 
 // Document ready function
 $(document).ready(function() {
@@ -40,7 +41,9 @@ function onMapClick(e) {
 
 // Display the score screen
 function showScoreScreen() {
-    
+    if(timeLimit > 0){
+        clearTimeout(timer);
+    }
     showContent('score-screen');
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
@@ -102,7 +105,7 @@ function showScoreScreen() {
 
     document.getElementById('next-button').onclick = function(){
         if(round >= maxRounds){
-            post('/api/score', {'score': totalScore, 'look': look, 'provinces': provinces});
+            post('/api/score', {'score': totalScore, 'look': look, 'provinces': provinces, 'totalTime': totalTime});
             finalScore();
         }
         else{
@@ -130,10 +133,11 @@ function showScoreScreen() {
 function showNextLocation() {
     if(timeLimit > 0){
         let countdown = timeLimit;
-        var time = setInterval(function(){
+        timer = setInterval(function(){
             console.log(countdown);
             document.getElementById('time-left').innerHTML = "Time: " + countdown;
             countdown--;
+            totalTime++;
             if (countdown < 0) {
                 clearInterval(time);
                 console.log('Time limit reached');
