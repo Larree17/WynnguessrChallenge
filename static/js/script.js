@@ -139,7 +139,7 @@ function showNextLocation() {
             countdown--;
             totalTime++;
             if (countdown < 0) {
-                clearInterval(time);
+                clearInterval(timer);
                 console.log('Time limit reached');
                 showScoreScreen();
             }
