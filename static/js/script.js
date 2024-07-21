@@ -40,6 +40,7 @@ function onMapClick(e) {
 
 // Display the score screen
 function showScoreScreen() {
+    
     showContent('score-screen');
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
@@ -127,6 +128,20 @@ function showScoreScreen() {
 
 // Load the next location
 function showNextLocation() {
+    if(timeLimit > 0){
+        let countdown = timeLimit;
+        var time = setInterval(function(){
+            console.log(countdown);
+            document.getElementById('time-left').innerHTML = "Time: " + countdown;
+            countdown--;
+            if (countdown < 0) {
+                clearInterval(time);
+                console.log('Time limit reached');
+                showScoreScreen();
+            }
+        }, 1000);
+    }
+
     showContent('guess-screen');
     round++;
     
@@ -147,14 +162,8 @@ function showNextLocation() {
     var bounds = [[159, -2383], [6573, 1651]]; // Map bounds
     L.imageOverlay('static/Wynncraft Map.png', bounds).addTo(map);
     map.setView([3000, -500], -2);
-
     map.on('click', onMapClick);
 
-    if (LOCATIONS.length === 0) {
-        document.getElementById('guess-button').innerHTML = "No more locations!";
-        document.getElementById('guess-button').style.backgroundColor = "red";
-        return;
-    }
     //selects a random location from the list of locations and removes it to prevent duplicates
     var rand = Math.floor(Math.random() * LOCATIONS.length);
     images[round - 1] = LOCATIONS[rand];
@@ -173,6 +182,7 @@ function showNextLocation() {
         }
         showScoreScreen();
     };
+    
     if(look == 'True'){
         $('#vrview').css('pointer-events', 'none');
     }
@@ -194,12 +204,8 @@ function showNextLocation() {
     marker = null;
     
     document.getElementById('round-number').innerHTML = "Round: " + round + "/" + maxRounds;
-    if(timeLimit > 0){
-        timer = setTimeout(function(){
-            console.log('Time limit reached');
-            showScoreScreen();
-        }, timeLimit * 1000);
-    }
+    
+    
 }
 function showContent(contentId){
     document.getElementById('guess-screen').style.display = "none";

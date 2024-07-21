@@ -26,8 +26,16 @@
             <p id="totalScore">
                 Score: 0
             </p>
+            {% if time_limit > 0 %}
+                <p id="time-left">
+                    Time: {{time_limit}}
+                </p>
+            {% endif %}
         </div>
     </nav>
+    <div id="countdown-screen">
+        
+    </div>
     <div class="guess-screen" id="guess-screen">
 
     </div>

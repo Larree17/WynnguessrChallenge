@@ -346,9 +346,25 @@ body {
     background-color: #83C73C;
     border-radius: 10px;
 }
+#countdown-screen{
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 5.5%;
+    height: 94.5%;
+    width: 100%;
+    text-align: center;
+    background-color: white;
+
+}
 
 #round-number{
     margin: 10px;
+}
+#time-left{
+    margin: 10px;
+
 }
 .apology-message{
     color: red;
