@@ -213,7 +213,7 @@ function finalScore() {
     document.getElementById('score-screen').innerHTML =
         "<div class = 'score-map' id='scoreMap'></div>" + 
         "<div id = 'score-container'>" +
-        "<p id='Finish Message' class='score-info'>Game Finished!</p>" + 
+        "<p id='Finish Message' class='score-info'></p>" + 
         "<div class = 'progress-bar'>" +
         "<div class = 'progress' id = 'progress'></div></div>" + 
         "<p id='score' class='score-info'></p>" + 
@@ -247,8 +247,12 @@ function finalScore() {
     }
     var group = new L.featureGroup(featureGroup);
     scoreMap.fitBounds(group.getBounds());
+    let sec = " Seconds";
+    if(totalTime == 1){
+        sec = " Second";
+    }
 
-    document.getElementById('Finish Message').innerHTML = "Total Time: " + totalTime + " seconds!";
+    document.getElementById('Finish Message').innerHTML = "Game Finished! Total Time: " + totalTime + sec;
     document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/" + maxRounds * 5000;
     document.getElementById('progress').style.width = (totalScore / (maxRounds * 5000)) * 100 + "%";
     $('#next-button').click(function(){
