@@ -18,12 +18,9 @@
     {% for user in users %}
         <tr class="leaderboard-row">
             <td class="leaderboard-data">{{ loop.index }}</td>
-            <td class="leaderboard-data">{{ user[0] }}</td>
-            <td class="leaderboard-data">{{ user[1] }}</td>
-            <td class="leaderboard-data">{{ user[2] }}</td>
-            <td class="leaderboard-data">{{ user[3] }}</td>
-            <td class="leaderboard-data">{{ user[4] }}</td>
-            <td class="leaderboard-data">{{ user[5] }}</td>
+            {% for data in user %}
+                <td class="leaderboard-data">{{ data }}</td>
+            {% endfor %}
         </tr>
     {% endfor %}
 </table>
