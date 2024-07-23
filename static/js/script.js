@@ -127,15 +127,16 @@ function showNextLocation() {
         console.log(countdown);
         if(timeLimit > 0){
             document.getElementById('time-left').innerHTML = "Time: " + countdown;
-            countdown--;
+            countdown = Math.round((countdown - .1) * 10) / 10;
             if (countdown < 0) {
                 clearInterval(timer);
                 console.log('Time limit reached');
                 showScoreScreen();
             }
         }
-        totalTime++;
-    }, 1000);
+        if (countdown % 1 == 0) 
+            totalTime++;
+    }, 100);
 
     showContent('guess-screen');
     round++;
