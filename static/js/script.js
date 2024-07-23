@@ -103,7 +103,7 @@ function showScoreScreen() {
 
     document.getElementById('next-button').onclick = function(){
         if(round >= maxRounds){
-            post('/api/score', {'score': totalScore, 'look': look, 'provinces': provinces, 'totalTime': totalTime});
+            post('/api/score', {'score': totalScore, 'look': look, 'provinces': provinces, 'totalTime': totalTime, 'rounds': maxRounds});
             finalScore();
         }
         else{
@@ -127,16 +127,15 @@ function showNextLocation() {
         console.log(countdown);
         if(timeLimit > 0){
             document.getElementById('time-left').innerHTML = "Time: " + countdown;
-            countdown = Math.round((countdown - .1) * 10) / 10;
+            countdown--;
             if (countdown < 0) {
                 clearInterval(timer);
                 console.log('Time limit reached');
                 showScoreScreen();
             }
         }
-        if (countdown % 1 == 0) 
-            totalTime++;
-    }, 100);
+        totalTime++;
+    }, 1000);
 
     showContent('guess-screen');
     round++;
