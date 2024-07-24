@@ -26,6 +26,10 @@ def post_score():
             return jsonify({"success": False})
         score = request.form['score']
         look = request.form['look']
+        if look == 'True':
+            look = 'Yes'
+        else:
+            look = 'No'
         provinces = request.form['provinces']
         rounds = request.form['rounds']
         totalTime = request.form['totalTime']

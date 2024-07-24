@@ -223,10 +223,30 @@ body {
     bottom: 0px;
     width: 99.5%;
 }
+.filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+
+}
+.filter-option-box{
+    display: flex;
+    justify-content: left;
+    margin-left: 30px;
+}
+.filter-option{
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #857361;
+}
+.filter-option:hover{
+    background-color: #857361;
+}
+
 .leaderboard-table{
     border-collapse: collapse;
-    width: 70%;
-    margin-top: 10px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     background-color: #857361;

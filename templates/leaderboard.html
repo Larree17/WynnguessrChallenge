@@ -3,27 +3,52 @@
 {% block title %}: Leaderboard{% endblock %}
 
 {% block content %}
-<table class="leaderboard-table">
-    <thead>
-        <tr class="leaderboard-row">
-            <th class="leaderboard-header">Rank</th>
-            <th class="leaderboard-header">Username</th>
-            <th class="leaderboard-header">Score</th>
-            <th class="leaderboard-header">Date</th>
-            <th class="leaderboard-header">Look</th>
-            <th class="leaderboard-header">Provinces</th>
-            <th class="leaderboard-header">Rounds</th>
-            <th class="leaderboard-header">Time</th>
-        </tr>
-    </thead>
-    {% for user in users %}
-        <tr class="leaderboard-row">
-            <td class="leaderboard-data">{{ loop.index }}</td>
-            {% for data in user %}
-                <td class="leaderboard-data">{{ data }}</td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-</table>
+<h1>Leaderboard</h1>
+<div>
+    <div class="filters">
+        <div class="provinces">
+            <button class="filter-option" onclick="updateRanking('wynn')" id="wynn">Wynn</button>
+            <button class="filter-option" onclick="updateRanking('gavel')" id="gavel">Gavel</button>
+            <button class="filter-option" onclick="updateRanking('corkus')" id="corkus">Corkus</button>
+            <button class="filter-option" onclick="updateRanking('ocean')" id="ocean">Ocean</button>
+            <button class="filter-option" onclick="updateRanking('silent-expanse')" id="silent-expanse">Silent Expanse</button>
+            <button class="filter-option" onclick="updateRanking('look')" id="look">Look</button>
+            <select class="filter-option" onclick="updateRanking('rounds')" id="rounds">
+                <option value="3">3 Rounds</option>
+                <option value="5" selected>5 Rounds</option>
+                <option value="10">10 Rounds</option>
+                <option value="25">25 Rounds</option>
+            </select>
+        </div>
+        
+    </div>
+    
+    <table class="leaderboard-table">
+        <thead>
+            <tr class="leaderboard-row">
+                <th class="leaderboard-header">Rank</th>
+                <th class="leaderboard-header">Username</th>
+                <th class="leaderboard-header">Score</th>
+                <th class="leaderboard-header">Date</th>
+                <th class="leaderboard-header">Look</th>
+                <th class="leaderboard-header">Provinces</th>
+                <th class="leaderboard-header">Rounds</th>
+                <th class="leaderboard-header">Time</th>
+            </tr>
+        </thead>
+        {% for user in users %}
+            <tr class="leaderboard-row">
+                <td class="leaderboard-data">{{ loop.index }}</td>
+                {% for data in user %}
+                    <td class="leaderboard-data">{{ data }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+<script src="{{ url_for('static', filename='js/query.js') }}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 {% endblock%}
