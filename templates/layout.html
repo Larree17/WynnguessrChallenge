@@ -10,7 +10,6 @@
 </head>
 
 <body>
-    <div class="background-image">
         <nav class="navbar">
             <div class="nav-container">
                 <a class="nav-icon" href="/">
@@ -62,9 +61,10 @@
             </div>
             {% endif %}
         </nav>
+        <div class="repeatable-background-image">
+            {% block content %}{% endblock %}
+        </div>
         
-        {% block content %}{% endblock %}
-    </div>
 
 </body>
 

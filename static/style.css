@@ -85,19 +85,31 @@ body {
     color: white;
     transform: scale(1.05);
 }
+.repeatable-background-image{
+    background-image: url("repeatable background.png");
+    background-size: contain;
+    background-repeat: repeat;
+    position:absolute;
+    top:5.5%;
+    left:0;
+    width:100%;
+    height: 94.5%;
+    color: black;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
 
-.background-image{
+.homepage-background-image{
     background-image: url("wynnguessr homepage background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-position: fixed;
-    background-color: #baaa80;
     position:absolute;
-    top:0;
+    top:5.5%;
     left:0;
     width:100%;
-    height:100%;
+    height:94.5%;
     color: black;
     text-align: center;
     font-family: Arial, sans-serif;
