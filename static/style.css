@@ -85,6 +85,13 @@ body {
     color: white;
     transform: scale(1.05);
 }
+.welcome-text{
+    position: relative;
+    display: inline-block;
+    left: 100px;
+    top: 50px;
+    width: 30%;
+}
 .repeatable-background-image{
     background-image: url("repeatable background.png");
     background-size: contain;
@@ -111,7 +118,6 @@ body {
     width:100%;
     height:94.5%;
     color: black;
-    text-align: center;
     font-family: Arial, sans-serif;
 }
 .guess-screen{
@@ -157,6 +163,7 @@ body {
     border: 4px solid black;
     background-color: #83C73C;
     font-size: 20px;
+    width: 150px;
     color: black; 
     transition: transform 0.3s ease-in, background-color 0.3s ease-in;
 }
