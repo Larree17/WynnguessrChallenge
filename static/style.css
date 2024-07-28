@@ -88,8 +88,8 @@ body {
 .welcome-text{
     position: relative;
     display: inline-block;
-    left: 100px;
-    top: 50px;
+    left: 150px;
+    top: 100px;
     width: 30%;
 }
 .repeatable-background-image{
