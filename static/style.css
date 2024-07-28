@@ -7,7 +7,7 @@ body {
     background-color: #baaa80;
     text-align: inline-block;
     padding: 0;
-    position: absolute; 
+    position: fixed; 
     left: 0; 
     right: 0; 
     z-index: 1; 
@@ -93,7 +93,7 @@ body {
     width: 30%;
 }
 .repeatable-background-image{
-    background-image: url("repeatable background.png");
+    /*background-image: url("repeatable background.png");*/
     background-size: contain;
     background-repeat: repeat;
     position:absolute;
