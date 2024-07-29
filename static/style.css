@@ -2,7 +2,9 @@ body {
     padding: 0;
     margin: 0;
   }
-
+h1{
+    color: white;
+}
 .navbar {
     background-color: #baaa80;
     text-align: inline-block;
@@ -89,7 +91,7 @@ body {
     position: relative;
     display: inline-block;
     left: 150px;
-    top: 100px;
+    top: 150px;
     width: 30%;
 }
 .repeatable-background-image{
@@ -101,7 +103,6 @@ body {
     left:0;
     width:100%;
     height: 94.5%;
-    color: black;
     text-align: center;
     font-family: Arial, sans-serif;
 }
@@ -141,7 +142,6 @@ body {
     text-align: center;
     font-family: Arial, sans-serif;
 }
-
 .vr-image iframe{
     background-size: cover;
     background-position: center;
@@ -159,6 +159,7 @@ body {
     text-align: center;
     vertical-align: middle;
     border-radius: 12px;
+    margin-right: 5px;
     padding: 10px;
     border: 4px solid black;
     background-color: #83C73C;
@@ -172,29 +173,79 @@ body {
     transform: scale(1.1);
     color: white;
 }
+.feature-container{
+    overflow:hidden;
+    top: 95%;
+    width: 100%;
+}
 .slanted-background-box{
     position: absolute;
-    top: 89%;
+    overflow: hidden;
+    top: 95%;
     height: 300px;
-    width: 114.5%;
+    width: 114.7%;
     left: -15%;
     background-color: #baaa80;
-    transform: rotate(5deg);
+    transform: rotate(2.3deg);
     border-top: 3px solid #857361;
 }
 .feature-information-box{
     overflow: hidden;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    z-index: -1;
+    flex-wrap: wrap;
+    justify-content: left;
     position: absolute;
     top: 100%;
     height: 100%;
     width: 100%;
     text-align: center;
     background-color: #baaa80;
+}
+
+.information-container{
+    display: flex;
+    flex-direction: row;
+}
+.information-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    color: black;
+    align-self: left;
+    margin: 100px 5%;
+    width: 30%;
+}
+.demo-container{
+    background-image: url("repeatable background.png");
+    background-size: contain;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 600px;
+    border-top: 3px solid #857361;
+}
+.demo-information-box{
+    color: black;
+    display: flex;
+    margin: 155px 250px;
+    width: 25%;
+    flex-direction: column;
+    text-align: left;
+
+}
+.information-box p, .demo-information-box p{
+    font-size: 20px;
+}
+.demo-information-box a{
+    width: 150px;
+}
+
+.vr-demo iframe{
+    margin-top: 50px;
+    margin-left: 100px;
+    width: 700px;
+    height: 400px;
 }
 .mode-select-form{
     display: flex;

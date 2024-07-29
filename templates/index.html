@@ -73,17 +73,57 @@
                         Play Now!
                     </div>
                 </a>
-            </div>
-        </div>
-        <div class="slanted-background-box">
-            
-        </div>
-        <div class="feature-information-box">
-            <div>
-                <h1>Choose Provinces</h1>
-                <p>You have the option to only select the your most well known Wynncraft Provinces!</p>
+                <a href="/register">
+                    <div class="play-button" style="font-family: cursive;">
+                        Register!
+                    </div>
+                </a>
             </div>
         </div>
         
+        <div class="feature-container">
+            <div class="slanted-background-box"></div>
 
+            <div class="feature-information-box">
+                <div class="information-container">
+                    <div class="information-box">
+                        <h1>Compete on the Leaderboard!</h1>
+                        <p>Test your knowledge and compete against other players to see who can get the highest score!</p>
+                    </div>
+                    <div class="information-box">
+                        <h1>Choose Provinces</h1>
+                        <p>You have the option to only select the your most well known Wynncraft Provinces!</p>
+                    </div>
+                    <div class="information-box">
+                        <h1>Track Your Stats</h1>
+                        <p>When logged in, all the games played will be logged, allowing you to see your previous scores and times!</p>
+                    </div>
+                </div>
+                <div class="demo-container">
+                    <div class="demo-information-box">
+                        <h1>Explore in 3D</h1>
+                        <p>Each location features a 3D viewer, allowing you to explore your surroundings and better identify your position within Wynncraft. Check out the demo on the right!</p>
+                        <a href="/mode">
+                            <div class="play-button">
+                                Play Now!
+                            </div>
+                        </a>
+                    </div>
+                    <div id="vrview" class="vr-demo">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <script src="https://storage.googleapis.com/vrview/2.0/build/vrview.min.js"></script>
+    <script>
+        window.addEventListener('load', onVrViewLoad);
+        function onVrViewLoad() {
+            const vrView = new VRView.Player('#vrview', {
+                image: 'static/locations/2024-07-02_00.08.12.png',
+                is_stereo: false
+            });
+        }
+    </script>
 </body>
