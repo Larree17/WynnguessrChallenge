@@ -1,12 +1,18 @@
 function updateRanking(id){
+    let ancestor = document.getElementById(id);
+
     console.log(id);
-    if($("#" + id).css("background-color") == "#857361"){
-        $("#" + id).css("background-color", "white");
-    }else{
-        $("#" + id).css("background-color", "#857361");
-    }
-
     //send ajax request to get rankings
-
-    
+    /*$.ajax({
+        url: path,
+        data: params,
+        type: method,
+        dataType: 'json',
+        success: function(response){
+            console.log(response);
+        },
+        error: function(error){
+            console.log(error);
+        }
+    });*/
 }
