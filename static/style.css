@@ -166,7 +166,8 @@ h1{
     font-size: 20px;
     width: 150px;
     color: black; 
-    transition: transform 0.3s ease, color 0.3s ease
+    transition: transform 0.3s ease, color 0.3s ease;
+    font-family: cursive;
 }
 .play-button:hover{
     background-color: #6FAE2D;
@@ -194,7 +195,7 @@ h1{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: left;
+    justify-content: center;
     position: absolute;
     top: 100%;
     height: 100%;
@@ -236,6 +237,13 @@ h1{
 }
 .information-box p, .demo-information-box p{
     font-size: 20px;
+    font-family: cursive;
+}
+.information-box h1, .demo-information-box h1{
+    font-family: cursive;
+}
+.demo-information-box p, .demo-information-box h1{
+    color: white;
 }
 .demo-information-box a{
     width: 150px;
