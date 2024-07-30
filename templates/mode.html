@@ -7,43 +7,34 @@
     <div>
         <form action="game" class="mode-select-form" method="post">
             <fieldset class="mode-select-box" id="provinces">
-                <h3 class="mode-select-option">Provinces</h3>
+                <h3 class="mode-select-header">Provinces</h3>
                 <div class="mode-select-option-box">
                     <input class="form-check-input" type="checkbox" name="province" id="wynn-province" checked="true" value="wynn">
                     <label class="mode-select-option" for="wynn-province">Wynn</label>
-                </div>
-                <div class="mode-select-option-box">
                     <input class="form-check-input" type="checkbox" name="province" id="gavel-province" checked="true" value="gavel">
                     <label class="mode-select-option" for="gavel-province">Gavel</label>
-                </div>
-                <div class="mode-select-option-box">
                     <input class="form-check-input" type="checkbox" name="province" id="corkus-province" checked="true" value="corkus">
                     <label class="mode-select-option" for="corkus-province">Corkus</label>
-                </div>
-                <div class="mode-select-option-box">
                     <input class="form-check-input" type="checkbox" name="province" id="ocean-province" checked="true" value="ocean">
                     <label class="mode-select-option" for="ocean-province">Ocean</label>
-                </div>
-                <div class="mode-select-option-box">
                     <input class="form-check-input" type="checkbox" name="province" id="silent-expanse-province" checked="true" value="silent-expanse">
                     <label class="mode-select-option" for="silent-expanse-province">Silent Expanse</label>
                 </div>
+                
             </fieldset>
-        
             <fieldset class="mode-select-box" id="timer">
-                <h3 class="mode-select-option">Time Limit</h3>
-                <div class="mode-select-option-box" onclick="enableTextBox();">
+                <h3 class="mode-select-header">Time Limit</h3>
+                <div class="mode-select-option-box" >
                     <input class="form-check-input" type="checkbox" id="time-limit-checkbox" name="time-limit-checkbox">
-                    <label class="mode-select-option" for="time-limit-checkbox">Timed</label>
+                    <label class="mode-select-option" for="time-limit-checkbox" onclick="enableTextBox();">Timed</label>
+                    <div class="mode-select-option-box" id="input-text-box"></div>
                 </div>
-                <div class="mode-select-option-box" id="input-text-box">
-                    
-                </div>
+                
                 
             </fieldset>
         
             <fieldset class="mode-select-box" id="look">
-                <h3 class="mode-select-option">Look</h3>
+                <h3 class="mode-select-header">Look</h3>
                 <div class="mode-select-option-box">
                     <input class="form-check-input" type="checkbox" id="no-look" name="look">
                     <label class="mode-select-option" for="no-look">No look</label>
@@ -51,24 +42,17 @@
             </fieldset>
 
             <fieldset class="mode-select-box" id="rounds">
-                <h3 class="mode-select-option">Rounds</h3>
+                <h3 class="mode-select-header">Rounds</h3>
                 <div class="mode-select-option-box">
-                    <input class="form-check-input" type="radio" id="3" name="rounds" value="3">
-                    <label class="mode-select-option" for="3">3 Rounds</label>
+                    <input class="form-check-input" type="radio" id="three" name="rounds" value="3">
+                    <label class="mode-select-option" for="three">3 Rounds</label>
+                    <input class="form-check-input" type="radio" id="five" name="rounds" value="5" checked="true">
+                    <label class="mode-select-option" for="five">5 Rounds</label>
+                    <input class="form-check-input" type="radio" id="ten" name="rounds" value="10">
+                    <label class="mode-select-option" for="ten">10 Rounds</label>
+                    <input class="form-check-input" type="radio" id="twentyfive" name="rounds" value="25">
+                    <label class="mode-select-option" for="twentyfive">25 Rounds</label>
                 </div>
-                <div class="mode-select-option-box">
-                    <input class="form-check-input" type="radio" id="5" name="rounds" value="5" checked="true">
-                    <label class="mode-select-option" for="5">5 Rounds</label>
-                </div>
-                <div class="mode-select-option-box">
-                    <input class="form-check-input" type="radio" id="10" name="rounds" value="10">
-                    <label class="mode-select-option" for="10">10 Rounds</label>
-                </div>
-                <div class="mode-select-option-box">
-                    <input class="form-check-input" type="radio" id="25" name="rounds" value="25">
-                    <label class="mode-select-option" for="25">25 Rounds</label>
-                </div>
-                    
             </fieldset>
             
             <button type="submit" class="form-submit" id="mode-submit-button">Play</button>
@@ -80,10 +64,10 @@
     <script>
         function enableTextBox(){
             if (document.getElementById("time-limit-checkbox").checked) {
-                document.getElementById("input-text-box").innerHTML='<input type="number" id="time-limit" name="time-limit" placeholder="Time Limit (s)" value="30"> ';
+                document.getElementById("input-text-box").innerHTML='';
             }
             else{
-                document.getElementById("input-text-box").innerHTML='';
+                document.getElementById("input-text-box").innerHTML='<input type="number" id="time-limit" name="time-limit" placeholder="Time Limit (s)" value="30"> ';
             }
         }
         

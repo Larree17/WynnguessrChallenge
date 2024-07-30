@@ -188,7 +188,7 @@ h1{
     left: -15%;
     background-color: #baaa80;
     transform: rotate(2.3deg);
-    border-top: 3px solid #857361;
+    border-top: 5px solid #857361;
 }
 .feature-information-box{
     overflow: hidden;
@@ -224,7 +224,7 @@ h1{
     flex-direction: row;
     width: 100%;
     height: 600px;
-    border-top: 3px solid #857361;
+    border-top: 5px solid #857361;
 }
 .demo-information-box{
     color: black;
@@ -264,8 +264,6 @@ h1{
     display: flex;
     flex-direction: column;
     color: white;
-    background-color: #857361;
-    border: 3px solid black;
     border-radius: 10px;
     padding: 10px;
     margin: 5px 20px;
@@ -273,29 +271,51 @@ h1{
 .mode-select-option-box{
     display: flex;
     justify-content: left;
-    margin-left: 30px;
+    flex-direction: row;
+    color: black;
+    margin: 5px;
+    border-radius: 10px;
 }
-.mode-select-option{
-    width: 100%;
+
+#wynn-province:checked ~ label[for="wynn-province"],
+#gavel-province:checked ~ label[for="gavel-province"],
+#corkus-province:checked ~ label[for="corkus-province"],
+#ocean-province:checked ~ label[for="ocean-province"],
+#silent-expanse-province:checked ~ label[for="silent-expanse-province"], 
+#time-limit-checkbox:checked ~ label[for="time-limit-checkbox"],
+#no-look:checked ~ label[for="no-look"],
+#three:checked ~ label[for="three"],
+#five:checked ~ label[for="five"],
+#ten:checked ~ label[for="ten"],
+#twentyfive:checked ~ label[for="twentyfive"]{
+  background: #378537;
+  color: #fff;
+}
+.mode-select-header{
     text-align: left;
     margin-left: 5px;
+    flex-basis: 100%;
 }
-#mode-select-button{
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 12px;
+.mode-select-option{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    color: black;
+    margin: 5px;
     padding: 10px;
-    border: 4px solid black;
-    background-color: #83C73C;
-    font-size: 20px;
-    color: black; 
-    transition: transform 0.3s ease, background-color 0.3s ease;
-
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 10px;
+    cursor: pointer
 }
-.mode-select-button:hover {
-    background-color: #6FAE2D;
-    transform: scale(1.1);
+#time-limit{
+    border-radius: 10px;
+    border: 3px solid black;
+    font-size: 20px;
+    width: 100px;
+}
+.form-check-input{
+    display: none;
 }
 .login-input{
     border-radius: 8px;
