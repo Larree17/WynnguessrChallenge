@@ -46,6 +46,12 @@ def post_score():
         conn.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})
+@app.route("/api/updaterank", methods=['POST'])
+def update_rank():
+    if request.method == 'POST':
+        wynn = request.form['wynn']
+        print(wynn)
+        return jsonify({"success": False})
 
 @app.route("/")
 def index():

@@ -1,12 +1,17 @@
-function updateRanking(id){
-    let ancestor = document.getElementById(id);
+document.addEventListener("DOMContentLoaded", (event) => {
+    updateRanking();
+function updateRanking(){
+    let form = document.getElementById('filter-options');
+    let params = {};
+    for(let i = 0; i < form.length; i++){
+        params[form[i].value] = form[i].checked;
 
-    console.log(id);
+    }
     //send ajax request to get rankings
-    /*$.ajax({
-        url: path,
+    $.ajax({
+        url: '/api/updaterank',
         data: params,
-        type: method,
+        type: 'POST',
         dataType: 'json',
         success: function(response){
             console.log(response);
@@ -14,5 +19,5 @@ function updateRanking(id){
         error: function(error){
             console.log(error);
         }
-    });*/
-}
+    });
+}});
