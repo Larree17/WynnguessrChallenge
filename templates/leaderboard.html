@@ -7,25 +7,25 @@
 <div class="leaderboard">
     <form class="filter-option-container" id="filter-options">
         <input type="checkbox" id="wynn" checked="true" value="wynn">
-        <label for="wynn" class="filter-option" onclick="updateRanking('wynn')">Wynn</label>
+        <label for="wynn" class="filter-option" >Wynn</label>
         <input type="checkbox" id="gavel" checked="true" value="gavel">
-        <label for="gavel" class="filter-option" onclick="updateRanking('gavel')">Gavel</label>
+        <label for="gavel" class="filter-option" >Gavel</label>
         <input type="checkbox" id="corkus" checked="true" value="corkus">
-        <label for="corkus" class="filter-option" onclick="updateRanking('corkus')">Corkus</label>
+        <label for="corkus" class="filter-option" >Corkus</label>
         <input type="checkbox" id="ocean" checked="true" value="ocean">
-        <label for="ocean" class="filter-option" onclick="updateRanking('ocean')">Ocean</label>
+        <label for="ocean" class="filter-option" >Ocean</label>
         <input type="checkbox" id="silent-expanse" checked="true" value="silent-expanse">
-        <label for="silent-expanse" class="filter-option" onclick="updateRanking('silent-expanse')">Silent Expanse</label>
+        <label for="silent-expanse" class="filter-option" >Silent Expanse</label>
         <input type="checkbox" id="no-look" value="no-look">
-        <label for="no-look" class="filter-option" onclick="updateRanking('look')">No Look</label>
+        <label for="no-look" class="filter-option" >No Look</label>
         <input type="radio" id="three-rounds" name="rounds" value="three">
-        <label for="three-rounds" class="filter-option" onclick="updateRanking('three-rounds')">3 Rounds</label>
+        <label for="three-rounds" class="filter-option" >3 Rounds</label>
         <input type="radio" id="five-rounds" name="rounds" checked="true" value="five">
-        <label for="five-rounds" class="filter-option" onclick="updateRanking('five-rounds')">5 Rounds</label>
+        <label for="five-rounds" class="filter-option" >5 Rounds</label>
         <input type="radio" id="ten-rounds" name="rounds" value="ten">
-        <label for="ten-rounds" class="filter-option" onclick="updateRanking('ten-rounds')">10 Rounds</label>
+        <label for="ten-rounds" class="filter-option">10 Rounds</label>
         <input type="radio" id="twenty-five-rounds" name="rounds" value="twenty-five">
-        <label for="twenty-five-rounds" class="filter-option" onclick="updateRanking('twenty-five-rounds')">25 Rounds</label>
+        <label for="twenty-five-rounds" class="filter-option">25 Rounds</label>
         
     </form>
         
@@ -37,7 +37,7 @@
                 <th class="leaderboard-header">Username</th>
                 <th class="leaderboard-header">Score</th>
                 <th class="leaderboard-header">Date</th>
-                <th class="leaderboard-header">Look</th>
+                <th class="leaderboard-header">No Look</th>
                 <th class="leaderboard-header">Provinces</th>
                 <th class="leaderboard-header">Rounds</th>
                 <th class="leaderboard-header">Time</th>
@@ -56,7 +56,7 @@
 
 
 
-<script src="{{ url_for('static', filename='js/query.js') }}"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/query.js') }}"></script>
 
 {% endblock%}

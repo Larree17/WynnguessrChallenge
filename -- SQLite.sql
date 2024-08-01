@@ -1,12 +1,1 @@
-.schema
-DROP TABLE IF EXISTS scores;
-CREATE TABLE scores (
-    id INTEGER PRIMARY KEY AUTOINCREMENT  ,  
-    user_id INTEGER    ,
-    score INTEGER   ,
-    date TEXT  ,
-    look BOOLEAN  ,
-    provinces TEXT ,
-    rounds INTEGER  ,
-    time INTEGER
-);
+SELECT username, score, date, nolook, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE nolook = "No" AND rounds = "5" AND provinces = "['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse']" ORDER BY score DESC LIMIT 50

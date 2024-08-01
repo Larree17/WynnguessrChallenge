@@ -42,16 +42,22 @@ def post_score():
             totalTime = str(minutes) + "m " + str(seconds) + "s"
         else:
             totalTime = str(seconds) + "s"
-        db.execute("INSERT INTO scores (user_id, score, date, look, provinces, rounds, time) VALUES (?, ?, ?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, rounds, totalTime))
+        db.execute("INSERT INTO scores (user_id, score, date, nolook, provinces, rounds, time) VALUES (?, ?, ?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, rounds, totalTime))
         conn.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})
+
 @app.route("/api/updaterank", methods=['POST'])
 def update_rank():
     if request.method == 'POST':
-        wynn = request.form['wynn']
-        print(wynn)
-        return jsonify({"success": False})
+        form = request.form
+        print(str(form['provinces']))
+        print(form['rounds'])
+        print(form['nolook'])
+        rankings = db.execute('SELECT username, score, date, nolook, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE provinces = ? AND nolook = ? AND rounds = ? ORDER BY score DESC LIMIT 50', (str(form['provinces']), form['rounds'], form['nolook'])).fetchall()
+        print(rankings)
+        return jsonify({"rankings": rankings})
+    return jsonify({"success": False})
 
 @app.route("/")
 def index():
@@ -65,7 +71,7 @@ def play():
 
 @app.route("/leaderboard")
 def leaderboard():
-    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date, look, provinces, rounds, time FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
+    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date, nolook, provinces, rounds, time FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
 
 @app.route("/stats")
 def stats():
