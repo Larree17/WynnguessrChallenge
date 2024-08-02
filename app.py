@@ -51,10 +51,10 @@ def post_score():
 def update_rank():
     if request.method == 'POST':
         form = request.form
-        print(str(form['provinces']))
+        print(form['provinces'])
         print(form['rounds'])
         print(form['nolook'])
-        rankings = db.execute('SELECT username, score, date, nolook, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE provinces = ? AND nolook = ? AND rounds = ? ORDER BY score DESC LIMIT 50', (str(form['provinces']), form['rounds'], form['nolook'])).fetchall()
+        rankings = db.execute('SELECT username, score, date, nolook, provinces, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE provinces = ? AND nolook = ? AND rounds = ? ORDER BY score DESC LIMIT 50', (str(form['provinces']), form['nolook'], form['rounds'])).fetchall()
         print(rankings)
         return jsonify({"rankings": rankings})
     return jsonify({"success": False})

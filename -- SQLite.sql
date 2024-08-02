@@ -1,1 +1,1 @@
-SELECT username, score, date, nolook, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE nolook = "No" AND rounds = "5" AND provinces = "['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse']" ORDER BY score DESC LIMIT 50
+SELECT username, score, date, nolook, provinces, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE nolook = "No" AND rounds = "5" AND provinces = "['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse']" ORDER BY score DESC LIMIT 50

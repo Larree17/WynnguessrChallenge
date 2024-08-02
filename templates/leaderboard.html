@@ -30,7 +30,7 @@
     </form>
         
     
-    <table class="leaderboard-table">
+    <table class="leaderboard-table" id="leaderboard-table">
         <thead>
             <tr class="leaderboard-row">
                 <th class="leaderboard-header">Rank</th>
@@ -43,14 +43,9 @@
                 <th class="leaderboard-header">Time</th>
             </tr>
         </thead>
-        {% for user in users %}
-            <tr class="leaderboard-row">
-                <td class="leaderboard-data">{{ loop.index }}</td>
-                {% for data in user %}
-                    <td class="leaderboard-data">{{ data }}</td>
-                {% endfor %}
-            </tr>
-        {% endfor %}
+        <tbody id="table-body">
+
+        </tbody>
     </table>
 </div>
 
