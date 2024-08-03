@@ -44,7 +44,6 @@ $( document ).ready(function() {
             type: 'POST',
             dataType: 'json',
             success: function(response){
-                console.log(response);
                 response = response['rankings'];
                 let table = document.getElementById('table-body');
                 $("#table-body tr").remove(); 
@@ -60,6 +59,21 @@ $( document ).ready(function() {
                         let cell = row.insertCell(j);
                         cell.innerHTML = response[i][j - 1];
                         cell.className = 'leaderboard-data';
+                        if(j == response[i].length){
+                            let time = Number(cell.innerHTML);
+                            let hours = Math.floor(time / 3600);
+                            let minutes = Math.floor((time % 3600) / 60);
+                            let seconds = time % 60;
+                            let timeString = '';
+                            if(hours > 0){
+                                timeString += hours + 'h ';
+                            }
+                            if(minutes > 0){
+                                timeString += minutes + 'm ';
+                            }
+                            timeString += seconds + 's';
+                            cell.innerHTML = timeString;
+                        }
                     }
                     row.insertCell();
                 }},

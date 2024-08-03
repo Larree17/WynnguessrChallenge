@@ -35,15 +35,6 @@ def post_score():
         provinces = request.form['provinces']
         rounds = request.form['rounds']
         totalTime = request.form['totalTime']
-        hours = int(totalTime) // 3600
-        minutes = (int(totalTime) % 3600) // 60
-        seconds = int(totalTime) % 60
-        if hours > 0:
-            totalTime = str(hours) + "h " + str(minutes) + "m " + str(seconds) + "s"
-        elif minutes > 0:
-            totalTime = str(minutes) + "m " + str(seconds) + "s"
-        else:
-            totalTime = str(seconds) + "s"
         db.execute("INSERT INTO scores (user_id, score, date, nolook, provinces, rounds, time) VALUES (?, ?, ?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, rounds, totalTime))
         conn.commit()
         return jsonify({"success": True})
@@ -53,11 +44,7 @@ def post_score():
 def update_rank():
     if request.method == 'POST':
         form = request.form
-        print(form['provinces'])
-        print(form['rounds'])
-        print(form['nolook'])
-        rankings = db.execute('SELECT username, score, date, nolook, provinces, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE provinces = ? AND nolook = ? AND rounds = ? ORDER BY score DESC LIMIT 50', (str(form['provinces']), form['nolook'], form['rounds'])).fetchall()
-        print(rankings)
+        rankings = db.execute('SELECT username, score, date, nolook, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE provinces = ? AND nolook = ? AND rounds = ? ORDER BY score DESC, time ASC LIMIT 50', (str(form['provinces']), form['nolook'], form['rounds'])).fetchall()
         return jsonify({"rankings": rankings})
     return jsonify({"success": False})
 
