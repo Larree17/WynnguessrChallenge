@@ -72,6 +72,14 @@ def update_rank():
         return jsonify({"rankings": rankings})
     return jsonify({"success": False})
 
+@app.route("/api/updateprofile", methods=['POST'])
+def update_profile():
+    if request.method == 'POST':
+        form = request.form
+        games = db.execute('SELECT username, score, date, nolook, rounds, time FROM users JOIN scores ON users.id = scores.user_id WHERE user_id = ? AND provinces = ? AND nolook = ? AND rounds = ? ORDER BY score DESC, time ASC LIMIT 50', (session['user_id'], str(form['provinces']), form['nolook'], form['rounds'])).fetchall()
+        return jsonify({"games": games})
+    return jsonify({"success": False})
+
 @app.route("/")
 def index():
     if 'loggedin' in session and session['loggedin']:
@@ -118,7 +126,6 @@ def login():
     if request.method == 'POST':#user login request
         username = request.form['username']
         password = request.form['password']
-        #successful login
         
         if username == "" or password == "":
             return render_template('apology.html', message = "Please fill in all fields")
@@ -138,6 +145,8 @@ def register():
         username = request.form['username']
         password = request.form['password']
         confirmation = request.form['confirmation']
+        if len(username) > 20:
+            return render_template('apology.html', message = "Username must be less than 20 characters")
         if password != confirmation:
             return render_template('apology.html', message = "Passwords do not match")
         elif db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall():
@@ -160,7 +169,11 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return render_template('profile.html', profile = db.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone())
+    if not session.get('loggedin'):
+        return redirect('/login')
+    games = db.execute("SELECT score, date, nolook, provinces, rounds, time FROM scores WHERE user_id = ? ORDER BY date DESC", (session['user_id'],)).fetchall()
+    profile = db.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],)).fetchone()
+    return render_template('profile.html', games = games, username = profile[0])
     
 @app.route("/apology")
 def apology():

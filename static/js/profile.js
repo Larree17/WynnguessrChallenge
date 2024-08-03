@@ -39,16 +39,16 @@ $( document ).ready(function() {
     
         //send ajax request to get rankings
         $.ajax({
-            url: '/api/updaterank',
+            url: '/api/updateprofile',
             data: params,
             type: 'POST',
             dataType: 'json',
             success: function(response){
-                console.log(response);
-                response = response['rankings'];
+                response = response['games'];
                 let table = document.getElementById('table-body');
                 $("#table-body tr").remove(); 
                 //for each response, create a row in the table
+                console.log(response);
                 for(let i = 0; i < response.length; i++){
                     row = table.insertRow(i);
                     row.className = 'leaderboard-row';
