@@ -48,7 +48,6 @@ $( document ).ready(function() {
                 response = response['rankings'];
                 let table = document.getElementById('table-body');
                 $("#table-body tr").remove(); 
-                console.log('removing rows');
                 //for each response, create a row in the table
                 for(let i = 0; i < response.length; i++){
                     row = table.insertRow(i);

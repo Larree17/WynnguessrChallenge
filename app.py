@@ -16,7 +16,7 @@ db = conn.cursor()
 
 @app.route("/api/locations", methods = ['GET'])
 def get_locations():
-    locations = db.execute("SELECT * FROM WynnProvince").fetchall()
+    locations = db.execute("SELECT * FROM wynn").fetchall()
     locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
     return jsonify(locations_list)
 
@@ -99,10 +99,6 @@ def game():
             time_limit = int(request.form.get('time-limit'))
         look = request.form.get('look') == 'on'
         rounds = request.form.get('rounds')
-        print(provinces)
-        print("Time limit: " + str(time_limit))
-        print("Look: " + str(look))
-        print("Rounds = " + rounds)
         return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds)
     return render_template('game.html')
 
