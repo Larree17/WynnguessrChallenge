@@ -4,10 +4,12 @@ from flask_cors import CORS
 import os
 import sqlite3
 from datetime import date
+from flask_bcrypt import Bcrypt 
 
 
 app = Flask(__name__)
 CORS(app)
+bcrypt = Bcrypt(app) 
 app.secret_key = os.urandom(24)
 conn = sqlite3.connect('database.db', check_same_thread=False)
 db = conn.cursor()
@@ -110,12 +112,14 @@ def login():
         username = request.form['username']
         password = request.form['password']
         #successful login
-        if db.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password)).fetchall():
-            session['loggedin'] = True
-            session['user_id'] = db.execute("SELECT id FROM users WHERE username = ?", (username,)).fetchone()[0]
-            return redirect('/')
-        elif username == "" or password == "":
+        
+        if username == "" or password == "":
             return render_template('apology.html', message = "Please fill in all fields")
+        user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+        if user and bcrypt.check_password_hash(user[2], password):
+            session['loggedin'] = True
+            session['user_id'] = user[0]
+            return redirect('/')
         else:
             return render_template('apology.html', message = "Invalid username or password")
     else:
@@ -134,7 +138,8 @@ def register():
         elif username == "" or password == "" or confirmation == "":
             return render_template('apology.html', message = "Please fill in all fields")
         else:
-            db.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+            hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+            db.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
             conn.commit()
             return redirect('/')
     else:
