@@ -44,7 +44,6 @@ $( document ).ready(function() {
             type: 'POST',
             dataType: 'json',
             success: function(response){
-                console.log(response);
                 response = response['rankings'];
                 let table = document.getElementById('table-body');
                 $("#table-body tr").remove(); 

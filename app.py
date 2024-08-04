@@ -118,7 +118,11 @@ def game():
             time_limit = int(request.form.get('time-limit'))
         look = request.form.get('look') == 'on'
         rounds = request.form.get('rounds')
-        return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds)
+        print(provinces)
+        locations = db.execute("SELECT * FROM locations WHERE province IN (?)", (provinces,)).fetchall()
+        print(locations)
+        locations_list = jsonify([{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations])
+        return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds, locations = locations_list)
     return render_template('game.html')
 
 @app.route("/login", methods=['POST', 'GET'])

@@ -218,6 +218,9 @@ body h1, body h2{
     margin: 100px 5%;
     width: 30%;
 }
+.information-box h1{
+    color: black;
+}
 .demo-container{
     background-image: url("repeatable background.png");
     background-size: contain;
@@ -341,9 +344,6 @@ body h1, body h2{
     flex-direction: column;
     justify-content: left;
     margin: 10px;
-}
-.profile-information{
-
 }
 #mode-submit-button{
     position: absolute;
