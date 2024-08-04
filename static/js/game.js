@@ -1,7 +1,7 @@
 var provinces = $('#game-variables').attr('provinces');
 var look = $('#game-variables').attr('look');
 var timeLimit = $('#game-variables').attr('timeLimit');
-var LOCATIONS;
+var LOCATIONS = $('#game-variables').attr('locations');
 var round = 0;
 var maxRounds = $('#game-variables').attr('rounds');
 var score = 0;
@@ -162,6 +162,7 @@ function showNextLocation() {
     //selects a random location from the list of locations and removes it to prevent duplicates
     var rand = Math.floor(Math.random() * LOCATIONS.length);
     images[round - 1] = LOCATIONS[rand];
+    console.log(LOCATIONS)
     LOCATIONS.splice(rand, 1);
     //loads next vrview image
     //sets up guess button functionality

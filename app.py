@@ -16,7 +16,11 @@ db = conn.cursor()
 
 @app.route("/api/locations", methods = ['GET'])
 def get_locations():
-    locations = db.execute("SELECT * FROM wynn").fetchall()
+    provinces = session['provinces']
+    placeholders = ', '.join('?' for _ in provinces)
+    query = f"SELECT * FROM locations WHERE province IN ({placeholders})"
+    locations = db.execute(query, provinces).fetchall()
+    print(locations)
     locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
     return jsonify(locations_list)
 
@@ -101,28 +105,32 @@ def stats():
 @app.route("/game", methods=['POST', 'GET'])
 def game():
     if request.method == 'POST':
+        #if there are no provinces selected, return apology
         if request.form.getlist('province') == []:
             return render_template('apology.html', message = "Please select at least one province")            
         provinces = request.form.getlist('province')
-        print("time-limit-checkbox:")
-        print(request.form.get('time-limit-checkbox'))
+        #if time limit is not selected, set time limit to -1
         if request.form.get('time-limit-checkbox') == None:
             time_limit = -1
+        #if time limit is selected, check if time limit is a number and greater than 0
         elif request.form.get('time-limit-checkbox') == 'on':
+            #if time limit is not entered, return apology
             if request.form.get('time-limit') == "":
                 return render_template('apology.html', message = "Please enter a time limit")
+            #if time limit is not a number, return apology
             if request.form.get('time-limit').isnumeric() == False:
                 return render_template('apology.html', message = "Time limit must be a number")
+            #if time limit is less than 1, return apology
             if int(request.form.get('time-limit')) < 1:
                 return render_template('apology.html', message = "Time limit cannot be less than 1 second")
             time_limit = int(request.form.get('time-limit'))
+        #if look is not selected, set look to False
         look = request.form.get('look') == 'on'
         rounds = request.form.get('rounds')
-        print(provinces)
-        locations = db.execute("SELECT * FROM locations WHERE province IN (?)", (provinces,)).fetchall()
-        print(locations)
-        locations_list = jsonify([{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations])
-        return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds, locations = locations_list)
+        #store provinces in session
+        session['provinces'] = provinces
+
+        return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds)
     return render_template('game.html')
 
 @app.route("/login", methods=['POST', 'GET'])
