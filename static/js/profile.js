@@ -48,7 +48,6 @@ $( document ).ready(function() {
                 let table = document.getElementById('table-body');
                 $("#table-body tr").remove(); 
                 //for each response, create a row in the table
-                console.log(response);
                 for(let i = 0; i < response.length; i++){
                     row = table.insertRow(i);
                     row.className = 'leaderboard-row';

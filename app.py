@@ -16,11 +16,13 @@ db = conn.cursor()
 
 @app.route("/api/locations", methods = ['GET'])
 def get_locations():
+    #if there are no provinces in session, return apology
+    if 'provinces' not in session:
+        return jsonify({"success": False})
     provinces = session['provinces']
     placeholders = ', '.join('?' for _ in provinces)
     query = f"SELECT * FROM locations WHERE province IN ({placeholders})"
     locations = db.execute(query, provinces).fetchall()
-    print(locations)
     locations_list = [{"id": location[0], "X" : location[1], "Z" : location[2], "url" : location[3]} for location in locations]
     return jsonify(locations_list)
 
@@ -104,6 +106,7 @@ def stats():
 
 @app.route("/game", methods=['POST', 'GET'])
 def game():
+    session['provinces'] = ['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse']
     if request.method == 'POST':
         #if there are no provinces selected, return apology
         if request.form.getlist('province') == []:
@@ -129,9 +132,10 @@ def game():
         rounds = request.form.get('rounds')
         #store provinces in session
         session['provinces'] = provinces
+        print(provinces, time_limit, look, rounds)
 
         return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds)
-    return render_template('game.html')
+    return render_template('game.html', provinces = "['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse']", time_limit = -1, look = False, rounds = 5)
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
