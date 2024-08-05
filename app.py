@@ -12,7 +12,7 @@ CORS(app)
 bcrypt = Bcrypt(app) 
 app.config.from_object(Config)
 conn = sqlite3.connect('database.db', check_same_thread=False)
-db = conn.cursor
+db = conn.cursor()
 
 @app.route("/api/locations", methods = ['GET'])
 def get_locations():
