@@ -5,14 +5,14 @@ import os
 import sqlite3
 from datetime import date
 from flask_bcrypt import Bcrypt 
-
+from config import Config
 
 app = Flask(__name__)
 CORS(app)
 bcrypt = Bcrypt(app) 
-app.secret_key = os.urandom(24)
+app.config.from_object(Config)
 conn = sqlite3.connect('database.db', check_same_thread=False)
-db = conn.cursor()
+db = conn.cursor
 
 @app.route("/api/locations", methods = ['GET'])
 def get_locations():
@@ -195,6 +195,3 @@ def profile():
 def apology():
     message = request.args.get('message', 'Something went wrong')
     return render_template('apology.html', message = message)
-
-if __name__ == "__main__":
-    app.run(debug=True)
