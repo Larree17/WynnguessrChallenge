@@ -63,7 +63,8 @@ $( document ).ready(function() {
                             let time = Number(cell.innerHTML);
                             let hours = Math.floor(time / 3600);
                             let minutes = Math.floor((time % 3600) / 60);
-                            let seconds = time % 60;
+                            let seconds = Math.floor(time % 60);
+                            let milliseconds = Math.round(time % 1 * 100);
                             let timeString = '';
                             if(hours > 0){
                                 timeString += hours + 'h ';
@@ -71,7 +72,10 @@ $( document ).ready(function() {
                             if(minutes > 0){
                                 timeString += minutes + 'm ';
                             }
-                            timeString += seconds + 's';
+                            if(seconds > 0){
+                                timeString += seconds + 's ';
+                            }
+                            timeString += milliseconds + 'ms';
                             cell.innerHTML = timeString;
                         }
                     }

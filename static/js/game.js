@@ -10,7 +10,7 @@ var images = new Array(Number(maxRounds));
 var markers = new Array(Number(maxRounds));
 var polylines = new Array(Number(maxRounds));
 var map;
-var timer = 0;
+var timer = null;
 var scoreMap;
 var totalTime = 0;
 var greenIcon = new L.Icon({
@@ -49,7 +49,7 @@ function onMapClick(e) {
 // Display the score screen
 function showScoreScreen() {
     if(timeLimit > 0){
-        clearTimeout(timer);
+        clearInterval(timer);
     }
     showContent('score-screen');
     document.getElementById('score-screen').innerHTML =
@@ -119,32 +119,15 @@ function showScoreScreen() {
     scoreMap.fitBounds(polylines[round - 1].getBounds());
 }
 
-// Load the next location
 function showNextLocation() {
-
-    let countdown = timeLimit;
-    timer = setInterval(function(){
-        console.log(countdown);
-        if(timeLimit > 0){
-            document.getElementById('time-left').innerHTML = "Time: " + countdown;
-            countdown--;
-            if (countdown < 0) {
-                clearInterval(timer);
-                console.log('Time limit reached');
-                showScoreScreen();
-            }
-        }
-        totalTime++;
-    }, 1000);
-
     showContent('guess-screen');
     round++;
     
     document.getElementById('guess-screen').innerHTML = 
-    "<div id='vrview' class = vr-image></div>" +
-    "<div class = 'map-container' id = 'map-container'>" +
-        "<div class = 'map' id='map'></div>" +
-        "<button id='guess-button' class = 'guess-button' type = 'submit'>Guess!</button></div>";
+    "<div id='panorama'></div>" +
+    "<div class='map-container' id='map-container'>" +
+        "<div class='map' id='map'></div>" +
+        "<button id='guess-button' class='guess-button' type='submit'>Guess!</button></div>";
     
     map = L.map('map', {
         crs: L.CRS.Simple,
@@ -159,46 +142,69 @@ function showNextLocation() {
     map.setView([3000, -500], -2);
     map.on('click', onMapClick);
 
-    //selects a random location from the list of locations and removes it to prevent duplicates
+    // Selects a random location from the list of locations and removes it to prevent duplicates
     var rand = Math.floor(Math.random() * LOCATIONS.length);
     images[round - 1] = LOCATIONS[rand];
-    console.log(LOCATIONS)
     LOCATIONS.splice(rand, 1);
-    //loads next vrview image
-    //sets up guess button functionality
+
+    // Sets up guess button functionality
     document.getElementById('guess-button').onclick = function () {
-        if (markers[round - 1] == undefined) {
+        if (markers[round - 1] === undefined) {
             document.getElementById('guess-button').innerHTML = "Select a location first!";
             document.getElementById('guess-button').style.backgroundColor = "red";
             return;
         }
-        if (timer) {
-            clearTimeout(timer);
-            timer = 0;
+        if (timeLimit > 0) {
+            clearInterval(timer);
         }
         showScoreScreen();
     };
-    
-    if(look == 'True'){
-        $('#vrview').css('pointer-events', 'none');
+
+    if (look === 'True') {
+        $('#panorama').css('pointer-events', 'none');
     }
-    var vrView = new VRView.Player('#vrview', {
+    
+    /*var vrView = new VRView.Player('#vrview', {
         image: images[round - 1]['url'],
         is_stereo: false,
         is_autopan_off: true,
+    });*/
+
+    //initailize panorama viewer
+    let viewer = pannellum.viewer('panorama', {
+        "type": "equirectangular",
+        "panorama": images[round - 1]['url'],
+        "autoLoad": true
     });
-    //removes all markers from the map
+    viewer.on('load', function(){
+        let countdown = timeLimit;
+        timer = setInterval(function(){
+            if(countdown >= 0){
+                document.getElementById('time-left').innerHTML = "Time: " + countdown;
+                countdown = Math.round((countdown - .01) * 100) / 100;
+                if (countdown < 0) {
+                    clearInterval(timer);
+                    showScoreScreen();
+                }
+            }
+            totalTime = Math.round((totalTime + .01) * 100) / 100;
+        }, 10);
+    });
+
+    // Remove all markers from the map
     map.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
             layer.remove();
         }
     });
-    if(polylines[round - 1] != undefined){
+
+    if (polylines[round - 1] !== undefined) {
         console.log('removing polyline');
         map.removeLayer(polyline);
     }
     marker = null;
     document.getElementById('round-number').innerHTML = "Round: " + round + "/" + maxRounds;
+    
     
 }
 

@@ -1,1 +1,1 @@
-SELECT * FROM scores
+SELECT * FROM scores;
