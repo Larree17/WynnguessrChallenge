@@ -64,7 +64,7 @@ $( document ).ready(function() {
                             let hours = Math.floor(time / 3600);
                             let minutes = Math.floor((time % 3600) / 60);
                             let seconds = Math.floor(time % 60);
-                            let milliseconds = Math.round(time % 1 * 100);
+                            let milliseconds = Math.round(time % 1 * 1000);
                             let timeString = '';
                             if(hours > 0){
                                 timeString += hours + 'h ';
