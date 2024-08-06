@@ -122,7 +122,7 @@ function showScoreScreen() {
 function showNextLocation() {
     showContent('guess-screen');
     round++;
-    
+    $('#time-left').html("Time: " + timeLimit);
     document.getElementById('guess-screen').innerHTML = 
     "<div id='panorama'></div>" +
     "<div class='map-container' id='map-container'>" +
