@@ -1,3 +1,6 @@
+*{
+    font-family: "Brush Script MT", cursive;
+}
 body {
     padding: 0;
     margin: 0;
@@ -38,7 +41,6 @@ body h1, body h2{
     padding: 0px 10px;
     text-decoration: none;
     font-size: 17px;
-    font-family: "Comic Sans";
     border-color: #402523;
     border-width: 3px;
     border-style: solid;
@@ -58,7 +60,6 @@ body h1, body h2{
     padding: 0px 10px;
     text-decoration: none;
     font-size: 17px;
-    font-family: "Comic Sans";
     border-color: #402523;
     border-width: 3px;
     border-style: solid;
@@ -107,7 +108,6 @@ body h1, body h2{
     width:100%;
     min-height: 94.5%;
     text-align: center;
-    font-family: Arial, sans-serif;
 }
 
 .homepage-background-image{
@@ -121,7 +121,6 @@ body h1, body h2{
     left:0;
     width:100%;
     height:94.5%;
-    font-family: Arial, sans-serif;
 }
 .guess-screen{
     position: absolute;
@@ -141,7 +140,6 @@ body h1, body h2{
     width:100%;
     height:100%;
     text-align: center;
-    font-family: Arial, sans-serif;
 }
 .vr-image iframe{
     background-size: cover;
@@ -153,7 +151,6 @@ body h1, body h2{
     height: 100%;
     color: black;
     text-align: center;
-    font-family: Arial, sans-serif;
 }
 .play-button{
     display: inline-block;
@@ -168,7 +165,6 @@ body h1, body h2{
     width: 150px;
     color: black; 
     transition: transform 0.3s ease, color 0.3s ease;
-    font-family: cursive;
 }
 .play-button:hover{
     background-color: #6FAE2D;
@@ -241,10 +237,8 @@ body h1, body h2{
 }
 .information-box p, .demo-information-box p{
     font-size: 20px;
-    font-family: cursive;
 }
 .information-box h1, .demo-information-box h1{
-    font-family: cursive;
 }
 .demo-information-box p, .demo-information-box h1{
     color: white;
@@ -302,7 +296,9 @@ body h1, body h2{
     border: 3px solid black;
     border-radius: 10px;
     cursor: pointer;
+    font-size: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
+
 }
 
 #time-limit{
