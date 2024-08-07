@@ -1,6 +1,7 @@
 *{
-    font-family: 'Dancing Script', 'Brush Script MT', cursive;
+    font-family: Georgia, serif;
 }
+
 body {
     padding: 0;
     margin: 0;
@@ -19,7 +20,7 @@ body h1, body h2{
     left: 0; 
     right: 0; 
     z-index: 1; 
-    height: 5.5%;
+    min-height: 50px;
     display: flex;
     align-items: center; 
     border-bottom: 3px solid #857361;
@@ -44,7 +45,7 @@ body h1, body h2{
     border-color: #402523;
     border-width: 3px;
     border-style: solid;
-    margin: 0 2px;
+    margin: 2px 2px;
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
 }
@@ -63,7 +64,7 @@ body h1, body h2{
     border-color: #402523;
     border-width: 3px;
     border-style: solid;
-    margin: 0 2px;
+    margin: 2px 3px;
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
 }
@@ -91,37 +92,36 @@ body h1, body h2{
     color: white;
     transform: scale(1.05);
 }
-.welcome-text{
-    position: relative;
-    display: inline-block;
-    left: 150px;
-    top: 150px;
-    width: 30%;
-}
-.repeatable-background-image{
-    background-image: url("repeatable background.png");
-    background-size: contain;
-    background-repeat: repeat;
-    position:absolute;
-    top:5.5%;
-    left:0;
-    width:100%;
-    min-height: 94.5%;
-    text-align: center;
-}
-
 .homepage-background-image{
     background-image: url("wynnguessr homepage background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-position: fixed;
-    position:absolute;
-    top:5.5%;
+    top:50px;
+    width: 100%;
+    min-height: 880px;
+    display:table;
+    overflow:visible; 
+}
+.welcome-text{
+    display: inline-block;
+    width: 30%;
+    margin-left: 150px;
+    margin-top: 150px;
+}
+
+.repeatable-background-image{
+    background-image: url("repeatable background.png");
+    background-size: contain;
+    background-repeat: repeat;
+    top:50px;
     left:0;
     width:100%;
-    height:94.5%;
+    min-height: 870px;
+    text-align: center;
 }
+
+
 .guess-screen{
     position: absolute;
     display: flex;
@@ -158,6 +158,7 @@ body h1, body h2{
     vertical-align: middle;
     border-radius: 12px;
     margin-right: 5px;
+    margin-bottom: 5px;
     padding: 10px;
     border: 4px solid black;
     background-color: #83C73C;
@@ -176,26 +177,26 @@ body h1, body h2{
     top: 95%;
     width: 100%;
 }
+
+
 .slanted-background-box{
     position: absolute;
     overflow: hidden;
-    top: 95%;
-    height: 300px;
-    width: 114.7%;
+    top: 97%;
+    height: 200px;
+    width: 114.8%;
     left: -15%;
     background-color: #baaa80;
-    transform: rotate(2.3deg);
+    transform: rotate(1.5deg);
     border-top: 5px solid #857361;
 }
 .feature-information-box{
     overflow: hidden;
     display: flex;
+    position: relative;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    position: absolute;
-    top: 100%;
-    height: 100%;
     width: 100%;
     text-align: center;
     background-color: #baaa80;
@@ -208,9 +209,7 @@ body h1, body h2{
 .information-box{
     display: flex;
     flex-direction: column;
-    justify-content: left;
     color: black;
-    align-self: left;
     margin: 100px 5%;
     width: 30%;
 }
@@ -229,11 +228,18 @@ body h1, body h2{
 .demo-information-box{
     color: black;
     display: flex;
-    margin: 155px 250px;
+    margin-left: 10%;
+    margin-top: 100px;
     width: 25%;
     flex-direction: column;
     text-align: left;
-
+}
+#panorama{
+    width: 70%;
+    height: 70%;
+    margin-top: 50px;
+    margin-right: 100px;
+    margin-left: 50px;
 }
 .information-box p, .demo-information-box p{
     font-size: 20px;
@@ -267,6 +273,7 @@ body h1, body h2{
 .mode-select-option-box{
     display: flex;
     justify-content: left;
+    flex-wrap: wrap;
     flex-direction: row;
     color: black;
     margin: 5px;
@@ -347,6 +354,7 @@ body h1, body h2{
 .filter-option-container{
     display: flex;
     justify-content: left;
+    flex-wrap: wrap;
     margin-left: 30px
     
 }
@@ -533,4 +541,47 @@ body h1, body h2{
     background-color: #baaa80;
     color: #000000;
     border-top: 3px solid #857361;
+}
+
+@media (max-width:960px) {
+    .welcome-text{
+        display: inline-block;
+        width: 80%;
+        margin-left: 50px;
+        margin-top: 150px;
+    }
+    .information-container{
+        display: flex;
+        flex-direction: column;
+    }
+    .information-box{
+        display: flex;
+        flex-direction: column;
+        color: black;
+        width: 100%;
+        margin: 10px 0;
+        margin-left: 10px;
+        padding-right: 20px;    
+    }
+    .demo-information-box{
+        color: black;
+        display: flex;
+        margin-top: 30px;
+        margin-left: 10%;
+        width: 80%;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    .demo-container{
+        flex-direction: column;
+        width: 100%;
+        height: 600px;
+        border-top: 5px solid #857361;
+    }
+    #panorama{
+        width: 80%;
+        margin-left: 10%;
+        margin-bottom: 30px;
+    }
 }

@@ -10,115 +10,113 @@
 </head>
 
 <body>
-        <nav class="navbar">
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="nav-icon" href="/">
+                <img src="static/wynnlogo.png" alt="logo" height=31.1>
+            </a>
+            <a href="/">
+                <div class="nav-link-left">
+                    <i class="material-icons">home</i>Home
+                </div>
+            </a>
+            <a href="/mode">
+                <div  class="nav-link-left">
+                    <i class="material-icons">play_arrow</i>Play
+                </div>
+            </a>
+            <a href="/leaderboard">
+                <div  class="nav-link-left" >
+                    <i class="material-icons">leaderboard</i>Leaderboard
+                </div>
+            </a>
+            
+        </div>
+        {% if session['user_id'] %}
             <div class="nav-container">
-                <a class="nav-icon" href="/">
-                    <img src="static/wynnlogo.png" alt="logo" height=31.1>
-                </a>
-                <a href="/">
-                    <div class="nav-link-left">
-                        <i class="material-icons">home</i>Home
+                <a href="/profile">
+                    <div class="nav-link-right">
+                        <i class="material-icons">account_circle</i>Profile
                     </div>
                 </a>
-                <a href="/mode">
-                    <div  class="nav-link-left">
-                        <i class="material-icons">play_arrow</i>Play
+                <a href="/logout">
+                    <div class="nav-link-right">
+                        <i class="material-icons">logout</i>Logout
                     </div>
                 </a>
-                <a href="/leaderboard">
-                    <div  class="nav-link-left" >
-                        <i class="material-icons">leaderboard</i>Leaderboard
-                    </div>
-                </a>
-                
             </div>
-            {% if session['user_id'] %}
-                <div class="nav-container">
-                    <a href="/profile">
-                        <div class="nav-link-right">
-                            <i class="material-icons">account_circle</i>Profile
+        {% else %}
+        <div>
+            <a href="/register">
+                <div class="nav-link-right">Register</div>
+            </a>
+            <a href="/login">
+                <div class="nav-link-right">Login</div>
+            </a>
+        </div>
+        {% endif %}
+    </nav>
+
+    <div class="homepage-background-image">
+        <div class="welcome-text">
+            <p style="color:white; font-size: 60px; position: relative;">Discover Wynncraft</p>
+            <p style="color:white; font-size: 25px;">
+                Welcome to WynnGuessr! Dive into the world of Wynncraft and see if you can identify locations from the MMORPG. Challenge yourself and showcase your knowledge!
+            </p>
+            <a href="/mode">
+                <div class="play-button">
+                    Play Now!
+                </div>
+            </a>
+            <a href="/register">
+                <div class="play-button">
+                    Register!
+                </div>
+            </a>
+        </div>
+    </div>
+    
+    <div class="feature-container">
+        <div class="slanted-background-box"></div>
+        <div class="feature-information-box">
+            <div class="information-container">
+                <div class="information-box">
+                    <h1>Choose Provinces</h1>
+                    <p>You have the option to only select the your most well known Wynncraft Provinces!</p>
+                </div>
+                <div class="information-box">
+                    <h1>Compete on the Leaderboard!</h1>
+                    <p>Test your knowledge and compete against other players to see who can get the highest score!</p>
+                </div>
+                <div class="information-box">
+                    <h1>Track Your Stats</h1>
+                    <p>When logged in, all the games played will be logged, allowing you to see your previous scores and times!</p>
+                </div>
+            </div>
+            <div class="demo-container">
+                <div class="demo-information-box">
+                    <h1>Explore in 3D</h1>
+                    <p>Each location features a 3D viewer, allowing you to explore your surroundings and better identify your position within Wynncraft. Check out the demo!</p>
+                    <a href="/mode">
+                        <div class="play-button">
+                            Play Now!
                         </div>
                     </a>
-                    <a href="/logout">
-                        <div class="nav-link-right">
-                            <i class="material-icons">logout</i>Logout
-                        </div>
-                    </a>
                 </div>
-            {% else %}
-            <div>
-                <a href="/register">
-                    <div class="nav-link-right">Register</div>
-                </a>
-                <a href="/login">
-                    <div class="nav-link-right">Login</div>
-                </a>
-            </div>
-            {% endif %}
-        </nav>
+                <div id='panorama'></div>
 
-        <div class="homepage-background-image">
-            <div class="welcome-text">
-                <p style="color:white; font-size: 60px; position: relative;">Discover Wynncraft</p>
-                <p style="color:white; font-size: 25px;">
-                    Welcome to WynnGuessr! Dive into the world of Wynncraft and see if you can identify locations from the MMORPG. Challenge yourself and showcase your knowledge!
-                </p>
-                <a href="/mode">
-                    <div class="play-button">
-                        Play Now!
-                    </div>
-                </a>
-                <a href="/register">
-                    <div class="play-button">
-                        Register!
-                    </div>
-                </a>
+
             </div>
         </div>
-        
-        <div class="feature-container">
-            <div class="slanted-background-box"></div>
-
-            <div class="feature-information-box">
-                <div class="information-container">
-                    <div class="information-box">
-                        <h1>Choose Provinces</h1>
-                        <p>You have the option to only select the your most well known Wynncraft Provinces!</p>
-                    </div>
-                    <div class="information-box">
-                        <h1>Compete on the Leaderboard!</h1>
-                        <p>Test your knowledge and compete against other players to see who can get the highest score!</p>
-                    </div>
-                    <div class="information-box">
-                        <h1>Track Your Stats</h1>
-                        <p>When logged in, all the games played will be logged, allowing you to see your previous scores and times!</p>
-                    </div>
-                </div>
-                <div class="demo-container">
-                    <div class="demo-information-box">
-                        <h1>Explore in 3D</h1>
-                        <p>Each location features a 3D viewer, allowing you to explore your surroundings and better identify your position within Wynncraft. Check out the demo on the right!</p>
-                        <a href="/mode">
-                            <div class="play-button">
-                                Play Now!
-                            </div>
-                        </a>
-                    </div>
-                    <div id="vrview" class="vr-demo">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    <script src="https://storage.googleapis.com/vrview/2.0/build/vrview.min.js"></script>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
     <script>
-        window.addEventListener('load', onVrViewLoad);
-        function onVrViewLoad() {
-            const vrView = new VRView.Player('#vrview', {
-                image: 'static/locations/2024-07-02_00.08.12.png',
-                is_stereo: false
-            });
-        }
+        let viewer = pannellum.viewer('panorama', {
+        "type": "equirectangular",
+        "panorama": 'static/locations/2024-07-02_00.20.24.png',
+        "autoLoad": true
+        });
     </script>
 </body>
