@@ -154,9 +154,7 @@ function showNextLocation() {
             document.getElementById('guess-button').style.backgroundColor = "red";
             return;
         }
-        if (timeLimit > 0) {
-            clearInterval(timer);
-        }
+        clearInterval(timer);
         showScoreScreen();
     };
 
@@ -188,6 +186,8 @@ function showNextLocation() {
                 }
             }
             totalTime = Math.round((totalTime + .01) * 100) / 100;
+            console.log(totalTime);
+
         }, 10);
     });
 
@@ -257,8 +257,23 @@ function finalScore() {
     if(totalTime == 1){
         sec = " Second";
     }
-
-    document.getElementById('Finish Message').innerHTML = "Game Finished! Total Time: " + totalTime + sec;
+    let time = totalTime
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time % 3600) / 60);
+    let seconds = Math.floor(time % 60);
+    let milliseconds = Math.round(time % 1 * 1000);
+    let timeString = '';
+    if(hours > 0){
+        timeString += hours + 'h ';
+    }
+    if(minutes > 0){
+        timeString += minutes + 'm ';
+    }
+    if(seconds > 0){
+        timeString += seconds + 's ';
+    }
+    timeString += milliseconds + 'ms';
+    document.getElementById('Finish Message').innerHTML = "Game Finished! Total Time: " + timeString;
     document.getElementById('score').innerHTML = "Final Score: " + totalScore + "/" + maxRounds * 5000;
     document.getElementById('progress').style.width = (totalScore / (maxRounds * 5000)) * 100 + "%";
     $('#next-button').click(function(){

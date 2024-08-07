@@ -1,1 +1,1 @@
-.schema
+DELETE FROM users;
