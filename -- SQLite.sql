@@ -1,1 +1,1 @@
-SELECT * FROM scores;
+SELECT * FROM locations WHERE image_url = "static/locations/2024-07-01_23.31.28.png"

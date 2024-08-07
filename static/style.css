@@ -1,5 +1,5 @@
 *{
-    font-family: "Brush Script MT", cursive;
+    font-family: 'Dancing Script', 'Brush Script MT', cursive;
 }
 body {
     padding: 0;
@@ -237,8 +237,6 @@ body h1, body h2{
 }
 .information-box p, .demo-information-box p{
     font-size: 20px;
-}
-.information-box h1, .demo-information-box h1{
 }
 .demo-information-box p, .demo-information-box h1{
     color: white;

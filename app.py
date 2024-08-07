@@ -195,3 +195,6 @@ def profile():
 def apology():
     message = request.args.get('message', 'Something went wrong')
     return render_template('apology.html', message = message)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
