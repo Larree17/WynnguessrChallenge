@@ -124,7 +124,7 @@ function showNextLocation() {
     round++;
     $('#time-left').html("Time: " + timeLimit);
     document.getElementById('guess-screen').innerHTML = 
-    "<div id='panorama'></div>" +
+    "<div id='game-panorama'></div>" +
     "<div class='map-container' id='map-container'>" +
         "<div class='map' id='map'></div>" +
         "<button id='guess-button' class='guess-button' type='submit'>Guess!</button></div>";
@@ -171,7 +171,7 @@ function showNextLocation() {
     });*/
 
     //initailize panorama viewer
-    let viewer = pannellum.viewer('panorama', {
+    let viewer = pannellum.viewer('game-panorama', {
         "type": "equirectangular",
         "panorama": images[round - 1]['url'],
         "autoLoad": true
