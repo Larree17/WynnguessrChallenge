@@ -88,9 +88,7 @@ def update_profile():
 
 @app.route("/")
 def index():
-    if 'loggedin' in session and session['loggedin']:
-        return render_template('index.html', username = db.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],)).fetchone()[0])
-    return render_template('index.html', username = "Guest")
+    return render_template('index.html')
 
 @app.route("/mode")
 def play():
@@ -98,11 +96,7 @@ def play():
 
 @app.route("/leaderboard")
 def leaderboard():
-    return render_template('leaderboard.html', users = db.execute("SELECT username, score, date, nolook, provinces, rounds, time FROM users JOIN scores ON users.id = scores.user_id ORDER BY score DESC LIMIT 50;").fetchall())
-
-@app.route("/stats")
-def stats():
-    return render_template('stats.html')
+    return render_template('leaderboard.html')
 
 @app.route("/game", methods=['POST', 'GET'])
 def game():
@@ -124,8 +118,10 @@ def game():
             if request.form.get('time-limit').isnumeric() == False:
                 return render_template('apology.html', message = "Time limit must be a number")
             #if time limit is less than 1, return apology
-            if int(request.form.get('time-limit')) < 1:
-                return render_template('apology.html', message = "Time limit cannot be less than 1 second")
+            if int(request.form.get('time-limit')) < 0:
+                return render_template('apology.html', message = "Time limit cannot be less than 0 seconds")
+            if int(request.form.get('time-limit')) > 1800:
+                return render_template('apology.html', message = "Time limit cannot be greater than 30 minutes")
             time_limit = int(request.form.get('time-limit'))
         #if look is not selected, set look to False
         look = request.form.get('look') == 'on'
@@ -161,8 +157,10 @@ def register():
         username = request.form['username']
         password = request.form['password']
         confirmation = request.form['confirmation']
-        if len(username) > 20:
-            return render_template('apology.html', message = "Username must be less than 20 characters")
+        if len(username) > 32:
+            return render_template('apology.html', message = "Username must be less than 32 characters")
+        if len(password) > 128:
+            return render_template('apology.html', message = "Password must be less than 128 characters")
         if password != confirmation:
             return render_template('apology.html', message = "Passwords do not match")
         elif db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall():
@@ -187,9 +185,8 @@ def logout():
 def profile():
     if not session.get('loggedin'):
         return redirect('/login')
-    games = db.execute("SELECT score, date, nolook, provinces, rounds, time FROM scores WHERE user_id = ? ORDER BY date DESC", (session['user_id'],)).fetchall()
     profile = db.execute("SELECT username FROM users WHERE id = ?", (session['user_id'],)).fetchone()
-    return render_template('profile.html', games = games, username = profile[0])
+    return render_template('profile.html', username = profile[0])
     
 @app.route("/apology")
 def apology():

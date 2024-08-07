@@ -186,7 +186,6 @@ function showNextLocation() {
                 }
             }
             totalTime = Math.round((totalTime + .01) * 100) / 100;
-            console.log(totalTime);
 
         }, 10);
     });
@@ -199,7 +198,6 @@ function showNextLocation() {
     });
 
     if (polylines[round - 1] !== undefined) {
-        console.log('removing polyline');
         map.removeLayer(polyline);
     }
     marker = null;
@@ -287,9 +285,6 @@ function post(path, params, method='post') {
         data: params,
         type: method,
         dataType: 'json',
-        success: function(response){
-            console.log(response);
-        },
         error: function(error){
             console.log(error);
         }
