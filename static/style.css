@@ -20,7 +20,7 @@ body h1, body h2{
     left: 0; 
     right: 0; 
     z-index: 1; 
-    min-height: 50px;
+    min-height: 7vh;
     display: flex;
     align-items: center; 
     border-bottom: 3px solid #857361;
@@ -97,37 +97,44 @@ body h1, body h2{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    top:50px;
+    top:7vh;
     width: 100%;
-    min-height: 880px;
+    min-height: 85vh;
     display:table;
     overflow:visible; 
 }
-.welcome-text{
+.welcome-box{
     display: inline-block;
     width: 30%;
     margin-left: 150px;
     margin-top: 150px;
+}
+.welcome-header{
+    color:white; 
+    font-size: 60px; 
+    position: relative;
+}
+.welcome-text{
+    color:white; 
+    font-size: 25px;
 }
 
 .repeatable-background-image{
     background-image: url("repeatable background.png");
     background-size: contain;
     background-repeat: repeat;
-    top:50px;
+    top:7vh;
     left:0;
     width:100%;
-    min-height: 870px;
+    min-height: 93dvh;
     text-align: center;
 }
-
-
 .guess-screen{
     position: absolute;
     display: flex;
-    top: 5.5%;
+    top: 7vh;
     width: 100%;
-    height: 94.5%;
+    height: 93vh;
 }
 .location-image{
     background-size: cover;
@@ -141,17 +148,6 @@ body h1, body h2{
     height:100%;
     text-align: center;
 }
-.vr-image iframe{
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-position: fixed;
-    position:absolute;
-    width:100%;
-    height: 100%;
-    color: black;
-    text-align: center;
-}
 .play-button{
     display: inline-block;
     text-align: center;
@@ -163,7 +159,7 @@ body h1, body h2{
     border: 4px solid black;
     background-color: #83C73C;
     font-size: 20px;
-    width: 150px;
+    width: 140px;
     color: black; 
     transition: transform 0.3s ease, color 0.3s ease;
 }
@@ -176,19 +172,6 @@ body h1, body h2{
     overflow:hidden;
     top: 95%;
     width: 100%;
-}
-
-
-.slanted-background-box{
-    position: absolute;
-    overflow: hidden;
-    top: 97%;
-    height: 200px;
-    width: 114.8%;
-    left: -15%;
-    background-color: #baaa80;
-    transform: rotate(1.5deg);
-    border-top: 5px solid #857361;
 }
 .feature-information-box{
     overflow: hidden;
@@ -205,6 +188,9 @@ body h1, body h2{
 .information-container{
     display: flex;
     flex-direction: row;
+    border-bottom: 5px solid #857361;
+    border-top: 5px solid #857361;
+
 }
 .information-box{
     display: flex;
@@ -223,7 +209,6 @@ body h1, body h2{
     flex-direction: row;
     width: 100%;
     height: 600px;
-    border-top: 5px solid #857361;
 }
 .demo-information-box{
     color: black;
@@ -249,13 +234,6 @@ body h1, body h2{
 }
 .demo-information-box a{
     width: 150px;
-}
-
-.vr-demo iframe{
-    margin-top: 50px;
-    margin-left: 100px;
-    width: 700px;
-    height: 400px;
 }
 .mode-select-form{
     display: flex;
@@ -347,9 +325,8 @@ body h1, body h2{
     margin: 10px;
 }
 #mode-submit-button{
-    position: absolute;
-    bottom: 0px;
-    width: 99.5%;
+    width: 99%;
+    bottom: 0;
 }
 .filter-option-container{
     display: flex;
@@ -381,6 +358,9 @@ body h1, body h2{
 }
 .leaderboard-row{
     border: 1px solid black;
+}
+#game-panorama{
+    height: 93vh;
 }
 .map-container{
     position: absolute;
@@ -453,7 +433,7 @@ body h1, body h2{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    top: 5.5%;
+    top: 7vh;
     height: 94.5%;
     width: 100%;
     text-align: center;
@@ -542,13 +522,23 @@ body h1, body h2{
     color: #000000;
     border-top: 3px solid #857361;
 }
-
+@media (max-width:1500px) {
+    .welcome-box{
+        width: 50%;
+    }
+}
 @media (max-width:960px) {
-    .welcome-text{
+    .welcome-box{
         display: inline-block;
         width: 80%;
         margin-left: 50px;
-        margin-top: 150px;
+        margin-top: 20px;
+    }
+    .welcome-header{
+        font-size: 45px; 
+    }
+    .welcome-text{
+        font-size: 20px;
     }
     .information-container{
         display: flex;
@@ -577,11 +567,100 @@ body h1, body h2{
         flex-direction: column;
         width: 100%;
         height: 600px;
-        border-top: 5px solid #857361;
     }
     #panorama{
         width: 80%;
         margin-left: 10%;
         margin-bottom: 30px;
+    }
+    .map-container{
+        height: 25vh;
+        width: 20vh;
+    }
+    
+    .map-container:hover{
+        height: 60vh;
+        width: 100vw;
+    }
+    #scoreMap{
+        position:absolute;
+        top: auto;
+        height: 63vh;
+        width: 100%;
+        image-rendering: pixelated;
+        background: black;
+    }
+    .guess-button{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 12px;
+        border: 4px solid black;
+        background-color: #83C73C;
+        font-size: 20px;
+        color: black; 
+        padding: 10px;
+        width: 100%;
+        height: 51px;
+        cursor: pointer;
+    }
+    .next-button{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        vertical-align: middle;
+        border-radius: 12px;
+        border: 4px solid black;
+        background-color: #83C73C;
+        font-size: 20px;
+        color: black; 
+        padding: 10px;
+        width: 80%;
+        height: 51px;
+        cursor: pointer;
+    }
+    .score-screen{
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        top: 7vh;
+        height: 93vh;
+        width: 100%;
+        text-align: center;
+        color: white;
+    }
+    #score-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position:absolute;
+        bottom: 0px;
+        height: 30vh;
+        width: 100%;
+        background-color: #141323;
+        overflow: hidden;
+    }
+    .score-info{
+        display: inline-block;
+        bottom: 5%;
+        vertical-align: middle;
+        margin: 15px;
+        font-size: 20px;
+        color: white;
+        width: 400px;
+    }
+    .progress-bar{
+        display: inline-block;
+        vertical-align: middle;
+        width: 300px;
+        height: 10px;
+        background-color: #77736f;
+        border-radius: 10px;
+    }
+    .leaderboard-row{
+        font-size: 10px;
     }
 }

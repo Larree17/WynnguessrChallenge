@@ -157,9 +157,9 @@ def register():
         username = request.form['username']
         password = request.form['password']
         confirmation = request.form['confirmation']
-        if len(username) > 32:
+        if len(username) > 20:
             return render_template('apology.html', message = "Username must be less than 32 characters")
-        if len(password) > 128:
+        if len(password) > 64:
             return render_template('apology.html', message = "Password must be less than 128 characters")
         if password != confirmation:
             return render_template('apology.html', message = "Passwords do not match")
@@ -171,6 +171,9 @@ def register():
             hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
             db.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
             conn.commit()
+            user = db.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+            session['loggedin'] = True
+            session['user_id'] = user[0]
             return redirect('/')
     else:
         return render_template('register.html')
