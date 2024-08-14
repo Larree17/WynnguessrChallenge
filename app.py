@@ -39,6 +39,8 @@ def post_score():
         else:
             look = 'No'
         provinces = request.form['provinces']
+        if request.form['rounds'] not in ['3', '5', '10', '25']:
+            return render_template('apology.html', message = "Invalid number of rounds")
         rounds = request.form['rounds']
         totalTime = request.form['totalTime']
         db.execute("INSERT INTO scores (user_id, score, date, nolook, provinces, rounds, time) VALUES (?, ?, ?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, rounds, totalTime))
