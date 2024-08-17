@@ -43,6 +43,11 @@ def post_score():
             return render_template('apology.html', message = "Invalid number of rounds")
         rounds = request.form['rounds']
         totalTime = request.form['totalTime']
+        print(int(rounds) * 5000)
+        if(int(score) > int(rounds) * 5000):
+            return jsonify({"success": False})
+        if(int(rounds) * 5000 == int(score) and int(totalTime) < .5):
+            return jsonify({"success": False})
         db.execute("INSERT INTO scores (user_id, score, date, nolook, provinces, rounds, time) VALUES (?, ?, ?, ?, ?, ?, ?)", (session['user_id'], score, date.today(), look, provinces, rounds, totalTime))
         conn.commit()
         return jsonify({"success": True})
