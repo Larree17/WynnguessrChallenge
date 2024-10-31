@@ -7,13 +7,11 @@ Welcome to **WynnGuessr**, an interactive map-based guessing game inspired by Ge
 ## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Features](#features)
-3. [Demo](#demo)
-4. [Technologies Used](#technologies-used)
-5. [Installation](#installation)
-6. [Usage](#usage)
-7. [Future Plans](#future-plans)
-8. [Contributing](#contributing)
-9. [License](#license)
+3. [Technologies Used](#technologies-used)
+4. [Installation](#installation)
+5. [Usage](#usage)
+6. [Future Plans](#future-plans)
+7. [Contributing](#contributing)
 
 ---
 
@@ -25,11 +23,6 @@ Welcome to **WynnGuessr**, an interactive map-based guessing game inspired by Ge
 - **User Authentication and Profiles**: User authentication lets players create profiles, save game history, and track progress.
 - **Leaderboards**: Compete against others with dynamically updated leaderboards.
 - **AWS-Optimized Performance**: Runs smoothly with AWS EC2 and EBS, supporting 100+ concurrent players while maintaining <2s load times.
-  
-## Demo
-Check out a live demo of *WynnGuessr* [here](link-to-demo).
-
-![WynnGuessr Screenshot](link-to-image)
 
 ## Technologies Used
 - **Frontend**: JavaScript, HTML, CSS, Leaflet.js
@@ -75,15 +68,10 @@ To set up *WynnGuessr* locally:
 - **Mobile Optimization**: Improving experience for mobile players.
 
 ## Contributing
-We welcome contributions to enhance *WynnGuessr*! To contribute:
+I welcome contributions to enhance *WynnGuessr*! To contribute:
 1. Fork the repository.
 2. Create a new branch.
 3. Make your changes and submit a pull request.
-
-Please follow our [contribution guidelines](link-to-contribution-guidelines) for detailed instructions.
-
-## License
-*WynnGuessr* is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ---
 
