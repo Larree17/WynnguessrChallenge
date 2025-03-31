@@ -1,3 +1,4 @@
+This project was originally made by Ched3. Go support them!!! All I did was lazily add in a challenge mode. Basically the rest of the ReadMe was written by them.
 ---
 
 # WynnGuessr
@@ -35,7 +36,7 @@ To set up *WynnGuessr* locally:
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/Ched3/WynnGuessr.git
+    git clone https://github.com/Larree17/WynnguessrChallenge.git
     cd WynnGuessr
     ```
 
