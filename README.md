@@ -37,7 +37,7 @@ To set up *WynnGuessr* locally:
 1. **Clone the repository:**
     ```bash
     git clone https://github.com/Larree17/WynnguessrChallenge.git
-    cd WynnGuessr
+    cd WynnGuessrChallenge
     ```
 
 2. **Install dependencies**:
