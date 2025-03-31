@@ -107,7 +107,7 @@ def leaderboard():
 
 @app.route("/game", methods=['POST', 'GET'])
 def game():
-    session['provinces'] = ['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse']
+    session['provinces'] = ['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse', 'challengeOne']
     if request.method == 'POST':
         #if there are no provinces selected, return apology
         if request.form.getlist('province') == []:
@@ -138,7 +138,7 @@ def game():
         print(provinces, time_limit, look, rounds)
 
         return render_template('game.html', provinces = provinces, time_limit = time_limit, look = look, rounds = rounds)
-    return render_template('game.html', provinces = "['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse']", time_limit = -1, look = False, rounds = 5)
+    return render_template('game.html', provinces = "['wynn', 'gavel', 'corkus', 'ocean', 'silent-expanse', 'challengeOne']", time_limit = -1, look = False, rounds = 5)
 
 @app.route("/login", methods=['POST', 'GET'])
 def login():
